@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "دليل العيادات",
+    "slug": "clinic-directory",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1B4F8A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.clinicdir.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "نحتاج إلى موقعك لعرض العيادات القريبة منك",
+        "NSCameraUsageDescription": "نحتاج إلى الكاميرا لرفع صور العيادة"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1B4F8A"
+      },
+      "package": "com.clinicdir.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-location",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "clinic-directory-app"
+      }
+    }
+  }
+}
