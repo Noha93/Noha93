@@ -3,6 +3,7 @@ import {
   View, Text, StyleSheet, FlatList, TouchableOpacity, StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useLanguage } from '../../context/LanguageContext';
 import { Colors } from '../../constants/colors';
 import { BorderRadius, Shadow, Spacing } from '../../constants/spacing';
@@ -11,6 +12,7 @@ import Badge from '../../components/common/Badge';
 
 export default function AppointmentsScreen() {
   const { t, isRTL } = useLanguage();
+  const navigation = useNavigation<any>();
   const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed'>('all');
 
   const filtered = activeFilter === 'all'
@@ -70,7 +72,11 @@ export default function AppointmentsScreen() {
         keyExtractor={a => a.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <View style={styles.aptCard}>
+          <TouchableOpacity
+            style={styles.aptCard}
+            onPress={() => navigation.navigate('AppointmentDetail', { appointmentId: item.id })}
+            activeOpacity={0.85}
+          >
             <View style={[styles.aptLeft, { borderLeftColor: item.status === 'confirmed' ? Colors.success : Colors.warning }]}>
               <Text style={styles.aptTime}>{item.timeSlot}</Text>
               <Text style={styles.aptDate}>{item.date}</Text>
@@ -93,7 +99,7 @@ export default function AppointmentsScreen() {
               <Badge label={getStatusLabel(item.status)} variant={getStatusVariant(item.status) as any} size="sm" />
               <Text style={styles.aptFee}>{item.fee} {isRTL ? 'ج.م' : 'EGP'}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
         ListEmptyComponent={
           <View style={styles.empty}>

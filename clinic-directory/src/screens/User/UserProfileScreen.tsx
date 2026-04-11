@@ -41,12 +41,16 @@ export default function UserProfileScreen() {
       title: isRTL ? 'حسابي' : 'My Account',
       items: [
         {
+          icon: 'person-outline', labelAr: 'تعديل الملف الشخصي', labelEn: 'Edit Profile',
+          color: Colors.primary, onPress: () => navigation.navigate('EditUserProfile'),
+        },
+        {
           icon: 'calendar-outline', labelAr: 'مواعيدي', labelEn: 'My Appointments',
           color: Colors.primary, onPress: () => navigation.navigate('MyAppointments'), badge: '2',
         },
         {
           icon: 'heart-outline', labelAr: 'الأطباء المفضلون', labelEn: 'Favorite Doctors',
-          color: Colors.error, onPress: () => {},
+          color: Colors.error, onPress: () => navigation.navigate('FavoriteDoctors'),
         },
         {
           icon: 'star-outline', labelAr: 'تقييماتي', labelEn: 'My Reviews',
@@ -59,7 +63,7 @@ export default function UserProfileScreen() {
       items: [
         {
           icon: 'notifications-outline', labelAr: 'الإشعارات', labelEn: 'Notifications',
-          color: Colors.info, onPress: () => {},
+          color: Colors.info, onPress: () => navigation.navigate('Notifications'),
         },
         {
           icon: 'language-outline', labelAr: 'اللغة', labelEn: 'Language',
@@ -81,11 +85,11 @@ export default function UserProfileScreen() {
       items: [
         {
           icon: 'help-circle-outline', labelAr: 'المساعدة والدعم', labelEn: 'Help & Support',
-          color: Colors.success, onPress: () => {},
+          color: Colors.success, onPress: () => navigation.navigate('HelpSupport'),
         },
         {
           icon: 'information-circle-outline', labelAr: 'عن التطبيق', labelEn: 'About App',
-          color: Colors.textMuted, onPress: () => {},
+          color: Colors.textMuted, onPress: () => navigation.navigate('AboutApp'),
         },
         {
           icon: 'shield-outline', labelAr: 'سياسة الخصوصية', labelEn: 'Privacy Policy',

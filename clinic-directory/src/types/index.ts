@@ -328,6 +328,12 @@ export type UserStackParamList = {
   MyAppointments: undefined;
   UserProfile: undefined;
   MapView: { doctorId?: string; hospitalId?: string };
+  EditUserProfile: undefined;
+  FavoriteDoctors: undefined;
+  Notifications: undefined;
+  AppointmentDetail: { appointmentId: string };
+  HelpSupport: undefined;
+  AboutApp: undefined;
 };
 
 export type DoctorStackParamList = {
@@ -340,6 +346,11 @@ export type DoctorStackParamList = {
   Advertisement: undefined;
   ClinicPhotos: undefined;
   WeeklySchedule: undefined;
+  Earnings: undefined;
+  DoctorNotifications: undefined;
+  PatientProfile: { patientName?: string; patientPhone?: string };
+  DoctorSettings: undefined;
+  ProfilePreview: undefined;
 };
 
 // ===== FILTER / SEARCH =====

@@ -104,6 +104,8 @@ export default function ProfileEditScreen() {
             { icon: 'calendar-outline', label: isRTL ? 'الجدول' : 'Schedule', screen: 'WeeklySchedule' },
             { icon: 'images-outline', label: isRTL ? 'الصور' : 'Photos', screen: 'ClinicPhotos' },
             { icon: 'megaphone-outline', label: isRTL ? 'إعلان' : 'Ads', screen: 'Advertisement' },
+            { icon: 'eye-outline', label: isRTL ? 'معاينة' : 'Preview', screen: 'ProfilePreview' },
+            { icon: 'settings-outline', label: isRTL ? 'إعدادات' : 'Settings', screen: 'DoctorSettings' },
           ].map((item, i) => (
             <TouchableOpacity
               key={i}

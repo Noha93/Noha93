@@ -69,7 +69,7 @@ export default function DashboardScreen() {
               <Text style={styles.welcomeText}>{t('dashboard.welcome')}</Text>
               <Text style={styles.doctorName} numberOfLines={1}>{docName}</Text>
             </View>
-            <TouchableOpacity style={styles.notifBtn}>
+            <TouchableOpacity style={styles.notifBtn} onPress={() => navigation.navigate('DoctorNotifications')}>
               <Ionicons name="notifications-outline" size={22} color={Colors.textWhite} />
               <View style={styles.notifDot} />
             </TouchableOpacity>
@@ -162,13 +162,17 @@ export default function DashboardScreen() {
         <View style={styles.aptsSection}>
           <View style={[styles.sectionHeader, isRTL && styles.rtlRow]}>
             <Text style={[styles.sectionTitle, isRTL && styles.rtlText]}>{t('dashboard.recentAppointments')}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Appointments')}>
               <Text style={styles.seeAll}>{t('dashboard.viewAllAppointments')}</Text>
             </TouchableOpacity>
           </View>
 
           {todayAppointments.map(apt => (
-            <View key={apt.id} style={styles.aptCard}>
+            <TouchableOpacity
+              key={apt.id}
+              style={styles.aptCard}
+              onPress={() => navigation.navigate('AppointmentDetail', { appointmentId: apt.id })}
+            >
               <View style={styles.aptAvatar}>
                 <Text style={styles.aptAvatarText}>{apt.patientName[0]}</Text>
               </View>
@@ -181,7 +185,7 @@ export default function DashboardScreen() {
                 variant={apt.status === 'confirmed' ? 'success' : 'warning'}
                 size="sm"
               />
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
 
@@ -192,12 +196,12 @@ export default function DashboardScreen() {
           </Text>
           <View style={styles.actionsGrid}>
             {[
-              { icon: 'create-outline', label: isRTL ? 'تعديل الملف' : 'Edit Profile', color: Colors.primary },
-              { icon: 'document-text-outline', label: isRTL ? 'الوثائق' : 'Documents', color: Colors.secondary },
-              { icon: 'megaphone-outline', label: isRTL ? 'إعلان جديد' : 'New Ad', color: Colors.warning },
-              { icon: 'star-outline', label: isRTL ? 'اشتراكي' : 'Subscription', color: Colors.success },
+              { icon: 'create-outline', label: isRTL ? 'تعديل الملف' : 'Edit Profile', color: Colors.primary, screen: 'ProfileEdit' },
+              { icon: 'document-text-outline', label: isRTL ? 'الوثائق' : 'Documents', color: Colors.secondary, screen: 'Documents' },
+              { icon: 'cash-outline', label: isRTL ? 'الإيرادات' : 'Earnings', color: Colors.warning, screen: 'Earnings' },
+              { icon: 'star-outline', label: isRTL ? 'اشتراكي' : 'Subscription', color: Colors.success, screen: 'Subscription' },
             ].map((action, i) => (
-              <TouchableOpacity key={i} style={styles.actionCard}>
+              <TouchableOpacity key={i} style={styles.actionCard} onPress={() => navigation.navigate(action.screen)}>
                 <View style={[styles.actionIcon, { backgroundColor: action.color + '15' }]}>
                   <Ionicons name={action.icon as any} size={24} color={action.color} />
                 </View>

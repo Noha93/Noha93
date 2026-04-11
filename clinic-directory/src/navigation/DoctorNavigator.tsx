@@ -16,6 +16,12 @@ import SubscriptionScreen from '../screens/Doctor/SubscriptionScreen';
 import AdvertisementScreen from '../screens/Doctor/AdvertisementScreen';
 import WeeklyScheduleScreen from '../screens/Doctor/WeeklyScheduleScreen';
 import ClinicPhotosScreen from '../screens/Doctor/ClinicPhotosScreen';
+import DoctorAppointmentDetailScreen from '../screens/Doctor/DoctorAppointmentDetailScreen';
+import EarningsScreen from '../screens/Doctor/EarningsScreen';
+import DoctorNotificationsScreen from '../screens/Doctor/DoctorNotificationsScreen';
+import PatientProfileScreen from '../screens/Doctor/PatientProfileScreen';
+import DoctorSettingsScreen from '../screens/Doctor/DoctorSettingsScreen';
+import ProfilePreviewScreen from '../screens/Doctor/ProfilePreviewScreen';
 
 const Tab = createBottomTabNavigator<DoctorTabParamList>();
 const Stack = createNativeStackNavigator<DoctorStackParamList>();
@@ -24,7 +30,10 @@ function DashboardStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
-      <Stack.Screen name="AppointmentDetail" component={AppointmentsScreen} />
+      <Stack.Screen name="AppointmentDetail" component={DoctorAppointmentDetailScreen} />
+      <Stack.Screen name="Earnings" component={EarningsScreen} />
+      <Stack.Screen name="DoctorNotifications" component={DoctorNotificationsScreen} />
+      <Stack.Screen name="PatientProfile" component={PatientProfileScreen} />
     </Stack.Navigator>
   );
 }
@@ -33,6 +42,8 @@ function AppointmentsStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Appointments" component={AppointmentsScreen} />
+      <Stack.Screen name="AppointmentDetail" component={DoctorAppointmentDetailScreen} />
+      <Stack.Screen name="PatientProfile" component={PatientProfileScreen} />
     </Stack.Navigator>
   );
 }
@@ -44,6 +55,8 @@ function ProfileStack() {
       <Stack.Screen name="WeeklySchedule" component={WeeklyScheduleScreen} />
       <Stack.Screen name="ClinicPhotos" component={ClinicPhotosScreen} />
       <Stack.Screen name="Advertisement" component={AdvertisementScreen} />
+      <Stack.Screen name="ProfilePreview" component={ProfilePreviewScreen} />
+      <Stack.Screen name="DoctorSettings" component={DoctorSettingsScreen} />
     </Stack.Navigator>
   );
 }
@@ -60,6 +73,7 @@ function SubscriptionStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Subscription" component={SubscriptionScreen} />
+      <Stack.Screen name="Earnings" component={EarningsScreen} />
     </Stack.Navigator>
   );
 }
