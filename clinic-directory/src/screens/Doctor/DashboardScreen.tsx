@@ -197,9 +197,11 @@ export default function DashboardScreen() {
           <View style={styles.actionsGrid}>
             {[
               { icon: 'create-outline', label: isRTL ? 'تعديل الملف' : 'Edit Profile', color: Colors.primary, screen: 'ProfileEdit' },
-              { icon: 'document-text-outline', label: isRTL ? 'الوثائق' : 'Documents', color: Colors.secondary, screen: 'Documents' },
+              { icon: 'business-outline', label: isRTL ? 'فروعي' : 'Branches', color: Colors.info, screen: 'DoctorBranches' },
               { icon: 'cash-outline', label: isRTL ? 'الإيرادات' : 'Earnings', color: Colors.warning, screen: 'Earnings' },
               { icon: 'star-outline', label: isRTL ? 'اشتراكي' : 'Subscription', color: Colors.success, screen: 'Subscription' },
+              { icon: 'document-text-outline', label: isRTL ? 'الوثائق' : 'Documents', color: Colors.secondary, screen: 'Documents' },
+              { icon: 'megaphone-outline', label: isRTL ? 'الإعلانات' : 'Ads', color: Colors.error, screen: 'Advertisement' },
             ].map((action, i) => (
               <TouchableOpacity key={i} style={styles.actionCard} onPress={() => navigation.navigate(action.screen)}>
                 <View style={[styles.actionIcon, { backgroundColor: action.color + '15' }]}>

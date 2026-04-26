@@ -22,6 +22,8 @@ import DoctorNotificationsScreen from '../screens/Doctor/DoctorNotificationsScre
 import PatientProfileScreen from '../screens/Doctor/PatientProfileScreen';
 import DoctorSettingsScreen from '../screens/Doctor/DoctorSettingsScreen';
 import ProfilePreviewScreen from '../screens/Doctor/ProfilePreviewScreen';
+import DoctorBranchesScreen from '../screens/Doctor/DoctorBranchesScreen';
+import EditBranchScreen from '../screens/Doctor/EditBranchScreen';
 
 const Tab = createBottomTabNavigator<DoctorTabParamList>();
 const Stack = createNativeStackNavigator<DoctorStackParamList>();
@@ -34,6 +36,8 @@ function DashboardStack() {
       <Stack.Screen name="Earnings" component={EarningsScreen} />
       <Stack.Screen name="DoctorNotifications" component={DoctorNotificationsScreen} />
       <Stack.Screen name="PatientProfile" component={PatientProfileScreen} />
+      <Stack.Screen name="DoctorBranches" component={DoctorBranchesScreen} />
+      <Stack.Screen name="EditBranch" component={EditBranchScreen} />
     </Stack.Navigator>
   );
 }
@@ -57,6 +61,8 @@ function ProfileStack() {
       <Stack.Screen name="Advertisement" component={AdvertisementScreen} />
       <Stack.Screen name="ProfilePreview" component={ProfilePreviewScreen} />
       <Stack.Screen name="DoctorSettings" component={DoctorSettingsScreen} />
+      <Stack.Screen name="DoctorBranches" component={DoctorBranchesScreen} />
+      <Stack.Screen name="EditBranch" component={EditBranchScreen} />
     </Stack.Navigator>
   );
 }

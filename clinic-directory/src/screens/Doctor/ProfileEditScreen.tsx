@@ -99,24 +99,27 @@ export default function ProfileEditScreen() {
         </View>
 
         {/* Quick Nav */}
-        <View style={styles.quickNav}>
-          {[
-            { icon: 'calendar-outline', label: isRTL ? 'الجدول' : 'Schedule', screen: 'WeeklySchedule' },
-            { icon: 'images-outline', label: isRTL ? 'الصور' : 'Photos', screen: 'ClinicPhotos' },
-            { icon: 'megaphone-outline', label: isRTL ? 'إعلان' : 'Ads', screen: 'Advertisement' },
-            { icon: 'eye-outline', label: isRTL ? 'معاينة' : 'Preview', screen: 'ProfilePreview' },
-            { icon: 'settings-outline', label: isRTL ? 'إعدادات' : 'Settings', screen: 'DoctorSettings' },
-          ].map((item, i) => (
-            <TouchableOpacity
-              key={i}
-              style={styles.quickNavItem}
-              onPress={() => navigation.navigate(item.screen)}
-            >
-              <Ionicons name={item.icon as any} size={20} color={Colors.secondary} />
-              <Text style={styles.quickNavLabel}>{item.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.quickNavScroll}>
+          <View style={styles.quickNav}>
+            {[
+              { icon: 'calendar-outline', label: isRTL ? 'الجدول' : 'Schedule', screen: 'WeeklySchedule' },
+              { icon: 'images-outline', label: isRTL ? 'الصور' : 'Photos', screen: 'ClinicPhotos' },
+              { icon: 'business-outline', label: isRTL ? 'الفروع' : 'Branches', screen: 'DoctorBranches' },
+              { icon: 'megaphone-outline', label: isRTL ? 'إعلان' : 'Ads', screen: 'Advertisement' },
+              { icon: 'eye-outline', label: isRTL ? 'معاينة' : 'Preview', screen: 'ProfilePreview' },
+              { icon: 'settings-outline', label: isRTL ? 'إعدادات' : 'Settings', screen: 'DoctorSettings' },
+            ].map((item, i) => (
+              <TouchableOpacity
+                key={i}
+                style={styles.quickNavItem}
+                onPress={() => navigation.navigate(item.screen)}
+              >
+                <Ionicons name={item.icon as any} size={20} color={Colors.secondary} />
+                <Text style={styles.quickNavLabel}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
       </LinearGradient>
 
       <ScrollView style={styles.content} contentContainerStyle={styles.contentInner}>
@@ -235,14 +238,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.textWhite,
   },
   headerTitle: { fontSize: 18, fontWeight: '700', color: Colors.textWhite },
+  quickNavScroll: { marginTop: 0 },
   quickNav: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     backgroundColor: 'rgba(255,255,255,0.12)',
     borderRadius: BorderRadius.xl,
     padding: 12,
+    gap: 20,
+    paddingHorizontal: 16,
   },
-  quickNavItem: { alignItems: 'center' },
+  quickNavItem: { alignItems: 'center', minWidth: 52 },
   quickNavLabel: { fontSize: 11, color: 'rgba(255,255,255,0.8)', marginTop: 4 },
 
   content: { flex: 1 },

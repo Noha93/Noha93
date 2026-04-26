@@ -462,6 +462,32 @@ export const ar = {
     searchArea: 'البحث في هذه المنطقة',
   },
 
+  // Branches
+  branches: {
+    title: 'فروعي',
+    addBranch: 'إضافة فرع',
+    editBranch: 'تعديل الفرع',
+    branchName: 'اسم الفرع',
+    branchNameAr: 'اسم الفرع (عربي)',
+    branchNameEn: 'اسم الفرع (إنجليزي)',
+    mainBranch: 'الفرع الرئيسي',
+    secondaryBranch: 'فرع إضافي',
+    branchStatus: 'حالة الفرع',
+    branchAddress: 'عنوان الفرع',
+    branchPhone: 'هاتف الفرع',
+    branchSchedule: 'مواعيد الفرع',
+    noBranches: 'لا توجد فروع مضافة',
+    noBranchesDesc: 'أضف فروع عيادتك لإدارتها بسهولة',
+    deleteBranch: 'حذف الفرع',
+    deleteConfirm: 'هل تريد حذف هذا الفرع؟',
+    saveSuccess: 'تم حفظ بيانات الفرع بنجاح',
+    maxBranches: 'وصلت للحد الأقصى للفروع في خطتك',
+    upgradeForMore: 'ترقية للحصول على فروع أكثر',
+    openNow: 'مفتوح',
+    closedNow: 'مغلق',
+    busyNow: 'مشغول',
+  },
+
   // Errors
   errors: {
     networkError: 'خطأ في الاتصال بالإنترنت',

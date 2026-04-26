@@ -196,6 +196,20 @@ export interface Doctor {
   tags: string[];
 }
 
+// ===== BRANCH =====
+
+export interface Branch {
+  id: string;
+  doctorId: string;
+  nameAr: string;
+  nameEn: string;
+  address: Address;
+  contact: ContactInfo;
+  schedule: DaySchedule[];
+  status: ClinicStatus;
+  isMain: boolean;
+}
+
 // ===== HOSPITAL / MEDICAL CENTER =====
 
 export interface Hospital {
@@ -351,6 +365,8 @@ export type DoctorStackParamList = {
   PatientProfile: { patientName?: string; patientPhone?: string };
   DoctorSettings: undefined;
   ProfilePreview: undefined;
+  DoctorBranches: undefined;
+  EditBranch: { branchId?: string };
 };
 
 // ===== FILTER / SEARCH =====

@@ -2,7 +2,7 @@
  * Mock Data for دليل العيادات - Clinic Directory
  */
 
-import { Doctor, Hospital, Advertisement, Appointment, UserProfile, SubscriptionFeatures } from '../types';
+import { Doctor, Hospital, Advertisement, Appointment, UserProfile, SubscriptionFeatures, Branch } from '../types';
 
 // ===== DOCTORS =====
 
@@ -622,3 +622,66 @@ export const DAYS_EN: Record<string, string> = {
   friday: 'Friday',
   saturday: 'Saturday',
 };
+
+// ===== BRANCHES =====
+
+export const MOCK_BRANCHES: Branch[] = [
+  {
+    id: 'b001',
+    doctorId: 'd001',
+    nameAr: 'عيادة الدقي الرئيسية',
+    nameEn: 'Dokki Main Clinic',
+    address: {
+      street: '15 شارع التحرير',
+      area: 'الدقي',
+      city: 'القاهرة',
+      country: 'مصر',
+      coordinates: { latitude: 30.0444, longitude: 31.2357 },
+    },
+    contact: {
+      phone: '02-27654321',
+      mobile: '010-12345678',
+      whatsapp: '01012345678',
+    },
+    schedule: [
+      { day: 'sunday', isWorking: true, startTime: '10:00', endTime: '14:00', maxAppointments: 12 },
+      { day: 'monday', isWorking: true, startTime: '10:00', endTime: '14:00', maxAppointments: 12 },
+      { day: 'tuesday', isWorking: true, startTime: '16:00', endTime: '20:00', maxAppointments: 10 },
+      { day: 'wednesday', isWorking: true, startTime: '16:00', endTime: '20:00', maxAppointments: 10 },
+      { day: 'thursday', isWorking: true, startTime: '10:00', endTime: '14:00', maxAppointments: 12 },
+      { day: 'friday', isWorking: false, startTime: '', endTime: '' },
+      { day: 'saturday', isWorking: true, startTime: '11:00', endTime: '15:00', maxAppointments: 8 },
+    ],
+    status: 'open',
+    isMain: true,
+  },
+  {
+    id: 'b002',
+    doctorId: 'd001',
+    nameAr: 'عيادة مدينة نصر',
+    nameEn: 'Nasr City Clinic',
+    address: {
+      street: '45 شارع مكرم عبيد',
+      area: 'مدينة نصر',
+      city: 'القاهرة',
+      country: 'مصر',
+      coordinates: { latitude: 30.0619, longitude: 31.3357 },
+    },
+    contact: {
+      phone: '02-24567890',
+      mobile: '010-98765432',
+      whatsapp: '01098765432',
+    },
+    schedule: [
+      { day: 'sunday', isWorking: false, startTime: '', endTime: '' },
+      { day: 'monday', isWorking: true, startTime: '17:00', endTime: '21:00', maxAppointments: 10 },
+      { day: 'tuesday', isWorking: true, startTime: '17:00', endTime: '21:00', maxAppointments: 10 },
+      { day: 'wednesday', isWorking: false, startTime: '', endTime: '' },
+      { day: 'thursday', isWorking: true, startTime: '17:00', endTime: '21:00', maxAppointments: 10 },
+      { day: 'friday', isWorking: false, startTime: '', endTime: '' },
+      { day: 'saturday', isWorking: true, startTime: '12:00', endTime: '16:00', maxAppointments: 8 },
+    ],
+    status: 'closed',
+    isMain: false,
+  },
+];

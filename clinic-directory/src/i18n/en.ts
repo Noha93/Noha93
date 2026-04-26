@@ -462,6 +462,32 @@ export const en = {
     searchArea: 'Search this area',
   },
 
+  // Branches
+  branches: {
+    title: 'My Branches',
+    addBranch: 'Add Branch',
+    editBranch: 'Edit Branch',
+    branchName: 'Branch Name',
+    branchNameAr: 'Branch Name (Arabic)',
+    branchNameEn: 'Branch Name (English)',
+    mainBranch: 'Main Branch',
+    secondaryBranch: 'Additional Branch',
+    branchStatus: 'Branch Status',
+    branchAddress: 'Branch Address',
+    branchPhone: 'Branch Phone',
+    branchSchedule: 'Branch Schedule',
+    noBranches: 'No branches added',
+    noBranchesDesc: 'Add your clinic branches to manage them easily',
+    deleteBranch: 'Delete Branch',
+    deleteConfirm: 'Delete this branch?',
+    saveSuccess: 'Branch saved successfully',
+    maxBranches: "You've reached the branch limit for your plan",
+    upgradeForMore: 'Upgrade for more branches',
+    openNow: 'Open',
+    closedNow: 'Closed',
+    busyNow: 'Busy',
+  },
+
   // Errors
   errors: {
     networkError: 'Network connection error',
