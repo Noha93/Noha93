@@ -1,5 +1,8 @@
 # نظام التصميم (Design System) — تطبيق زي (Zey)
 
+> **ملف Figma الحي**: https://www.figma.com/design/vrjaT5YEJ1yI2RzJSn7rc2
+> يحتوي على 4 صفحات: Cover · Foundations (ألوان/طباعة/ظلال كـ Variables & Styles) · Components (أزرار، حقول إدخال، بطاقة منتج، شريط تنقل سفلي، Segmented Control، Chips، Badge) · Screens (Onboarding، Home، Browse نساء/رجال/أطفال، Product Detail، Cart، Checkout، Account).
+
 ## 1. هوية العلامة
 - **الاسم**: زي — Zey (بمعنى "الزي/الأناقة" بالعامية المصرية، اسم قصير يعمل بالعربي والإنجليزي).
 - **الشخصية**: عصري، دافئ، واثق، بسيط (Minimal but warm) — يناسب العائلة كلها وليس فقط فئة واحدة.
