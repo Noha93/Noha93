@@ -1,7 +1,11 @@
 # نظام التصميم (Design System) — تطبيق زي (Zey)
 
 > **ملف Figma الحي**: https://www.figma.com/design/vrjaT5YEJ1yI2RzJSn7rc2
-> يحتوي على 4 صفحات: Cover · Foundations (ألوان/طباعة/ظلال كـ Variables & Styles) · Components (أزرار، حقول إدخال، بطاقة منتج، شريط تنقل سفلي، Segmented Control، Chips، Badge) · Screens (Onboarding، Home، Browse نساء/رجال/أطفال، Product Detail، Cart، Checkout، Account).
+> يحتوي على 4 صفحات: Cover · Foundations (ألوان/طباعة/ظلال كـ Variables & Styles) · Components (أزرار، حقول إدخال، بطاقة منتج، شريط تنقل سفلي، Segmented Control، Chips، Badge) · Screens (12 شاشة كاملة، مربوطة ببروتوتايب تفاعلي — افتحي الملف واضغطي زر **Present ▶** أعلى يمين الصفحة لتجربتها).
+>
+> **الشاشات الـ12**: Onboarding · Home · Browse — نساء/رجال/أطفال (بتبديل حي عبر Segmented Control) · Product Detail · Cart · Checkout · Order Success · Search · Wishlist · Account.
+>
+> **رحلة البروتوتايب الأساسية**: Onboarding → Home → (اختيار قسم نساء/رجال/أطفال أو الضغط على منتج) → Browse → Product Detail → إضافة للسلة → Cart → Checkout → تأكيد الطلب → Order Success → متابعة التسوق → Home. شريط التنقل السفلي شغّال في كل الشاشات وبيودّي لنفس الوجهات (الرئيسية/تصفح/المفضلة/السلة/الحساب) بشكل متسق.
 
 ## 1. هوية العلامة
 - **الاسم**: زي — Zey (بمعنى "الزي/الأناقة" بالعامية المصرية، اسم قصير يعمل بالعربي والإنجليزي).
