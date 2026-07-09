@@ -5,7 +5,7 @@
 >
 > **الشاشات الـ33**:
 > - **التصفح والشراء**: Onboarding · Home (بانر + 6 سلايدرات أفقية قابلة للسحب: التخفيضات، الأكثر مبيعًا، وصل حديثًا، ومقترح لك لكل قسم نساء/رجال/أطفال) · Category Hub — نساء/رجال (فئات حسب نوع الملابس) و**أطفال** (فئات مقسّمة **بنات/أولاد أولاً ثم حسب السن** داخل كل منهم: 0-2 سنة، 3-6 سنوات، 7-12 سنة — بالإضافة لملابس رضّع ومدرسة/زي موحد كفئتين مستقلتين) · Browse — نساء/رجال/أطفال (بتبديل حي عبر Segmented Control) · Filters (Bottom Sheet) · Product Detail (بتقييمات ⭐ ومنتجات مقترحة) · Size Guide (Bottom Sheet) · All Reviews · Write a Review · Search · Wishlist (+ حالة فارغة) · Cart (+ شريط شحن مجاني تحفيزي + حالة فارغة) · Checkout · Coupon Code (Bottom Sheet) · Order Success
-> - **الدخول والتسجيل**: Login (بالهاتف) · OTP Verification · Sign Up
+> - **الدخول والتسجيل**: Login (إيميل+كلمة سر، Google، Apple، رقم الهاتف كبديل، والمتابعة كضيف — كلهم في شاشة واحدة) · OTP Verification (لمسار الهاتف) · Sign Up
 > - **الحساب وما بعد الشراء**: Account · Edit Profile · My Orders · Order Tracking (Timeline + طلب استرجاع/استبدال) · Return/Exchange Request · Add Address · Payment Methods · Notifications · Settings · Help & Support (FAQ + تواصل)
 >
 > **رحلة البروتوتايب الأساسية**: Onboarding → (تسجيل دخول/OTP أو تخطي) → Home → اختيار قسم نساء/رجال/أطفال → Category Hub (فئات فرعية) → Browse (فلاتر) → Product Detail (تقييمات/جدول مقاسات) → إضافة للسلة → Cart → Checkout (عنوان/دفع/كوبون كشاشات مستقلة) → تأكيد الطلب → Order Success → متابعة التسوق → Home. شريط التنقل السفلي شغّال في كل الشاشات الرئيسية وبيودّي لنفس الوجهات بشكل متسق، وكل الشاشات الفرعية (الطلبات/التتبع/العناوين/الدفع/الإشعارات/الإعدادات/المساعدة) عندها زر رجوع لمكانها الطبيعي.
