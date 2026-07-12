@@ -1,18 +1,22 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
+import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { colors, spacing } from '../../src/constants/theme';
 
 export default function MapScreen() {
   return (
     <View style={styles.screen}>
-      <AppText style={styles.icon}>🗺️</AppText>
-      <AppText weight="displayExtraBold" style={styles.title}>
-        خريطة أقرب نقاط الإنقاذ
-      </AppText>
-      <AppText color={colors.textMuted} style={styles.sub}>
-        هنعرض هنا أقرب نقاط إطفاء وإسعاف وشرطة — قريبًا في مرحلة تانية من التطبيق
-      </AppText>
+      <ScreenHeader title="الخريطة" subtitle="أقرب نقاط الإنقاذ حواليكِ" icon="🗺️" />
+      <View style={styles.placeholder}>
+        <AppText style={styles.icon}>🗺️</AppText>
+        <AppText weight="displayExtraBold" style={styles.title}>
+          خريطة أقرب نقاط الإنقاذ
+        </AppText>
+        <AppText color={colors.textMuted} style={styles.sub}>
+          هنعرض هنا أقرب نقاط إطفاء وإسعاف وشرطة — قريبًا في مرحلة تانية من التطبيق
+        </AppText>
+      </View>
     </View>
   );
 }
@@ -21,6 +25,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.bg,
+  },
+  placeholder: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.xl,

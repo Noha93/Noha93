@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
+import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { ContactRow } from '../../src/components/ContactRow';
 import { SheetButton } from '../../src/components/SheetButton';
 import { useContacts, MAX_CONTACTS } from '../../src/context/ContactsContext';
@@ -38,15 +39,9 @@ export default function SettingsScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <AppText weight="displayExtraBold" style={styles.title}>
-            الإعدادات
-          </AppText>
-          <AppText color={colors.textMuted} style={styles.subtitle}>
-            جهات اتصال الطوارئ الخاصة بك (حتى {MAX_CONTACTS})
-          </AppText>
-        </View>
+        <ScreenHeader title="الإعدادات" subtitle={`جهات اتصال الطوارئ الخاصة بك (حتى ${MAX_CONTACTS})`} icon="⚙️" />
 
+        <View style={styles.body}>
         {contacts.length === 0 ? (
           <AppText color={colors.textMuted} style={styles.empty}>
             لسه معنديش جهات اتصال محفوظة
@@ -86,6 +81,7 @@ export default function SettingsScreen() {
         <AppText color={colors.textMuted} style={styles.note}>
           جهات الاتصال دي بتظهر جاهزة كل ما تحبي تشاركي موقعك عبر رسالة SMS بعد أي بلاغ طوارئ.
         </AppText>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -99,17 +95,8 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: 60,
   },
-  header: {
-    paddingHorizontal: spacing.lg,
+  body: {
     paddingTop: spacing.lg,
-    paddingBottom: spacing.md,
-  },
-  title: {
-    fontSize: 20,
-  },
-  subtitle: {
-    fontSize: 12,
-    marginTop: 4,
   },
   empty: {
     paddingHorizontal: spacing.lg,
@@ -122,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
     padding: spacing.md,
   },
   formTitle: {

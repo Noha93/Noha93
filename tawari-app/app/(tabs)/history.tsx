@@ -1,6 +1,7 @@
 import React from 'react';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
+import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { useReports } from '../../src/context/ReportsContext';
 import { sosServices } from '../../src/constants/services';
 import { mapsLink } from '../../src/utils/share';
@@ -21,15 +22,9 @@ export default function HistoryScreen() {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <View style={styles.header}>
-        <AppText weight="displayExtraBold" style={styles.title}>
-          سجل البلاغات
-        </AppText>
-        <AppText color={colors.textMuted} style={styles.subtitle}>
-          البلاغات والمكالمات محفوظة محليًا على جهازك فقط
-        </AppText>
-      </View>
+      <ScreenHeader title="سجل البلاغات" subtitle="البلاغات والمكالمات محفوظة محليًا على جهازك فقط" icon="🕓" />
 
+      <View style={styles.body}>
       {reports.length === 0 ? (
         <AppText color={colors.textMuted} style={styles.empty}>
           سجل البلاغات فارغ حاليًا
@@ -79,6 +74,7 @@ export default function HistoryScreen() {
           );
         })
       )}
+      </View>
     </ScrollView>
   );
 }
@@ -91,17 +87,8 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: 40,
   },
-  header: {
-    paddingHorizontal: spacing.lg,
+  body: {
     paddingTop: spacing.lg,
-    paddingBottom: spacing.md,
-  },
-  title: {
-    fontSize: 20,
-  },
-  subtitle: {
-    fontSize: 12,
-    marginTop: 4,
   },
   empty: {
     paddingHorizontal: spacing.lg,
