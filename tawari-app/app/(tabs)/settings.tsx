@@ -73,7 +73,7 @@ export default function SettingsScreen() {
                 keyboardType="phone-pad"
                 textAlign="right"
               />
-              <SheetButton label="إضافة" color={colors.fire} onPress={handleAdd} />
+              <SheetButton label="إضافة" color={colors.primary} onPress={handleAdd} />
             </>
           ) : null}
         </View>
