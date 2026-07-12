@@ -21,8 +21,8 @@ export const colors = {
   voiceDark: '#6D28D9',
   // brand / chrome accent (logo, active tab, primary CTAs) — separate from the
   // per-emergency-type colors above (fire/police/amb keep their own meaning)
-  primary: '#8B5CF6',
-  primaryDark: '#6D28D9',
+  primary: '#B3202C',
+  primaryDark: '#8C1620',
 } as const;
 
 export const radius = {
