@@ -7,17 +7,15 @@ export interface ReportEntry {
   id: string;
   serviceKey: ServiceKey;
   serviceName: string;
-  kind: 'report' | 'call';
   coords: Coords | null;
   createdAt: string;
-  resolved: boolean | null;
+  resolved: boolean;
 }
 
 interface ReportsContextValue {
   reports: ReportEntry[];
   loaded: boolean;
   addReport: (entry: Omit<ReportEntry, 'id' | 'createdAt'>) => Promise<ReportEntry>;
-  setResolved: (id: string, resolved: boolean) => Promise<void>;
 }
 
 const ReportsContext = createContext<ReportsContextValue | null>(null);
@@ -48,13 +46,8 @@ export function ReportsProvider({ children }: { children: React.ReactNode }) {
     return full;
   };
 
-  const setResolved = async (id: string, resolved: boolean) => {
-    const next = reports.map((r) => (r.id === id ? { ...r, resolved } : r));
-    await persist(next);
-  };
-
   return (
-    <ReportsContext.Provider value={{ reports, loaded, addReport, setResolved }}>
+    <ReportsContext.Provider value={{ reports, loaded, addReport }}>
       {children}
     </ReportsContext.Provider>
   );

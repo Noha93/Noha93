@@ -9,7 +9,10 @@ export type OtherKey =
   | 'tourist'
   | 'child'
   | 'health'
-  | 'rail';
+  | 'rail'
+  | 'women'
+  | 'addiction'
+  | 'prosecution';
 export type ServiceKey = SosKey | OtherKey;
 
 export interface SosService {
@@ -74,6 +77,9 @@ export const otherServices: Record<OtherKey, OtherService> = {
   child: { key: 'child', name: 'خط نجدة الطفل', number: '16000', label: 'المجلس القومي للطفولة والأمومة', icon: '🧒' },
   health: { key: 'health', name: 'طوارئ وزارة الصحة', number: '137', label: 'وزارة الصحة والسكان', icon: '🏥' },
   rail: { key: 'rail', name: 'شرطة السكة الحديد', number: '145', label: 'شرطة السكة الحديد', icon: '🚆' },
+  women: { key: 'women', name: 'خط نجدة المرأة', number: '15115', label: 'المجلس القومي للمرأة', icon: '🆘' },
+  addiction: { key: 'addiction', name: 'مكافحة الإدمان', number: '08008880700', label: 'صندوق مكافحة وعلاج الإدمان', icon: '💊' },
+  prosecution: { key: 'prosecution', name: 'بلاغ للنيابة العامة', number: '15888', label: 'النيابة العامة', icon: '⚖️' },
 };
 
 export function findService(key: ServiceKey): SosService | OtherService {

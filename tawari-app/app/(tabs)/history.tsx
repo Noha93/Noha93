@@ -46,18 +46,9 @@ export default function HistoryScreen() {
                     {formatDate(r.createdAt)}
                   </AppText>
                 </View>
-                <View
-                  style={[
-                    styles.badge,
-                    r.resolved === true && { backgroundColor: '#22c55e18' },
-                    r.resolved === false && { backgroundColor: '#E6394618' },
-                  ]}
-                >
-                  <AppText
-                    style={styles.badgeText}
-                    color={r.resolved === true ? colors.success : r.resolved === false ? colors.fire : colors.textMuted}
-                  >
-                    {r.resolved === true ? 'تم الحل' : r.resolved === false ? 'محتاج متابعة' : 'بلاغ رقمي'}
+                <View style={[styles.badge, { backgroundColor: r.resolved ? '#22c55e18' : '#E6394618' }]}>
+                  <AppText style={styles.badgeText} color={r.resolved ? colors.success : colors.fire}>
+                    {r.resolved ? 'تم الحل' : 'محتاج متابعة'}
                   </AppText>
                 </View>
               </View>

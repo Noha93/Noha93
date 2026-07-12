@@ -7,8 +7,6 @@ import { SosCircle } from '../../src/components/SosCircle';
 import { VoiceReportButton } from '../../src/components/VoiceReportButton';
 import { OtherServiceButton } from '../../src/components/OtherServiceButton';
 import { ContactRow } from '../../src/components/ContactRow';
-import { ReportConfirmSheet } from '../../src/components/sheets/ReportConfirmSheet';
-import { ReportSuccessSheet } from '../../src/components/sheets/ReportSuccessSheet';
 import { CallConfirmSheet } from '../../src/components/sheets/CallConfirmSheet';
 import { PostCallSheet } from '../../src/components/sheets/PostCallSheet';
 import { ShareLocationSheet } from '../../src/components/sheets/ShareLocationSheet';
@@ -23,8 +21,6 @@ import { sosServices, otherServices, findService, type SosKey, type ServiceKey }
 import { placeCall, emergencyMessage, shareViaWhatsApp, shareViaSms, shareViaSheet, copyLocationLink } from '../../src/utils/share';
 
 type SheetView =
-  | { type: 'report'; key: SosKey; fromVoice?: boolean }
-  | { type: 'report-success'; key: SosKey; reportId: string }
   | { type: 'call-confirm'; key: ServiceKey }
   | { type: 'post-call'; key: SosKey }
   | { type: 'share-location'; key: SosKey; auto?: boolean }
@@ -79,12 +75,10 @@ export default function HomeScreen() {
     stopListening();
   };
 
-  const openReportSheet = (key: SosKey) => setSheet({ type: 'report', key });
-
   const { status: voiceStatus, transcript: voiceTranscript, startListening, stopListening } = useVoiceReport({
     onMatch: (key) => {
-      showToast(`سمعناكِ — بنفتحلك بلاغ ${sosServices[key].name}`);
-      setSheet({ type: 'report', key, fromVoice: true });
+      showToast(`سمعناكِ — بنفتحلك الاتصال بـ ${sosServices[key].name}`);
+      setSheet({ type: 'call-confirm', key });
     },
   });
 
@@ -111,19 +105,6 @@ export default function HomeScreen() {
     pendingCallRef.current = { key, auto: true };
   };
 
-  const confirmReport = async (key: SosKey) => {
-    const svc = sosServices[key];
-    const report = await addReport({
-      serviceKey: key,
-      serviceName: svc.name,
-      kind: 'report',
-      coords: coordsRef.current,
-      resolved: null,
-    });
-    setSheet({ type: 'report-success', key, reportId: report.id });
-    showToast('تم إرسال البلاغ إلى ' + svc.label);
-  };
-
   const triggerAutoShare = async (key: SosKey) => {
     if (!coordsRef.current) {
       await requestLocation();
@@ -139,14 +120,14 @@ export default function HomeScreen() {
 
   const handleResolved = async (key: SosKey) => {
     const svc = sosServices[key];
-    await addReport({ serviceKey: key, serviceName: svc.name, kind: 'call', coords: coordsRef.current, resolved: true });
+    await addReport({ serviceKey: key, serviceName: svc.name, coords: coordsRef.current, resolved: true });
     closeSheet();
     showToast('الحمد لله على السلامة 🤍');
   };
 
   const handleNotResolved = async (key: SosKey) => {
     const svc = sosServices[key];
-    await addReport({ serviceKey: key, serviceName: svc.name, kind: 'call', coords: coordsRef.current, resolved: false });
+    await addReport({ serviceKey: key, serviceName: svc.name, coords: coordsRef.current, resolved: false });
     setSheet({ type: 'share-location', key, auto: false });
   };
 
@@ -208,14 +189,14 @@ export default function HomeScreen() {
             مرحبًا 👋
           </AppText>
           <AppText color={colors.onInk} style={styles.hSub}>
-            دوسي على نوع الطارئة، أو استخدمي صوتك — أو اضغطي مطولًا 3 ثوانٍ للاتصال الفوري
+            دوسي على نوع الطارئة عشان تتصلي بيها (هنأكد معاكِ الأول)، أو استخدمي صوتك، أو اضغطي مطولًا 3 ثوانٍ للاتصال الفوري
           </AppText>
         </View>
 
         <View style={styles.sosRow}>
-          <SosCircle service={sosServices.fire} onPress={() => openReportSheet('fire')} onAutoTrigger={() => autoTriggerSos('fire')} />
-          <SosCircle service={sosServices.police} onPress={() => openReportSheet('police')} onAutoTrigger={() => autoTriggerSos('police')} />
-          <SosCircle service={sosServices.amb} onPress={() => openReportSheet('amb')} onAutoTrigger={() => autoTriggerSos('amb')} />
+          <SosCircle service={sosServices.fire} onPress={() => openCallConfirm('fire')} onAutoTrigger={() => autoTriggerSos('fire')} />
+          <SosCircle service={sosServices.police} onPress={() => openCallConfirm('police')} onAutoTrigger={() => autoTriggerSos('police')} />
+          <SosCircle service={sosServices.amb} onPress={() => openCallConfirm('amb')} onAutoTrigger={() => autoTriggerSos('amb')} />
         </View>
 
         <View style={styles.voiceWrap}>
@@ -250,27 +231,6 @@ export default function HomeScreen() {
     </ScrollView>
 
     <BottomSheet visible={!!sheet} onClose={closeSheet}>
-      {sheet?.type === 'report' ? (
-        <ReportConfirmSheet
-          service={sosServices[sheet.key]}
-          coords={coords}
-          onConfirmReport={() => confirmReport(sheet.key)}
-          onCallDirectly={() => openCallConfirm(sheet.key)}
-          onCancel={closeSheet}
-        />
-      ) : null}
-
-      {sheet?.type === 'report-success' ? (
-        <ReportSuccessSheet
-          service={sosServices[sheet.key]}
-          reportId={sheet.reportId}
-          coords={coords}
-          contactNames={contacts.map((c) => c.name)}
-          onShareWhatsApp={shareHandlers(sheet.key).onWhatsApp}
-          onDone={closeSheet}
-        />
-      ) : null}
-
       {sheet?.type === 'call-confirm' ? (
         <CallConfirmSheet
           label={findService(sheet.key).label}
