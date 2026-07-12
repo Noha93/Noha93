@@ -1,7 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { AppText } from './AppText';
-import { colors, radius, spacing } from '../constants/theme';
+import { radius, spacing } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 interface Props {
   label: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function SheetButton({ label, onPress, variant = 'solid', color, style }: Props) {
+  const { colors } = useTheme();
   const bg = variant === 'solid' ? color ?? colors.police : variant === 'secondary' ? colors.bg : 'transparent';
   const textColor = variant === 'solid' ? '#fff' : colors.text;
   const border = variant === 'outline' ? colors.border : variant === 'secondary' ? colors.border : 'transparent';

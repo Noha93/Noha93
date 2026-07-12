@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
-import { colors, spacing } from '../../src/constants/theme';
+import { spacing, type ThemeColors } from '../../src/constants/theme';
+import { useTheme } from '../../src/context/ThemeContext';
 
 export default function MapScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.screen}>
       <ScreenHeader title="الخريطة" subtitle="أقرب نقاط الإنقاذ حواليكِ" icon="🗺️" />
@@ -21,29 +24,31 @@ export default function MapScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  placeholder: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: spacing.xl,
-  },
-  icon: {
-    fontSize: 44,
-    marginBottom: spacing.md,
-  },
-  title: {
-    fontSize: 17,
-    marginBottom: 6,
-    textAlign: 'center',
-  },
-  sub: {
-    fontSize: 12.5,
-    textAlign: 'center',
-    lineHeight: 19,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    placeholder: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.xl,
+    },
+    icon: {
+      fontSize: 44,
+      marginBottom: spacing.md,
+    },
+    title: {
+      fontSize: 17,
+      marginBottom: 6,
+      textAlign: 'center',
+    },
+    sub: {
+      fontSize: 12.5,
+      textAlign: 'center',
+      lineHeight: 19,
+    },
+  });
+}

@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { ContactRow } from '../../src/components/ContactRow';
 import { SheetButton } from '../../src/components/SheetButton';
 import { useContacts, MAX_CONTACTS } from '../../src/context/ContactsContext';
 import { useToast } from '../../src/context/ToastContext';
-import { colors, radius, spacing } from '../../src/constants/theme';
+import { useTheme, type ThemeMode } from '../../src/context/ThemeContext';
+import { fonts, radius, spacing, type ThemeColors } from '../../src/constants/theme';
+
+const THEME_OPTIONS: { mode: ThemeMode; label: string; icon: string }[] = [
+  { mode: 'light', label: 'فاتح', icon: '☀️' },
+  { mode: 'dark', label: 'غامق', icon: '🌙' },
+  { mode: 'system', label: 'تلقائي', icon: '⚙️' },
+];
 
 export default function SettingsScreen() {
   const { contacts, addContact, removeContact } = useContacts();
   const { showToast } = useToast();
+  const { colors, mode, setMode } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -42,6 +51,34 @@ export default function SettingsScreen() {
         <ScreenHeader title="الإعدادات" subtitle={`جهات اتصال الطوارئ الخاصة بك (حتى ${MAX_CONTACTS})`} icon="⚙️" />
 
         <View style={styles.body}>
+        <AppText weight="bodyBold" style={styles.sectionTitle}>
+          المظهر
+        </AppText>
+        <View style={styles.themeRow}>
+          {THEME_OPTIONS.map((opt) => {
+            const active = mode === opt.mode;
+            return (
+              <Pressable
+                key={opt.mode}
+                onPress={() => setMode(opt.mode)}
+                style={[styles.themeOption, active && styles.themeOptionActive]}
+              >
+                <AppText style={styles.themeIcon}>{opt.icon}</AppText>
+                <AppText
+                  weight={active ? 'bodyBold' : 'body'}
+                  color={active ? '#fff' : colors.textMuted}
+                  style={styles.themeLabel}
+                >
+                  {opt.label}
+                </AppText>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <AppText weight="bodyBold" style={styles.sectionTitle}>
+          جهات اتصال الطوارئ
+        </AppText>
         {contacts.length === 0 ? (
           <AppText color={colors.textMuted} style={styles.empty}>
             لسه معنديش جهات اتصال محفوظة
@@ -87,50 +124,84 @@ export default function SettingsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  content: {
-    paddingBottom: 60,
-  },
-  body: {
-    paddingTop: spacing.lg,
-  },
-  empty: {
-    paddingHorizontal: spacing.lg,
-    fontSize: 12,
-    marginBottom: spacing.sm,
-  },
-  form: {
-    marginHorizontal: spacing.lg,
-    marginTop: spacing.md,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.lg,
-    padding: spacing.md,
-  },
-  formTitle: {
-    fontSize: 13,
-    marginBottom: spacing.sm,
-    textAlign: 'right',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.sm,
-    paddingHorizontal: spacing.md,
-    paddingVertical: 10,
-    marginBottom: spacing.sm,
-    fontFamily: 'Tajawal_400Regular',
-    color: colors.text,
-  },
-  note: {
-    paddingHorizontal: spacing.lg,
-    marginTop: spacing.lg,
-    fontSize: 11,
-    lineHeight: 17,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    content: {
+      paddingBottom: 60,
+    },
+    body: {
+      paddingTop: spacing.lg,
+    },
+    sectionTitle: {
+      paddingHorizontal: spacing.lg,
+      fontSize: 13,
+      color: colors.textMuted,
+      marginBottom: spacing.xs,
+    },
+    themeRow: {
+      flexDirection: 'row-reverse',
+      gap: spacing.xs,
+      paddingHorizontal: spacing.lg,
+      marginBottom: spacing.lg,
+    },
+    themeOption: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 4,
+      paddingVertical: spacing.sm,
+      borderRadius: radius.md,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    themeOptionActive: {
+      backgroundColor: colors.primary,
+      borderColor: colors.primary,
+    },
+    themeIcon: {
+      fontSize: 18,
+    },
+    themeLabel: {
+      fontSize: 11.5,
+    },
+    empty: {
+      paddingHorizontal: spacing.lg,
+      fontSize: 12,
+      marginBottom: spacing.sm,
+    },
+    form: {
+      marginHorizontal: spacing.lg,
+      marginTop: spacing.md,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.lg,
+      padding: spacing.md,
+    },
+    formTitle: {
+      fontSize: 13,
+      marginBottom: spacing.sm,
+      textAlign: 'right',
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.sm,
+      paddingHorizontal: spacing.md,
+      paddingVertical: 10,
+      marginBottom: spacing.sm,
+      fontFamily: fonts.body,
+      color: colors.text,
+    },
+    note: {
+      paddingHorizontal: spacing.lg,
+      marginTop: spacing.lg,
+      fontSize: 11,
+      lineHeight: 17,
+    },
+  });
+}

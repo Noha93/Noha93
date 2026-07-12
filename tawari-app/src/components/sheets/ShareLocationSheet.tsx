@@ -4,6 +4,7 @@ import { AppText } from '../AppText';
 import { SheetButton } from '../SheetButton';
 import { LocationBox } from '../LocationBox';
 import { colors, spacing } from '../../constants/theme';
+import { useTheme } from '../../context/ThemeContext';
 import type { Coords } from '../../utils/share';
 import type { LocationStatus } from '../../hooks/useLocation';
 
@@ -30,12 +31,13 @@ export function ShareLocationSheet({
   onCopyLink,
   onDismiss,
 }: Props) {
+  const { colors: themeColors } = useTheme();
   return (
     <>
       <AppText weight="displayExtraBold" style={styles.title}>
         شارك موقعك
       </AppText>
-      <AppText color={colors.textMuted} style={styles.sub}>
+      <AppText color={themeColors.textMuted} style={styles.sub}>
         {autoOpened
           ? 'فتحنالك واتساب تلقائيًا — اختاري جهة الاتصال اللي تحبي تبعتيلها موقعك'
           : 'اختاري الطريقة اللي تحبي تشاركي بيها موقعك الحالي'}
@@ -57,7 +59,7 @@ export function ShareLocationSheet({
           <SheetButton label="📋 نسخ رابط الموقع" variant="secondary" onPress={onCopyLink} />
         </>
       )}
-      <AppText color={colors.textMuted} style={styles.note}>
+      <AppText color={themeColors.textMuted} style={styles.note}>
         هتختاري جهة الاتصال بنفسك جوه واتساب أو الرسائل — التطبيق مش بيقدر يبعت تلقائيًا لحد من غير موافقتك.
       </AppText>
       <SheetButton label="لا شكرًا" variant="outline" onPress={onDismiss} />

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { useReports } from '../../src/context/ReportsContext';
+import { useTheme } from '../../src/context/ThemeContext';
 import { sosServices } from '../../src/constants/services';
 import { mapsLink } from '../../src/utils/share';
-import { colors, radius, spacing } from '../../src/constants/theme';
+import { radius, spacing, type ThemeColors } from '../../src/constants/theme';
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleString('ar-EG', {
@@ -19,6 +20,8 @@ function formatDate(iso: string): string {
 
 export default function HistoryScreen() {
   const { reports } = useReports();
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
@@ -70,68 +73,70 @@ export default function HistoryScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  content: {
-    paddingBottom: 40,
-  },
-  body: {
-    paddingTop: spacing.lg,
-  },
-  empty: {
-    paddingHorizontal: spacing.lg,
-    fontSize: 12,
-  },
-  card: {
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.sm,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.lg,
-    padding: spacing.md,
-  },
-  row: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    gap: 10,
-  },
-  iconBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.bg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    fontSize: 18,
-  },
-  info: {
-    flex: 1,
-  },
-  name: {
-    fontSize: 13,
-  },
-  date: {
-    fontSize: 10.5,
-    marginTop: 2,
-  },
-  badge: {
-    backgroundColor: colors.bg,
-    borderRadius: radius.pill,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  badgeText: {
-    fontSize: 10,
-  },
-  link: {
-    fontSize: 11.5,
-    marginTop: spacing.sm,
-    textAlign: 'right',
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    content: {
+      paddingBottom: 40,
+    },
+    body: {
+      paddingTop: spacing.lg,
+    },
+    empty: {
+      paddingHorizontal: spacing.lg,
+      fontSize: 12,
+    },
+    card: {
+      marginHorizontal: spacing.lg,
+      marginBottom: spacing.sm,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.lg,
+      padding: spacing.md,
+    },
+    row: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+      gap: 10,
+    },
+    iconBadge: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: colors.bg,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    icon: {
+      fontSize: 18,
+    },
+    info: {
+      flex: 1,
+    },
+    name: {
+      fontSize: 13,
+    },
+    date: {
+      fontSize: 10.5,
+      marginTop: 2,
+    },
+    badge: {
+      backgroundColor: colors.bg,
+      borderRadius: radius.pill,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+    },
+    badgeText: {
+      fontSize: 10,
+    },
+    link: {
+      fontSize: 11.5,
+      marginTop: spacing.sm,
+      textAlign: 'right',
+    },
+  });
+}

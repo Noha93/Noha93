@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
-import { colors, radius, spacing } from '../constants/theme';
+import { radius, spacing, type ThemeColors } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 interface Props {
   title: string;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export function ScreenHeader({ title, subtitle, icon }: Props) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.band}>
       <View style={styles.titleRow}>
@@ -27,28 +30,30 @@ export function ScreenHeader({ title, subtitle, icon }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  band: {
-    backgroundColor: colors.ink,
-    borderBottomLeftRadius: radius.xl,
-    borderBottomRightRadius: radius.xl,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.lg,
-    paddingHorizontal: spacing.lg,
-  },
-  titleRow: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    gap: 8,
-  },
-  icon: {
-    fontSize: 20,
-  },
-  title: {
-    fontSize: 20,
-  },
-  subtitle: {
-    fontSize: 12,
-    marginTop: 4,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    band: {
+      backgroundColor: colors.ink,
+      borderBottomLeftRadius: radius.xl,
+      borderBottomRightRadius: radius.xl,
+      paddingTop: spacing.xl,
+      paddingBottom: spacing.lg,
+      paddingHorizontal: spacing.lg,
+    },
+    titleRow: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+      gap: 8,
+    },
+    icon: {
+      fontSize: 20,
+    },
+    title: {
+      fontSize: 20,
+    },
+    subtitle: {
+      fontSize: 12,
+      marginTop: 4,
+    },
+  });
+}

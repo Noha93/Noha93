@@ -38,14 +38,22 @@ app/                      # شاشات Expo Router (file-based routing)
   (tabs)/map.tsx            # placeholder لمرحلة تانية (خريطة أقرب نقاط الإنقاذ)
 
 src/
-  constants/                # الألوان والخطوط والمسافات + بيانات أرقام الطوارئ المصرية
-  context/                  # ContactsContext / ReportsContext / ToastContext (AsyncStorage)
+  constants/theme.ts         # design system: ألوان (فاتح/غامق)، خطوط، مسافات 8pt، typography scale
+  context/                  # ThemeContext (فاتح/غامق/تلقائي) / ContactsContext / ReportsContext / ToastContext
   hooks/useLocation.ts       # GPS عبر expo-location
   hooks/useVoiceReport.ts    # البلاغ الصوتي عبر expo-speech-recognition
   utils/share.ts             # بناء رسالة الطوارئ + واتساب/SMS/Share Sheet/نسخ رابط
   utils/voiceIntent.ts       # مطابقة كلمات عربية (حريق/سرقة/إسعاف...) لنوع البلاغ
   components/                # SosCircle, VoiceReportButton, BottomSheet, الشيتات المختلفة...
 ```
+
+## Design System
+
+- **الألوان:** كل شاشة بتاخد ألوانها من `useTheme()` (`src/context/ThemeContext.tsx`) بدل import ثابت — فيه لوحة كاملة فاتحة وغامقة (`lightColors` / `darkColors` في `theme.ts`) بنفس الأسماء بالظبط، فأي كومبوننت جديد بيتكتب مرة واحدة ويشتغل صح في الوضعين. الألوان الدلالية (أحمر الحريق، أزرق الشرطة، تركواز الإسعاف، الأحمر الغامق للبراند، البنفسجي لزر الصوت) ثابتة في الوضعين عن قصد — علشان التلوين الدلالي (إيه بيمثل إيه) ميتغيّرش مع تغيير المظهر.
+- **الوضع الغامق:** فيه Toggle في الإعدادات (فاتح / غامق / تلقائي — بيتبع نظام الجهاز)، والاختيار بيتخزن محليًا. لتضيفي ألوان جديدة: زوّدي المفتاح في اللوحتين الاتنين بنفس الاسم.
+- **الخطوط:** IBM Plex Sans Arabic (كل النصوص العربية، وزن واحد شامل بدل عنوان/نص منفصلين) + Inter (محمّل وجاهز لأي نص إنجليزي مستقبلي، مش مستخدم دلوقتي لأن الواجهة عربية بالكامل).
+- **مقاس المسافات:** 8pt grid حقيقي (`spacing.xxs..xxl` = 4/8/12/16/24/32/40)، وحدة زوايا (`radius.sm..xl`) متسقة.
+- **Typography scale + Elevation tokens:** جاهزين في `theme.ts` (`typography`, `elevation`) لأي كومبوننت جديد.
 
 ## الـ Flow الأساسي
 
@@ -71,7 +79,6 @@ src/
 - **مفيش تكامل حقيقي مع أنظمة الشرطة/الإسعاف المصرية الرسمية.** "البلاغ الرقمي" جوه التطبيق محاكاة للعرض بس. الاتصال الحقيقي الوحيد هو `tel:` بالأرقام الرسمية.
 - **مفيش إرسال SMS/واتساب تلقائي صامت لحد.** ده قيد فعلي في iOS وAndroid — التطبيق بيجهّز الرسالة والمستلمين المقترحين لكن المستخدم لازم يضغط "إرسال" بنفسه.
 - **RTL:** التطبيق مصمم يدويًا كـ RTL (زي الـ HTML prototype بـ `dir="rtl"`) من غير الاعتماد على `I18nManager.forceRTL` (اللي بيحتاج إعادة تشغيل التطبيق ليشتغل صح) — عشان كده كل الـ layouts متبنية يدويًا بـ `flexDirection: row-reverse` + `textAlign: right`.
-- **الخطوط:** Cairo (العناوين) + Tajawal (النص الأساسي) عبر `@expo-google-fonts`.
 - **التصميم العصري (v2):** استلهمنا من عدة case studies لتطبيقات طوارئ/استجابة أولى — استبدلنا الأزرار المستطيلة بأزرار SOS دائرية نابضة (pulse rings) بألوان مميزة، وheader غامق (near-black) يبرز الأزرار الملوّنة فوقه، وكروت شبكية بأيقونات دائرية للخدمات التانية.
 - **البلاغ الصوتي محلي بالكامل** — التعرف على الصوت وتحديد النوع بيحصلوا على الجهاز (on-device)، من غير ما نبعت تسجيل صوتي لأي سيرفر خارجي.
 

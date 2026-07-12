@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TextProps, StyleSheet } from 'react-native';
-import { colors, fonts } from '../constants/theme';
+import { fonts } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 type Weight = 'body' | 'bodyMedium' | 'bodyBold' | 'display' | 'displayExtraBold';
 
@@ -10,6 +11,7 @@ interface Props extends TextProps {
 }
 
 export function AppText({ style, weight = 'body', color, ...props }: Props) {
+  const { colors } = useTheme();
   return (
     <Text
       {...props}

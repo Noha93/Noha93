@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { AppText } from '../AppText';
 import { SheetButton } from '../SheetButton';
 import { spacing } from '../../constants/theme';
+import { useTheme } from '../../context/ThemeContext';
 
 interface Props {
   label: string;
@@ -13,12 +14,13 @@ interface Props {
 }
 
 export function CallConfirmSheet({ label, number, color, onConfirm, onCancel }: Props) {
+  const { colors } = useTheme();
   return (
     <>
       <AppText weight="displayExtraBold" color={color} style={styles.title}>
         تأكيد الاتصال
       </AppText>
-      <AppText color="#6B7280" style={styles.sub}>
+      <AppText color={colors.textMuted} style={styles.sub}>
         هل أنت متأكد أنك تريد الاتصال بـ{'\n'}
         <AppText weight="bodyBold" color={color}>
           {label}

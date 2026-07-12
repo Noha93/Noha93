@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { AppText } from '../AppText';
 import { SheetButton } from '../SheetButton';
 import { colors, spacing } from '../../constants/theme';
+import { useTheme } from '../../context/ThemeContext';
 
 interface Props {
   serviceLabel: string;
@@ -11,12 +12,13 @@ interface Props {
 }
 
 export function PostCallSheet({ serviceLabel, onResolved, onNotResolved }: Props) {
+  const { colors: themeColors } = useTheme();
   return (
     <>
       <AppText weight="displayExtraBold" style={styles.title}>
         انتهيت من المكالمة؟
       </AppText>
-      <AppText color={colors.textMuted} style={styles.sub}>
+      <AppText color={themeColors.textMuted} style={styles.sub}>
         هل تم حل المشكلة بعد اتصالك بـ {serviceLabel}؟
       </AppText>
       <SheetButton label="🔘 نعم، تم الحل" color={colors.success} onPress={onResolved} />

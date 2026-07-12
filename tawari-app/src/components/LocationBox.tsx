@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
-import { colors, radius, spacing } from '../constants/theme';
+import { radius, spacing, type ThemeColors } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import type { Coords } from '../utils/share';
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export function LocationBox({ coords }: Props) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.box}>
       <AppText weight="bodyBold" style={styles.status}>
@@ -23,20 +26,22 @@ export function LocationBox({ coords }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  box: {
-    backgroundColor: colors.bg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.sm,
-    padding: spacing.md,
-    marginBottom: spacing.lg,
-  },
-  status: {
-    fontSize: 12,
-    marginBottom: 2,
-  },
-  line: {
-    fontSize: 12,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    box: {
+      backgroundColor: colors.bg,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.sm,
+      padding: spacing.md,
+      marginBottom: spacing.lg,
+    },
+    status: {
+      fontSize: 12,
+      marginBottom: 2,
+    },
+    line: {
+      fontSize: 12,
+    },
+  });
+}

@@ -1,7 +1,8 @@
-import React, { createContext, useCallback, useContext, useRef, useState } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import { AppText } from '../components/AppText';
-import { colors, radius, spacing } from '../constants/theme';
+import { radius, spacing, type ThemeColors } from '../constants/theme';
+import { useTheme } from './ThemeContext';
 
 interface ToastContextValue {
   showToast: (message: string) => void;
@@ -10,6 +11,8 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [message, setMessage] = useState<string | null>(null);
   const opacity = useRef(new Animated.Value(0)).current;
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -48,20 +51,24 @@ export function useToast() {
   return ctx;
 }
 
-const styles = StyleSheet.create({
-  toast: {
-    position: 'absolute',
-    top: 56,
-    alignSelf: 'center',
-    backgroundColor: colors.text,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.md,
-    zIndex: 200,
-    maxWidth: '86%',
-  },
-  text: {
-    fontSize: 12.5,
-    textAlign: 'center',
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    toast: {
+      position: 'absolute',
+      top: 56,
+      alignSelf: 'center',
+      // always a dark bubble (ink is dark in both light & dark schemes) so the
+      // white toast text stays legible regardless of theme
+      backgroundColor: colors.ink,
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.lg,
+      borderRadius: radius.md,
+      zIndex: 200,
+      maxWidth: '86%',
+    },
+    text: {
+      fontSize: 12.5,
+      textAlign: 'center',
+    },
+  });
+}

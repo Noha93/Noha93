@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
-import { colors, radius, spacing } from '../constants/theme';
+import { radius, spacing, type ThemeColors } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import type { EmergencyContact } from '../context/ContactsContext';
 
 interface Props {
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export function ContactRow({ contact, onRemove }: Props) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const initials = contact.name.trim().slice(0, 2);
   return (
     <View style={styles.card}>
@@ -41,47 +44,49 @@ export function ContactRow({ contact, onRemove }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.sm,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.md,
-    padding: spacing.md,
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.sm,
-  },
-  row: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    gap: 10,
-  },
-  avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: {
-    fontSize: 12,
-  },
-  name: {
-    fontSize: 12.5,
-  },
-  phone: {
-    fontSize: 10.5,
-    marginTop: 2,
-  },
-  check: {
-    fontSize: 16,
-  },
-  remove: {
-    fontSize: 12,
-  },
-});
+function createStyles(colors: ThemeColors) {
+  return StyleSheet.create({
+    card: {
+      marginHorizontal: spacing.lg,
+      marginBottom: spacing.sm,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.md,
+      padding: spacing.md,
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: spacing.sm,
+    },
+    row: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+      gap: 10,
+    },
+    avatar: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: colors.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    avatarText: {
+      fontSize: 12,
+    },
+    name: {
+      fontSize: 12.5,
+    },
+    phone: {
+      fontSize: 10.5,
+      marginTop: 2,
+    },
+    check: {
+      fontSize: 16,
+    },
+    remove: {
+      fontSize: 12,
+    },
+  });
+}
