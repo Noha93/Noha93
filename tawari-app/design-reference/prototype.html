@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>طوارئ — بلّغ الآن</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fire:#E63946; --fire-d:#c22733;
+  --police:#2A6FDB; --police-d:#1e56b3;
+  --amb:#2A9D8F; --amb-d:#208074;
+  --bg:#F7F8FA; --surface:#FFFFFF; --text:#1A1A2E; --text-muted:#6B7280;
+  --border:#E5E7EB; --radius:18px; --success:#22C55E; --warn:#F59E0B;
+  --font-display:'Cairo',sans-serif; --font-body:'Tajawal',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:78px;}
+
+/* top bar */
+.topbar{padding:18px 20px 10px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:var(--font-display);font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px;}
+.brand span{color:var(--fire);}
+.loc-pill{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:11px;color:var(--text-muted);}
+.loc-dot{width:8px;height:8px;border-radius:50%;background:#ccc;}
+.loc-dot.on{background:var(--success);box-shadow:0 0 0 3px #22c55e33;}
+.loc-dot.off{background:var(--fire);}
+
+.greeting{padding:0 20px 14px;}
+.greeting h1{font-family:var(--font-display);font-size:19px;font-weight:800;}
+.greeting p{font-size:12px;color:var(--text-muted);margin-top:2px;}
+
+/* main SOS buttons */
+.sos-wrap{padding:6px 20px;display:flex;flex-direction:column;gap:14px;}
+.sos-btn{border:none;border-radius:var(--radius);padding:22px 20px;display:flex;align-items:center;gap:16px;color:#fff;cursor:pointer;text-align:right;width:100%;box-shadow:0 10px 24px rgba(0,0,0,.12);transition:transform .15s ease;}
+.sos-btn:active{transform:scale(.97);}
+.sos-btn .ic{font-size:30px;width:52px;height:52px;background:rgba(255,255,255,.22);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sos-btn .tx b{display:block;font-family:var(--font-display);font-size:17px;font-weight:800;}
+.sos-btn .tx small{display:block;font-size:11.5px;opacity:.9;margin-top:2px;font-weight:400;}
+.sos-fire{background:linear-gradient(135deg,var(--fire),#ff6b7a);}
+.sos-police{background:linear-gradient(135deg,var(--police),#6fa0f0);}
+.sos-amb{background:linear-gradient(135deg,var(--amb),#5fc2b5);}
+
+/* other services */
+.section-h{padding:26px 20px 10px;font-family:var(--font-display);font-weight:800;font-size:14px;color:var(--text-muted);display:flex;align-items:center;gap:8px;}
+.other-grid{padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.other-btn{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center;cursor:pointer;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;gap:6px;}
+.other-btn .ic{font-size:22px;}
+.other-btn b{font-size:12.5px;font-weight:700;}
+.other-btn small{font-size:10.5px;color:var(--text-muted);}
+
+/* contacts */
+.contact-card{margin:0 20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.contact-row{display:flex;align-items:center;gap:10px;}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--fire);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.contact-name{font-size:12.5px;font-weight:700;}
+.contact-num{font-size:10.5px;color:var(--text-muted);}
+.add-contact{margin:10px 20px 0;border:2px dashed var(--border);border-radius:14px;padding:12px;text-align:center;font-size:12px;color:var(--text-muted);background:transparent;cursor:pointer;width:calc(100% - 40px);}
+
+/* bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--surface);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:10px 0 14px;font-size:10.5px;color:var(--text-muted);}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.nav-item.active{color:var(--fire);font-weight:700;}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(10,10,15,.55);display:none;align-items:flex-end;justify-content:center;z-index:100;}
+.overlay.show{display:flex;}
+.sheet{background:var(--surface);width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:22px 20px 28px;animation:up .25s ease;}
+@keyframes up{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.sheet-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+.sheet h2{font-family:var(--font-display);font-size:17px;font-weight:800;text-align:center;margin-bottom:4px;}
+.sheet p.sub{text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:16px;}
+.loc-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:12px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start;}
+.loc-box .status{font-weight:700;margin-bottom:2px;}
+.sheet-btn{width:100%;border:none;border-radius:14px;padding:15px;font-family:var(--font-body);font-weight:700;font-size:14.5px;color:#fff;cursor:pointer;margin-bottom:10px;}
+.sheet-btn.outline{background:transparent;border:1.5px solid var(--border);color:var(--text);}
+.sheet-btn.secondary{background:var(--bg);color:var(--text);border:1px solid var(--border);}
+
+/* confirmation state */
+.confirm-state{text-align:center;padding:10px 0;}
+.confirm-icon{width:70px;height:70px;border-radius:50%;background:#22c55e18;color:var(--success);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px;}
+.confirm-state h3{font-family:var(--font-display);font-size:16px;margin-bottom:4px;}
+.confirm-state p{font-size:12px;color:var(--text-muted);margin-bottom:16px;}
+.progress-track{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:right;font-size:12.5px;margin-bottom:16px;}
+.progress-track .step{color:var(--success);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;justify-content:flex-end;}
+.progress-track .step.pending{color:var(--text-muted);}
+
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#1A1A2E;color:#fff;padding:12px 20px;border-radius:12px;font-size:12.5px;z-index:200;display:none;box-shadow:0 10px 30px rgba(0,0,0,.3);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">🚨 <span>طوارئ</span></div>
+    <div class="loc-pill" id="locPill"><span class="loc-dot off" id="locDot"></span><span id="locText">تفعيل الموقع</span></div>
+  </div>
+
+  <div class="greeting">
+    <h1>مرحبًا 👋</h1>
+    <p>اضغط على نوع الطارئة لإرسال بلاغ فوري</p>
+  </div>
+
+  <div class="sos-wrap">
+    <button class="sos-btn sos-fire" onclick="openReport('fire')">
+      <div class="ic">🔥</div>
+      <div class="tx"><b>حريق</b><small>إبلاغ الحماية المدنية والمطافي فورًا</small></div>
+    </button>
+    <button class="sos-btn sos-police" onclick="openReport('police')">
+      <div class="ic">👮</div>
+      <div class="tx"><b>شرطة</b><small>الإبلاغ عن سرقة أو اعتداء أو خطر</small></div>
+    </button>
+    <button class="sos-btn sos-amb" onclick="openReport('amb')">
+      <div class="ic">🚑</div>
+      <div class="tx"><b>إسعاف</b><small>طلب مساعدة طبية عاجلة</small></div>
+    </button>
+  </div>
+
+  <div class="section-h">🛟 خدمات طوارئ أخرى قد تفيدك</div>
+  <div class="other-grid">
+    <button class="other-btn" onclick="confirmCall('gas')"><div class="ic">🧯</div><b>تسرب غاز</b><small>129</small></button>
+    <button class="other-btn" onclick="confirmCall('elec')"><div class="ic">⚡</div><b>أعطال كهرباء</b><small>121</small></button>
+    <button class="other-btn" onclick="confirmCall('water')"><div class="ic">🚰</div><b>أعطال مياه</b><small>125</small></button>
+    <button class="other-btn" onclick="confirmCall('traffic')"><div class="ic">🚗</div><b>حوادث طرق / مرور</b><small>128</small></button>
+    <button class="other-btn" onclick="confirmCall('tourist')"><div class="ic">🕌</div><b>الشرطة السياحية</b><small>126</small></button>
+    <button class="other-btn" onclick="confirmCall('child')"><div class="ic">🧒</div><b>خط نجدة الطفل</b><small>16000</small></button>
+    <button class="other-btn" onclick="confirmCall('health')"><div class="ic">🏥</div><b>طوارئ وزارة الصحة</b><small>137</small></button>
+    <button class="other-btn" onclick="confirmCall('rail')"><div class="ic">🚆</div><b>شرطة السكة الحديد</b><small>145</small></button>
+  </div>
+
+  <div class="section-h">👨‍👩‍👧 جهات اتصال الطوارئ الخاصة بك</div>
+  <div class="contact-card">
+    <div class="contact-row"><div class="avatar">من</div><div><div class="contact-name">منى (الزوجة)</div><div class="contact-num">تُبلَّغ تلقائيًا عند أي بلاغ</div></div></div>
+    <span style="font-size:16px;">✓</span>
+  </div>
+  <button class="add-contact" onclick="showToast('لإضافة جهة اتصال جديدة، افتح الإعدادات')">+ إضافة فرد من العائلة</button>
+
+  <div class="bottom-nav">
+    <div class="nav-item active"><span>🏠</span>الرئيسية</div>
+    <div class="nav-item" onclick="showToast('خريطة أقرب نقاط الإنقاذ — قريبًا')"><span>🗺️</span>الخريطة</div>
+    <div class="nav-item" onclick="showToast('سجل البلاغات فارغ حاليًا')"><span>🕓</span>السجل</div>
+    <div class="nav-item" onclick="showToast('الإعدادات — قريبًا')"><span>⚙️</span>الإعدادات</div>
+  </div>
+</div>
+
+<!-- Report Sheet -->
+<div class="overlay" id="overlay">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const services = {
+  fire:   { name:'حريق',  color:'var(--fire)',   grad:'linear-gradient(135deg,#E63946,#ff6b7a)', number:'180', label:'الحماية المدنية / المطافي', eta:'6' },
+  police: { name:'شرطة',  color:'var(--police)', grad:'linear-gradient(135deg,#2A6FDB,#6fa0f0)',   number:'122', label:'شرطة النجدة', eta:'8' },
+  amb:    { name:'إسعاف', color:'var(--amb)',    grad:'linear-gradient(135deg,#2A9D8F,#5fc2b5)',   number:'123', label:'الإسعاف المصري', eta:'9' }
+};
+
+const otherServices = {
+  gas:     { name:'تسرب غاز',        number:'129',   label:'شركة الغاز الطبيعي' },
+  elec:    { name:'أعطال كهرباء',     number:'121',   label:'شركة الكهرباء' },
+  water:   { name:'أعطال مياه',       number:'125',   label:'شركة المياه' },
+  traffic: { name:'حوادث طرق / مرور', number:'128',   label:'شرطة المرور' },
+  tourist: { name:'الشرطة السياحية',  number:'126',   label:'الشرطة السياحية والآثار' },
+  child:   { name:'خط نجدة الطفل',    number:'16000', label:'المجلس القومي للطفولة والأمومة' },
+  health:  { name:'طوارئ وزارة الصحة',number:'137',   label:'وزارة الصحة والسكان' },
+  rail:    { name:'شرطة السكة الحديد',number:'145',   label:'شرطة السكة الحديد' }
+};
+
+let currentLocation = null;
+let pendingShare = null; // { name, number, label } — set right before dialing, used to prompt location sharing after the call
+
+function requestLocation(){
+  if(!navigator.geolocation){
+    document.getElementById('locText').textContent = 'الموقع غير مدعوم';
+    return;
+  }
+  document.getElementById('locText').textContent = 'جارِ التحديد...';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    currentLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    document.getElementById('locDot').className = 'loc-dot on';
+    document.getElementById('locText').textContent = 'الموقع مفعّل';
+  }, err=>{
+    document.getElementById('locDot').className = 'loc-dot off';
+    document.getElementById('locText').textContent = 'فعّل إذن الموقع';
+  }, { enableHighAccuracy:true, timeout:8000 });
+}
+document.getElementById('locPill').addEventListener('click', requestLocation);
+requestLocation();
+
+function locationLine(){
+  if(currentLocation){
+    return `📍 تم تحديد موقعك بدقة (${currentLocation.lat.toFixed(4)}, ${currentLocation.lng.toFixed(4)})`;
+  }
+  return '📍 لم يتم تحديد الموقع بعد — اضغط لتفعيله لإرسال بلاغ أدق';
+}
+
+function mapsLink(){
+  if(!currentLocation) return '#';
+  return `https://www.google.com/maps?q=${currentLocation.lat},${currentLocation.lng}`;
+}
+
+function openReport(type){
+  const s = services[type];
+  const sheet = document.getElementById('sheet');
+  sheet.innerHTML = `
+    <div class="sheet-handle"></div>
+    <h2 style="color:${s.color}">تأكيد بلاغ ${s.name}</h2>
+    <p class="sub">سيتم إرسال نوع الطارئة وموقعك إلى ${s.label}</p>
+    <div class="loc-box">
+      <div>
+        <div class="status">${currentLocation ? '✅ الموقع جاهز للإرسال' : '⚠️ الموقع غير مفعّل'}</div>
+        <div>${locationLine()}</div>
+      </div>
+    </div>
+    <button class="sheet-btn" style="background:${s.color}" onclick="confirmReport('${type}')">تأكيد وإرسال البلاغ</button>
+    <button class="sheet-btn secondary" onclick="confirmCall('${type}')">📞 أو اتصل مباشرة بـ ${s.number}</button>
+    <button class="sheet-btn outline" onclick="closeSheet()">إلغاء</button>
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function confirmReport(type){
+  const s = services[type];
+  const reportId = 'EG-' + Math.floor(10000 + Math.random()*89999);
+  const sheet = document.getElementById('sheet');
+  sheet.innerHTML = `
+    <div class="sheet-handle"></div>
+    <div class="confirm-state">
+      <div class="confirm-icon">✓</div>
+      <h3>تم إرسال بلاغك</h3>
+      <p>رقم البلاغ #${reportId} — الوصول المتوقع خلال ${s.eta} دقائق</p>
+      <div class="progress-track">
+        <div class="step">✓ تم استلام البلاغ</div>
+        <div class="step">✓ تم تنبيه جهة الاتصال (منى)</div>
+        <div class="step pending">○ الفريق في الطريق إليك</div>
+      </div>
+      ${currentLocation ? `<a class="sheet-btn secondary" style="display:block;text-align:center;text-decoration:none;" href="${mapsLink()}" target="_blank">🗺️ عرض موقعي على الخريطة</a>` : ''}
+      <a class="sheet-btn secondary" style="display:block;text-align:center;text-decoration:none;margin-top:0;" target="_blank" href="https://wa.me/?text=${encodeURIComponent('🚨 بلاغ '+s.name+' — رقم البلاغ #'+reportId+(currentLocation? ' — موقعي: '+mapsLink() : ''))}">📤 مشاركة الموقع عبر واتساب</a>
+      <button class="sheet-btn" style="background:${s.color}" onclick="closeSheet()">تم</button>
+    </div>
+  `;
+  showToast('تم إرسال البلاغ إلى ' + s.label);
+}
+
+// STEP 1 — show a confirmation sheet BEFORE dialing any emergency number
+function confirmCall(key){
+  const s = services[key] || otherServices[key];
+  const color = s.color || 'var(--police)';
+  const sheet = document.getElementById('sheet');
+  sheet.innerHTML = `
+    <div class="sheet-handle"></div>
+    <h2 style="color:${color}">تأكيد الاتصال</h2>
+    <p class="sub">هل أنت متأكد أنك تريد الاتصال بـ<br><b style="color:${color}">${s.label}</b> على الرقم <b>${s.number}</b>؟</p>
+    <button class="sheet-btn" style="background:${color}" onclick="performCall('${key}')">✅ نعم، اتصل الآن</button>
+    <button class="sheet-btn outline" onclick="closeSheet()">إلغاء</button>
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+
+// STEP 2 — user confirmed: place the call, and remember to offer location sharing once they come back
+function performCall(key){
+  const s = services[key] || otherServices[key];
+  pendingShare = { name: s.name, number: s.number, label: s.label };
+  closeSheet();
+  window.location.href = 'tel:' + s.number;
+}
+
+// STEP 3 — when the user returns to the app after the call, offer to share their location with that service
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'visible' && pendingShare){
+    const svc = pendingShare;
+    pendingShare = null;
+    setTimeout(() => shareLocationPrompt(svc), 500);
+  }
+});
+
+function shareLocationPrompt(svc){
+  const sheet = document.getElementById('sheet');
+  sheet.innerHTML = `
+    <div class="sheet-handle"></div>
+    <h2>انتهيت من المكالمة؟</h2>
+    <p class="sub">تقدر تشارك موقعك الآن مع <b>${svc.label}</b> عشان يوصلوا لك بسرعة</p>
+    <div class="loc-box">
+      <div>
+        <div class="status">${currentLocation ? '✅ الموقع جاهز للمشاركة' : '⚠️ الموقع غير مفعّل'}</div>
+        <div>${locationLine()}</div>
+      </div>
+    </div>
+    ${currentLocation ? `
+    <a class="sheet-btn" style="display:block;text-align:center;text-decoration:none;background:var(--amb);" target="_blank" href="https://wa.me/?text=${encodeURIComponent('📍 موقعي الحالي بعد الاتصال بـ '+svc.label+' ('+svc.number+'): '+mapsLink())}">📤 مشاركة الموقع عبر واتساب</a>
+    <a class="sheet-btn secondary" style="display:block;text-align:center;text-decoration:none;" href="sms:?body=${encodeURIComponent('موقعي الحالي: '+mapsLink())}">💬 مشاركة عبر رسالة نصية</a>
+    ` : `<button class="sheet-btn secondary" onclick="requestLocation(); closeSheet();">تفعيل الموقع أولًا</button>`}
+    <button class="sheet-btn outline" onclick="closeSheet()">لا شكرًا</button>
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closeSheet(){
+  document.getElementById('overlay').classList.remove('show');
+}
+document.getElementById('overlay').addEventListener('click', e=>{
+  if(e.target.id === 'overlay') closeSheet();
+});
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2600);
+}
+</script>
+</body>
+</html>

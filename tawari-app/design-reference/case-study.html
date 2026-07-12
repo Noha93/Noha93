@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>طوارئ — دراسة حالة UX/UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cs-bg:#0b0e14; --cs-surface:#12161f; --cs-surface-alt:#181d29;
+  --cs-text:#eef0f5; --cs-text-muted:#8b93a7; --cs-accent:#ff4757;
+  --cs-accent-light:#ff6b7a; --cs-border:#232937; --cs-card:#141926;
+
+  --app-fire:#E63946; --app-police:#2A6FDB; --app-amb:#2A9D8F;
+  --app-bg:#F7F8FA; --app-surface:#FFFFFF; --app-text:#1A1A2E;
+  --app-text-muted:#6B7280; --app-border:#E5E7EB; --app-radius:16px;
+
+  --font-display:'Cairo',sans-serif; --font-body:'Tajawal',sans-serif;
+  --space-xs:4px;--space-sm:8px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--cs-bg);color:var(--cs-text);line-height:1.7;}
+img{max-width:100%;display:block;}
+.section{max-width:1200px;margin:0 auto;padding:var(--space-3xl) var(--space-lg);}
+.section-label{font-size:12px;text-transform:uppercase;letter-spacing:3px;color:var(--cs-accent);margin-bottom:var(--space-sm);font-weight:700;}
+.section-title{font-family:var(--font-display);font-size:34px;font-weight:800;line-height:1.3;margin-bottom:var(--space-md);}
+.section-sub{color:var(--cs-text-muted);font-size:16px;max-width:760px;margin-bottom:var(--space-xl);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.grid{display:grid;gap:20px;}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.card{background:var(--cs-card);border:1px solid var(--cs-border);border-radius:14px;padding:22px;}
+.badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.5px;}
+
+/* NAV */
+.navbar{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--cs-border);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.nav-brand{font-family:var(--font-display);font-weight:800;font-size:18px;display:flex;align-items:center;gap:8px;}
+.nav-brand span{color:var(--cs-accent);}
+.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;}
+.nav-links::-webkit-scrollbar{display:none;}
+.nav-links a{white-space:nowrap;color:var(--cs-text-muted);text-decoration:none;font-size:13px;padding:8px 12px;border-radius:8px;transition:.2s;}
+.nav-links a:hover{color:var(--cs-text);background:var(--cs-surface-alt);}
+
+/* HERO */
+.hero{padding:100px 20px 70px;text-align:center;background:radial-gradient(ellipse at top,rgba(255,71,87,.15),transparent 60%);}
+.hero-icon{width:88px;height:88px;border-radius:24px;background:linear-gradient(135deg,var(--app-fire),var(--cs-accent-light));display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 24px;box-shadow:0 20px 50px rgba(255,71,87,.35);}
+.hero h1{font-family:var(--font-display);font-size:52px;font-weight:800;margin-bottom:16px;}
+.hero p.tagline{font-size:19px;color:var(--cs-text-muted);max-width:640px;margin:0 auto 32px;}
+.hero-meta{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:40px;}
+.hero-meta div{text-align:center;}
+.hero-meta .num{font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--cs-accent);}
+.hero-meta .lbl{font-size:12px;color:var(--cs-text-muted);}
+
+/* overview */
+.overview-list{list-style:none;display:flex;flex-direction:column;gap:14px;}
+.overview-list li{display:flex;gap:12px;}
+.overview-list b{min-width:120px;color:var(--cs-accent);font-weight:700;}
+
+/* 5W */
+.w-card{padding:26px;border-radius:16px;position:relative;overflow:hidden;}
+.w-card h3{font-family:var(--font-display);font-size:20px;margin-bottom:10px;}
+.w-icon{font-size:26px;margin-bottom:12px;}
+.w1{background:linear-gradient(135deg,#2a1420,#1a1020);border:1px solid #4a2030;}
+.w2{background:linear-gradient(135deg,#141f2a,#101a24);border:1px solid #203a4a;}
+.w3{background:linear-gradient(135deg,#1a2416,#101c10);border:1px solid #2f4a20;}
+.w4{background:linear-gradient(135deg,#241a10,#1c140a);border:1px solid #4a3418;}
+.w5{background:linear-gradient(135deg,#221430,#160e20);border:1px solid #402060;}
+
+/* competitor */
+.competitor-card{background:var(--cs-card);border:1px solid var(--cs-border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;}
+.competitor-header{display:flex;align-items:center;gap:12px;}
+.competitor-logo{width:46px;height:46px;border-radius:12px;background:var(--cs-surface-alt);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.competitor-name{font-weight:700;font-size:15px;}
+.competitor-sub{font-size:12px;color:var(--cs-text-muted);}
+.competitor-tag{font-size:10px;background:var(--cs-surface-alt);color:var(--cs-text-muted);padding:2px 8px;border-radius:6px;display:inline-block;margin-top:4px;}
+.pill-list{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:13px;}
+.pill-list li{padding-right:14px;position:relative;color:var(--cs-text-muted);}
+.pill-list.good li::before{content:'✓';position:absolute;right:0;color:#22c55e;}
+.pill-list.bad li::before{content:'✕';position:absolute;right:0;color:#ef4444;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:10px 12px;text-align:center;border-bottom:1px solid var(--cs-border);}
+th{color:var(--cs-text-muted);font-weight:600;text-align:right;font-size:12px;}
+td:first-child,th:first-child{text-align:right;}
+tr:hover td{background:var(--cs-surface-alt);}
+.our-col{background:rgba(255,71,87,.08);}
+
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--cs-border);border-radius:14px;overflow:hidden;}
+.swot-cell{padding:22px;}
+.swot-cell h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.swot-s{background:#0f1f16;} .swot-s h4{color:#22c55e;}
+.swot-w{background:#241417;} .swot-w h4{color:#ef4444;}
+.swot-o{background:#101c26;} .swot-o h4{color:#3b9eff;}
+.swot-t{background:#241a0e;} .swot-t h4{color:#f59e0b;}
+.swot-cell ul{list-style:none;font-size:13px;color:var(--cs-text-muted);display:flex;flex-direction:column;gap:6px;}
+.swot-cell li{position:relative;padding-right:14px;}
+.swot-cell li::before{content:'–';position:absolute;right:0;}
+
+/* survey */
+.survey-q{border-bottom:1px solid var(--cs-border);padding:14px 0;}
+.survey-q .qn{font-size:12px;color:var(--cs-accent);font-weight:700;}
+.donut{width:170px;height:170px;border-radius:50%;position:relative;margin:0 auto;}
+.donut::after{content:'';position:absolute;inset:26px;border-radius:50%;background:var(--cs-card);}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;}
+.donut-center b{font-family:var(--font-display);font-size:22px;}
+.donut-center span{font-size:11px;color:var(--cs-text-muted);}
+.legend{display:flex;flex-direction:column;gap:8px;font-size:13px;}
+.legend .dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-left:8px;}
+.bar-chart{display:flex;flex-direction:column;gap:12px;}
+.bar-row{display:grid;grid-template-columns:130px 1fr 46px;align-items:center;gap:12px;}
+.bar-label{font-size:13px;text-align:right;color:var(--cs-text-muted);}
+.bar-track{height:24px;background:var(--cs-surface-alt);border-radius:6px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:6px;background:var(--cs-accent);transition:width 1.2s ease;}
+.bar-value{font-size:13px;font-weight:700;}
+.insight{background:linear-gradient(135deg,rgba(255,71,87,.12),rgba(255,71,87,.03));border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:14px 18px;font-size:13px;margin-top:14px;}
+.insight b{color:var(--cs-accent-light);}
+
+/* personas */
+.persona-card{background:var(--cs-card);border-radius:16px;overflow:hidden;border:1px solid var(--cs-border);}
+.persona-head{padding:30px;text-align:center;color:#fff;}
+.persona-avatar{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.22);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;}
+.persona-quote{font-size:13px;opacity:.9;font-style:italic;margin-top:8px;}
+.persona-body{padding:22px;display:flex;flex-direction:column;gap:16px;}
+.persona-body h5{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--cs-accent);margin-bottom:6px;}
+.persona-body ul{list-style:none;font-size:13px;color:var(--cs-text-muted);display:flex;flex-direction:column;gap:5px;}
+.persona-body li{position:relative;padding-right:14px;}
+.persona-body li::before{content:'–';position:absolute;right:0;}
+.tech-scale{display:flex;gap:4px;}
+.tech-scale span{width:20px;height:6px;border-radius:3px;background:var(--cs-border);}
+.tech-scale span.on{background:var(--cs-accent);}
+
+/* empathy */
+.empathy-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:var(--cs-border);border-radius:16px;overflow:hidden;max-width:800px;margin:0 auto;}
+.empathy-quadrant{background:var(--cs-card);padding:24px;min-height:190px;}
+.empathy-quadrant h3{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:15px;}
+.empathy-quadrant ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.empathy-quadrant li{font-size:13px;color:var(--cs-text-muted);padding-right:14px;position:relative;}
+.empathy-quadrant li::before{content:'–';position:absolute;right:0;}
+
+/* journey */
+.journey-wrap{overflow-x:auto;padding-bottom:16px;}
+.journey-track{display:flex;gap:0;min-width:900px;position:relative;padding-top:60px;}
+.journey-stage{flex:1;padding:0 12px;border-right:1px dashed var(--cs-border);position:relative;}
+.journey-stage:last-child{border-right:none;}
+.journey-stage h4{font-family:var(--font-display);font-size:14px;margin-bottom:10px;text-align:center;}
+.journey-emoji{position:absolute;top:-46px;left:50%;transform:translateX(-50%);font-size:22px;}
+.journey-stage .jrow{font-size:11px;color:var(--cs-text-muted);margin-bottom:10px;}
+.journey-stage .jrow b{display:block;color:var(--cs-text);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.journey-line{position:absolute;top:-14px;left:0;right:0;height:2px;background:linear-gradient(90deg,#ef4444,#f59e0b,#22c55e,#22c55e,#22c55e,#22c55e);}
+
+/* features */
+.feature-card{background:var(--cs-card);border:1px solid var(--cs-border);border-radius:14px;padding:22px;position:relative;overflow:hidden;}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.feature-must::before{background:#ef4444;} .feature-should::before{background:#f59e0b;} .feature-could::before{background:#22c55e;}
+.priority-must{background:#ef444422;color:#f87171;} .priority-should{background:#f59e0b22;color:#fbbf24;} .priority-could{background:#22c55e22;color:#4ade80;}
+.feature-icon{font-size:24px;margin-bottom:10px;}
+.feature-card h4{font-family:var(--font-display);font-size:16px;margin:8px 0 6px;}
+.feature-story{font-size:12px;color:var(--cs-text-muted);background:var(--cs-surface-alt);padding:10px 12px;border-radius:8px;margin:10px 0;}
+.feature-meta{display:flex;gap:16px;font-size:11px;color:var(--cs-text-muted);margin-top:10px;}
+
+/* sitemap */
+.sitemap{display:flex;flex-direction:column;align-items:center;padding:20px;overflow-x:auto;}
+.sitemap-node{padding:9px 18px;background:var(--cs-card);border:2px solid var(--cs-accent);border-radius:8px;font-size:12px;font-weight:600;text-align:center;white-space:nowrap;}
+.sitemap-node.root{background:var(--cs-accent);color:#fff;font-weight:800;}
+.sitemap-level{display:flex;gap:14px;position:relative;padding-top:30px;flex-wrap:wrap;justify-content:center;}
+.sitemap-level::before{content:'';position:absolute;top:0;left:50%;width:2px;height:30px;background:var(--cs-border);}
+
+/* flows */
+.flow-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 0;}
+.flow-step{padding:10px 18px;border-radius:8px;background:var(--cs-card);border:2px solid var(--cs-border);font-size:12px;text-align:center;}
+.flow-step.decision{border-radius:50%;width:90px;height:90px;display:flex;align-items:center;justify-content:center;border-color:#f59e0b;}
+.flow-step.start{background:var(--cs-accent);border-color:var(--cs-accent);color:#fff;border-radius:999px;}
+.flow-step.end{background:#22c55e22;border-color:#22c55e;color:#4ade80;border-radius:999px;}
+.flow-arrow{color:var(--cs-text-muted);font-size:16px;}
+
+/* design system */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px;}
+.swatch .preview{width:100%;aspect-ratio:1;border-radius:12px;border:1px solid var(--cs-border);margin-bottom:8px;}
+.swatch .name{font-size:12px;font-weight:700;}
+.swatch .hex{font-size:11px;color:var(--cs-text-muted);font-family:monospace;}
+.type-sample{display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid var(--cs-border);}
+.type-meta{min-width:170px;font-size:11px;color:var(--cs-text-muted);font-family:monospace;}
+.space-demo{background:var(--cs-accent);border-radius:4px;}
+.radius-demo{width:60px;height:60px;background:var(--cs-surface-alt);border:1.5px solid var(--cs-accent);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--cs-text-muted);}
+
+/* components */
+.component-group{background:var(--cs-card);border:1px solid var(--cs-border);border-radius:14px;padding:22px;margin-bottom:20px;}
+.component-group h4{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--cs-text-muted);margin-bottom:16px;}
+.component-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+.app-btn{padding:12px 26px;border-radius:var(--app-radius);font-family:var(--font-body);font-size:14px;font-weight:700;border:none;cursor:pointer;}
+.app-btn-fire{background:var(--app-fire);color:#fff;}
+.app-btn-police{background:var(--app-police);color:#fff;}
+.app-btn-amb{background:var(--app-amb);color:#fff;}
+.app-btn-outline{background:transparent;border:2px solid var(--app-border);color:#eee;}
+.app-btn-disabled{opacity:.4;cursor:not-allowed;}
+.app-input-demo{background:#fff;border:1.5px solid var(--app-border);border-radius:10px;padding:10px 14px;color:#333;font-size:13px;min-width:160px;}
+.app-chip{background:var(--cs-surface-alt);color:var(--cs-text);padding:6px 14px;border-radius:999px;font-size:12px;}
+
+/* wireframes */
+.wireframe-screen{width:230px;height:460px;background:#F5F5F5;border:2px solid #CCC;border-radius:26px;padding:38px 12px 22px;position:relative;font-family:var(--font-body);flex-shrink:0;}
+.wire-header{height:16px;background:#D5D5D5;border-radius:4px;margin-bottom:10px;}
+.wire-text{height:8px;background:#DCDCDC;border-radius:2px;margin-bottom:5px;}
+.wire-text.short{width:55%;}
+.wire-btn{height:60px;background:#D0D0D0;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#888;font-size:11px;margin-bottom:10px;}
+.wire-nav{position:absolute;bottom:0;left:0;right:0;height:44px;background:#fff;border-top:1.5px solid #DDD;display:flex;justify-content:space-around;align-items:center;}
+.wire-nav-item{width:16px;height:16px;background:#D5D5D5;border-radius:50%;}
+.wire-label{text-align:center;font-size:12px;color:var(--cs-text-muted);margin-top:10px;}
+
+/* final ui phones */
+.phone-mockup{width:250px;background:var(--app-bg);border-radius:32px;border:6px solid #111;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,.4);position:relative;flex-shrink:0;}
+.status-bar{height:34px;padding:8px 18px 0;display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--app-text);}
+.phone-content{padding:12px 14px 70px;min-height:440px;}
+.phone-nav{position:absolute;bottom:0;left:0;right:0;height:56px;background:#fff;border-top:1px solid var(--app-border);display:flex;justify-content:space-around;align-items:center;font-size:9px;color:var(--app-text-muted);}
+.phone-nav .active{color:var(--app-fire);font-weight:700;}
+.sos-btn{border-radius:20px;padding:16px;color:#fff;text-align:center;margin-bottom:10px;font-weight:700;font-size:13px;box-shadow:0 8px 20px rgba(0,0,0,.15);}
+.sos-btn small{display:block;font-weight:400;font-size:10px;opacity:.85;margin-top:2px;}
+.screen-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:34px;justify-items:center;}
+.screen-item .label{margin-top:14px;font-size:13px;font-weight:700;color:var(--cs-text-muted);text-align:center;}
+
+/* conclusion */
+.conclusion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+footer{padding:50px 20px;text-align:center;color:var(--cs-text-muted);font-size:13px;border-top:1px solid var(--cs-border);}
+
+@media (max-width:860px){
+  .grid-2,.grid-3,.grid-4,.conclusion-grid{grid-template-columns:1fr;}
+  .empathy-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:34px;}
+  .swot-grid{grid-template-columns:1fr;}
+  .section-title{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-brand">🚨 <span>طوارئ</span> | دراسة حالة</div>
+    <div class="nav-links">
+      <a href="#overview">النظرة العامة</a>
+      <a href="#research">البحث</a>
+      <a href="#competitors">المنافسون</a>
+      <a href="#survey">الاستبيان</a>
+      <a href="#personas">الشخصيات</a>
+      <a href="#journey">الرحلة</a>
+      <a href="#features">الميزات</a>
+      <a href="#architecture">البنية</a>
+      <a href="#design-system">نظام التصميم</a>
+      <a href="#wireframes">المخططات</a>
+      <a href="#final-ui">الواجهات النهائية</a>
+      <a href="#conclusion">الخلاصة</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="overview">
+  <div class="hero-icon">🚨</div>
+  <h1>طوارئ</h1>
+  <p class="tagline">تطبيق موبايل يتيح للمواطن المصري الإبلاغ عن حريق أو سرقة أو حالة طبية طارئة بضغطة زر واحدة، مع إرسال الموقع الجغرافي الدقيق فورًا لأقرب جهة مختصة — دون الحاجة لمكالمة هاتفية أو وصف شفهي للموقع.</p>
+  <div class="hero-meta">
+    <div><div class="num">15 ث</div><div class="lbl">الوقت المستهدف للإبلاغ</div></div>
+    <div><div class="num">3</div><div class="lbl">جهات طوارئ في تطبيق واحد</div></div>
+    <div><div class="num">240</div><div class="lbl">مشارك في الاستبيان</div></div>
+    <div><div class="num">18</div><div class="lbl">شاشة مصممة</div></div>
+  </div>
+</header>
+
+<section class="section reveal" id="research">
+  <div class="section-label">المرحلة الأولى — الاكتشاف والبحث</div>
+  <div class="section-title">نظرة عامة على المشروع</div>
+  <div class="grid grid-2">
+    <div class="card">
+      <ul class="overview-list">
+        <li><b>المشكلة</b><span>المواطنون في مصر يعتمدون على الاتصال الهاتفي التقليدي (122 / 123 / 180) للإبلاغ عن الطوارئ، وهو ما يتطلب وصفًا شفهيًا للموقع تحت الضغط النفسي، وغالبًا ما يتأخر أو يفشل خصوصًا في الشوارع الجانبية والمناطق الريفية.</span></li>
+        <li><b>الحل</b><span>تطبيق واحد بثلاثة أزرار كبيرة وواضحة (حريق / شرطة / إسعاف) يرسل الموقع الجغرافي الدقيق تلقائيًا، ويصنّف نوع الطوارئ، ويتيح وضعًا صامتًا للحالات التي تتطلب سرية.</span></li>
+        <li><b>الجمهور</b><span>المواطنون المصريون 18–60 سنة، وبشكل خاص سائقو السيارات، النساء المتنقلات ليلًا، وكبار السن الذين يعيشون بمفردهم.</span></li>
+        <li><b>المنصة</b><span>تطبيق موبايل — Android و iOS (Cross-platform)</span></li>
+        <li><b>الجدول الزمني</b><span>أسبوعان بحث ← 3 أسابيع تصميم ← أسبوع نموذج أولي قابل للتفاعل</span></li>
+        <li><b>الدور</b><span>باحثة ومصممة UX/UI — من البحث إلى الواجهات النهائية</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="font-family:var(--font-display);margin-bottom:12px;color:var(--cs-accent-light);">بيان المشكلة</h4>
+      <p style="color:var(--cs-text-muted);font-size:14px;margin-bottom:20px;">المواطنون في مصر يواجهون صعوبة في التبليغ السريع والدقيق عن الطوارئ لأن القنوات الحالية تعتمد على مكالمة صوتية ووصف يدوي للموقع تحت ضغط الذعر. هذا يؤدي لتأخر وصول المساعدة في حالات تُحسب فيها الثواني، مثل الحرائق والسكتات القلبية. طوارئ يهدف لتقليص زمن الإبلاغ إلى أقل من 15 ثانية عبر الموقع التلقائي وواجهة بضغطة واحدة.</p>
+      <h4 style="font-family:var(--font-display);margin-bottom:12px;color:var(--cs-accent-light);">أهداف المشروع</h4>
+      <ul class="pill-list good">
+        <li>خفض وقت الإبلاغ من ~3 دقائق (مكالمة) إلى أقل من 15 ثانية</li>
+        <li>رفع دقة تحديد الموقع لفرق الإنقاذ إلى ما يقارب 100٪</li>
+        <li>توفير وضع إبلاغ صامت للحالات التي تتطلب سرية</li>
+        <li>دعم كبار السن وضعاف السمع بواجهة بصرية مبسطة</li>
+        <li>تنبيه تلقائي لجهات اتصال العائلة عند كل بلاغ</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-title">تحليل الأسئلة الخمسة (5W)</div>
+  <p class="section-sub">إطار عمل لفهم سياق المشكلة من كل الزوايا قبل بدء التصميم.</p>
+  <div class="grid grid-3" style="grid-template-columns:repeat(3,1fr);">
+    <div class="w-card w1"><div class="w-icon">👥</div><h3>من (WHO)</h3><p style="font-size:13px;color:var(--cs-text-muted);">المواطنون في القاهرة الكبرى والمحافظات، سائقو السيارات، النساء المتنقلات مساءً، كبار السن الذين يعيشون بمفردهم، وأصحاب المتاجر.</p></div>
+    <div class="w-card w2"><div class="w-icon">❗</div><h3>ماذا (WHAT)</h3><p style="font-size:13px;color:var(--cs-text-muted);">صعوبة التبليغ السريع والدقيق عن الحرائق والسرقات والحالات الطبية الطارئة عبر القنوات الحالية.</p></div>
+    <div class="w-card w3"><div class="w-icon">⏰</div><h3>متى (WHEN)</h3><p style="font-size:13px;color:var(--cs-text-muted);">لحظات الذعر: حريق منزلي، حادث سيارة، سرقة، أزمة صحية مفاجئة — غالبًا في ذروة الزحام أو أثناء الليل.</p></div>
+    <div class="w-card w4"><div class="w-icon">📍</div><h3>أين (WHERE)</h3><p style="font-size:13px;color:var(--cs-text-muted);">الشارع، المنزل، وسائل المواصلات، الأماكن العامة — في أي مكان بمصر، مع أو بدون تغطية إنترنت قوية.</p></div>
+    <div class="w-card w5"><div class="w-icon">💡</div><h3>لماذا (WHY)</h3><p style="font-size:13px;color:var(--cs-text-muted);">كل ثانية تأخير في حالات الحريق أو السكتة القلبية تقلل فرص النجاة؛ الخط الساخن التقليدي بطيء ولا يحدد الموقع بدقة كافية.</p></div>
+  </div>
+</section>
+
+<section class="section reveal" id="competitors">
+  <div class="section-label">تحليل السوق</div>
+  <div class="section-title">تحليل المنافسين</div>
+  <p class="section-sub">تمت دراسة 4 حلول عبر فئات مختلفة: منافس مباشر، غير مباشر، طموح، وإقليمي.</p>
+  <div class="grid grid-4" style="grid-template-columns:repeat(4,1fr);margin-bottom:26px;">
+    <div class="competitor-card">
+      <div class="competitor-header"><div class="competitor-logo">👮</div><div><div class="competitor-name">مباشر</div><div class="competitor-sub">وزارة الداخلية المصرية</div></div></div>
+      <span class="competitor-tag">منافس مباشر</span>
+      <ul class="pill-list good"><li>رسمي وموثوق</li><li>إبلاغ عن جرائم</li></ul>
+      <ul class="pill-list bad"><li>لا يغطي الحريق أو الإسعاف</li><li>واجهة بيروقراطية بطيئة</li><li>لا وضع صامت</li></ul>
+    </div>
+    <div class="competitor-card">
+      <div class="competitor-header"><div class="competitor-logo">☎️</div><div><div class="competitor-name">الخط الساخن التقليدي</div><div class="competitor-sub">122 / 123 / 180</div></div></div>
+      <span class="competitor-tag">منافس غير مباشر</span>
+      <ul class="pill-list good"><li>معروف لدى الجميع</li><li>يعمل بدون تطبيق</li></ul>
+      <ul class="pill-list bad"><li>وصف شفهي للموقع</li><li>انتظار على الخط</li><li>لا تتبع لحالة البلاغ</li></ul>
+    </div>
+    <div class="competitor-card">
+      <div class="competitor-header"><div class="competitor-logo">🌍</div><div><div class="competitor-name">Noonlight</div><div class="competitor-sub">USA — تطبيق أمان شخصي</div></div></div>
+      <span class="competitor-tag">منافس طموح</span>
+      <ul class="pill-list good"><li>زر SOS ممتاز</li><li>مشاركة موقع لحظية</li><li>تجربة مستخدم سلسة</li></ul>
+      <ul class="pill-list bad"><li>غير متاح بالعربية</li><li>غير مرتبط بالجهات المصرية</li></ul>
+    </div>
+    <div class="competitor-card">
+      <div class="competitor-header"><div class="competitor-logo">🛡️</div><div><div class="competitor-name">كلنا أمن</div><div class="competitor-sub">السعودية</div></div></div>
+      <span class="competitor-tag">منافس إقليمي</span>
+      <ul class="pill-list good"><li>تكامل حكومي قوي</li><li>دعم كامل بالعربية</li></ul>
+      <ul class="pill-list bad"><li>مقتصر على البلاغات الأمنية</li><li>لا يدعم الحريق/الإسعاف بنفس التطبيق</li></ul>
+    </div>
+  </div>
+
+  <div class="card" style="overflow-x:auto;margin-bottom:26px;">
+    <table>
+      <tr><th>الميزة</th><th>مباشر</th><th>الخط الساخن</th><th>Noonlight</th><th>كلنا أمن</th><th class="our-col">طوارئ</th></tr>
+      <tr><td>زر SOS بضغطة واحدة</td><td>❌</td><td>❌</td><td>✅</td><td>⚡</td><td class="our-col">✅</td></tr>
+      <tr><td>تحديد الموقع تلقائيًا</td><td>⚡</td><td>❌</td><td>✅</td><td>⚡</td><td class="our-col">✅</td></tr>
+      <tr><td>تصنيف نوع الطوارئ (حريق/شرطة/إسعاف)</td><td>❌</td><td>⚡</td><td>❌</td><td>❌</td><td class="our-col">✅</td></tr>
+      <tr><td>العمل بضعف الإنترنت (SMS احتياطي)</td><td>❌</td><td>✅</td><td>⚡</td><td>❌</td><td class="our-col">✅</td></tr>
+      <tr><td>تنبيه تلقائي لجهات العائلة</td><td>❌</td><td>❌</td><td>✅</td><td>❌</td><td class="our-col">✅</td></tr>
+      <tr><td>وضع صامت / سري</td><td>❌</td><td>❌</td><td>⚡</td><td>❌</td><td class="our-col">✅</td></tr>
+      <tr><td>تتبع حالة البلاغ لحظيًا</td><td>⚡</td><td>❌</td><td>✅</td><td>⚡</td><td class="our-col">✅</td></tr>
+      <tr><td>دعم عربي كامل + كبار السن</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td><td class="our-col">✅</td></tr>
+    </table>
+  </div>
+
+  <div class="swot-grid">
+    <div class="swot-cell swot-s"><h4>نقاط القوة</h4><ul><li>تركيز حصري على السرعة والبساطة القصوى</li><li>يعمل ضمن ضعف تغطية الشبكة عبر SMS احتياطي</li><li>يجمع الحريق والشرطة والإسعاف في مكان واحد</li></ul></div>
+    <div class="swot-cell swot-w"><h4>نقاط الضعف</h4><ul><li>يحتاج شراكة رسمية مع الجهات الحكومية لتفعيل استجابة حقيقية</li><li>بيانات نقاط الإنقاذ تحتاج تحديثًا مستمرًا ودقيقًا</li></ul></div>
+    <div class="swot-cell swot-o"><h4>الفرص</h4><ul><li>غياب حل موحد وبسيط في السوق المصري حاليًا</li><li>يتماشى مع مبادرات التحول الرقمي في مصر</li></ul></div>
+    <div class="swot-cell swot-t"><h4>التهديدات</h4><ul><li>احتمال طرح تطبيق حكومي منافس لاحقًا</li><li>مخاوف الخصوصية المرتبطة بمشاركة الموقع الدائمة</li></ul></div>
+  </div>
+</section>
+
+<section class="section reveal" id="survey">
+  <div class="section-label">التحقق من الفرضيات</div>
+  <div class="section-title">تصميم وتحليل الاستبيان</div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4 style="font-family:var(--font-display);margin-bottom:14px;">أسئلة الاستبيان (12 سؤالًا)</h4>
+      <div class="survey-q"><div class="qn">القسم 1 — بيانات ديموغرافية</div>ما هي فئتك العمرية؟ (18-24 / 25-34 / 35-44 / 45+)</div>
+      <div class="survey-q">ما مدى راحتك في استخدام تطبيقات الموبايل؟ (مقياس 1-5)</div>
+      <div class="survey-q"><div class="qn">القسم 2 — التحقق من المشكلة</div>هل سبق وواجهت موقفًا طارئًا احتجت فيه للإبلاغ السريع؟</div>
+      <div class="survey-q">كم استغرق الأمر حتى تمكنت من التبليغ عبر الطرق الحالية؟</div>
+      <div class="survey-q">ما أكبر عائق واجهك عند الاتصال بالطوارئ؟ (سؤال مفتوح)</div>
+      <div class="survey-q">قيّم رضاك عن سرعة استجابة الجهات الحالية (مقياس 1-5)</div>
+      <div class="survey-q"><div class="qn">القسم 3 — التحقق من الميزات</div>أي الميزات تعتبرها الأهم؟ (ترتيب متعدد)</div>
+      <div class="survey-q">هل تفضل زر إبلاغ صامت في حالات الخطر الحساسة؟</div>
+      <div class="survey-q">هل تثق بمشاركة موقعك الجغرافي مع جهة رسمية في حالات الطوارئ؟</div>
+      <div class="survey-q"><div class="qn">القسم 4 — سلوكي</div>ما الجهاز الذي تحمله معك دائمًا؟ (موبايل/لا شيء)</div>
+      <div class="survey-q">هل تحفظ أرقام الطوارئ في هاتفك حاليًا؟</div>
+      <div class="survey-q">ما مدى استعدادك لتفعيل مشاركة الموقع بشكل دائم للتطبيق؟</div>
+    </div>
+    <div class="card">
+      <h4 style="font-family:var(--font-display);margin-bottom:20px;">ملخص النتائج — 240 مشاركًا</h4>
+      <div style="position:relative;">
+        <div class="donut" style="background:conic-gradient(#ff4757 0% 42%, #f59e0b 42% 68%, #3b9eff 68% 88%, #6b7280 88% 100%);">
+          <div class="donut-center"><b>42٪</b><span>واجهوا حريقًا/سرقة</span></div>
+        </div>
+      </div>
+      <div class="legend" style="margin-top:16px;">
+        <div><span class="dot" style="background:#ff4757;"></span>واجهوا طارئة واحتاجوا الإبلاغ — 42٪</div>
+        <div><span class="dot" style="background:#f59e0b;"></span>حاولوا الإبلاغ وواجهوا صعوبة — 26٪</div>
+        <div><span class="dot" style="background:#3b9eff;"></span>لم يبلغوا بسبب تعقيد الإجراء — 20٪</div>
+        <div><span class="dot" style="background:#6b7280;"></span>لم يواجهوا طارئة — 12٪</div>
+      </div>
+      <div class="insight">📊 <b>الخلاصة:</b> 68٪ من العينة إما احتاجت للإبلاغ عن طارئة أو حاولت ذلك وواجهت صعوبة — ما يؤكد حجم المشكلة الحقيقي. ← <b>الأثر التصميمي:</b> تبسيط خطوة الإبلاغ لأقصى درجة هو الأولوية القصوى.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h4 style="font-family:var(--font-display);margin-bottom:16px;">الميزات الأكثر طلبًا</h4>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">موقع تلقائي دقيق</div><div class="bar-track"><div class="bar-fill" style="width:91%;"></div></div><div class="bar-value">91٪</div></div>
+      <div class="bar-row"><div class="bar-label">زر بضغطة واحدة</div><div class="bar-track"><div class="bar-fill" style="width:87%;"></div></div><div class="bar-value">87٪</div></div>
+      <div class="bar-row"><div class="bar-label">تنبيه العائلة تلقائيًا</div><div class="bar-track"><div class="bar-fill" style="width:74%;"></div></div><div class="bar-value">74٪</div></div>
+      <div class="bar-row"><div class="bar-label">وضع صامت/سري</div><div class="bar-track"><div class="bar-fill" style="width:61%;"></div></div><div class="bar-value">61٪</div></div>
+      <div class="bar-row"><div class="bar-label">تتبع حالة البلاغ</div><div class="bar-track"><div class="bar-fill" style="width:58%;"></div></div><div class="bar-value">58٪</div></div>
+      <div class="bar-row"><div class="bar-label">عمل بدون إنترنت</div><div class="bar-track"><div class="bar-fill" style="width:49%;"></div></div><div class="bar-value">49٪</div></div>
+    </div>
+    <div class="insight">📊 <b>أعلى ميزة مطلوبة:</b> الموقع التلقائي الدقيق (91٪) والزر بضغطة واحدة (87٪) — يؤكدان أن السرعة والدقة هما جوهر القيمة المقترحة للتطبيق.</div>
+  </div>
+</section>
+
+<section class="section reveal" id="personas">
+  <div class="section-label">المرحلة الثانية — فهم المستخدم</div>
+  <div class="section-title">شخصيات المستخدمين</div>
+  <div class="grid grid-3" style="grid-template-columns:repeat(3,1fr);">
+    <div class="persona-card">
+      <div class="persona-head" style="background:linear-gradient(135deg,#E63946,#ff6b7a);">
+        <div class="persona-avatar">أف</div>
+        <div style="font-weight:800;font-size:17px;">أحمد فتحي، 34</div>
+        <div style="font-size:12px;opacity:.85;">مهندس مدني — القاهرة</div>
+        <div class="persona-quote">"لما بيشتعل حريق في المطبخ، مش هعرف أوصف موقعي بالظبط وأنا مرعوب"</div>
+      </div>
+      <div class="persona-body">
+        <div><h5>الخلفية</h5><p style="font-size:13px;color:var(--cs-text-muted);">يقود سيارته يوميًا لمسافات طويلة بين القاهرة والجيزة، ويعيش مع زوجته وطفلين. شاهد حادث سيارة أمامه ولم يعرف كيف يبلغ بدقة عن الموقع.</p></div>
+        <div><h5>الراحة التقنية</h5><div class="tech-scale"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div></div>
+        <div><h5>الأهداف</h5><ul><li>الإبلاغ عن الحوادث بسرعة أثناء القيادة</li><li>حماية عائلته في حالات الطوارئ المنزلية</li></ul></div>
+        <div><h5>نقاط الألم</h5><ul><li>لا يعرف عنوانه الدقيق في الطرق السريعة</li><li>ينشغل بالاتصال بدل التصرف الفوري</li></ul></div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-head" style="background:linear-gradient(135deg,#2A9D8F,#5fc2b5);">
+        <div class="persona-avatar">سع</div>
+        <div style="font-weight:800;font-size:17px;">سميرة عبد الله، 61</div>
+        <div style="font-size:12px;opacity:.85;">معلمة متقاعدة — الإسكندرية</div>
+        <div class="persona-quote">"عايزة حاجة سهلة، مش عايزة أدور في قوائم أو أكتب حاجة وأنا مش قادرة أتنفس"</div>
+      </div>
+      <div class="persona-body">
+        <div><h5>الخلفية</h5><p style="font-size:13px;color:var(--cs-text-muted);">تعيش بمفردها بعد وفاة زوجها، تعاني من مشاكل في القلب أحيانًا، أبناؤها يزورونها أسبوعيًا فقط.</p></div>
+        <div><h5>الراحة التقنية</h5><div class="tech-scale"><span class="on"></span><span></span><span></span><span></span><span></span></div></div>
+        <div><h5>الأهداف</h5><ul><li>طلب إسعاف فورًا دون تعقيد</li><li>إبلاغ أبنائها تلقائيًا عند أي طارئة</li></ul></div>
+        <div><h5>نقاط الألم</h5><ul><li>ضعف السمع يصعّب المكالمات الهاتفية</li><li>القلق من نسيان كلمات مهمة أثناء الأزمة</li></ul></div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-head" style="background:linear-gradient(135deg,#2A6FDB,#6fa0f0);">
+        <div class="persona-avatar">مح</div>
+        <div style="font-weight:800;font-size:17px;">مروة حسن، 27</div>
+        <div style="font-size:12px;opacity:.85;">موظفة تسويق — الجيزة</div>
+        <div class="persona-quote">"أحيانًا محتاجة أبلغ من غير ما اللي قدامي يحس إني بكلم حد"</div>
+      </div>
+      <div class="persona-body">
+        <div><h5>الخلفية</h5><p style="font-size:13px;color:var(--cs-text-muted);">تتنقل بالمواصلات العامة ليلًا بعد العمل، تعرضت مرة لمحاولة سرقة موبايل وشعرت بعجز عن الإبلاغ الآمن وقتها.</p></div>
+        <div><h5>الراحة التقنية</h5><div class="tech-scale"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div></div>
+        <div><h5>الأهداف</h5><ul><li>إبلاغ سري لا يلفت انتباه أحد بجوارها</li><li>مشاركة موقعها اللحظي مع أهلها</li></ul></div>
+        <div><h5>نقاط الألم</h5><ul><li>الخوف من تصعيد الموقف إذا لاحظ الجاني أنها تتصل</li><li>عدم توفر شرطة نسائية قريبة دائمًا</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-title">خريطة التعاطف — الشخصية الأساسية (أحمد)</div>
+  <div class="empathy-grid">
+    <div class="empathy-quadrant" style="background:#1a1420;"><h3>💬 يقول</h3><ul><li>"مش عارف أوصف الشارع ده بالظبط"</li><li>"لو في تطبيق يبعت موقعي بس كان أسهل بكتير"</li><li>"مستني على الخط ده وقت بيضيع"</li></ul></div>
+    <div class="empathy-quadrant" style="background:#141f2a;"><h3>💭 يفكر</h3><ul><li>هل هيوصلوا بسرعة كفاية؟</li><li>هل وصفت المكان صح؟</li><li>هل لازم أفضل واقف مكاني للشرح؟</li></ul></div>
+    <div class="empathy-quadrant" style="background:#101c10;"><h3>🏃 يفعل</h3><ul><li>يحاول تشغيل خرائط جوجل ويقرأ الإحداثيات هاتفيًا</li><li>يتصل بأكثر من رقم لضمان الوصول</li><li>يطلب من شخص قريب المساعدة في الوصف</li></ul></div>
+    <div class="empathy-quadrant" style="background:#241a10;"><h3>❤️ يشعر</h3><ul><li>قلق وضغط شديد</li><li>إحباط من بطء الإجراء</li><li>خوف على سلامة عائلته</li></ul></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:20px;">
+    <div class="card"><h5 style="color:#ef4444;margin-bottom:8px;">نقاط الألم</h5><p style="font-size:13px;color:var(--cs-text-muted);">تأخر تحديد الموقع، صعوبة الوصف الشفهي تحت الضغط، عدم اليقين من استلام البلاغ.</p></div>
+    <div class="card"><h5 style="color:#22c55e;margin-bottom:8px;">الأهداف / المكاسب</h5><p style="font-size:13px;color:var(--cs-text-muted);">إبلاغ فوري بضغطة واحدة، ثقة بأن الموقع وصل بدقة، تأكيد مرئي بأن المساعدة في الطريق.</p></div>
+  </div>
+</section>
+
+<section class="section reveal" id="journey">
+  <div class="section-title">خريطة رحلة المستخدم</div>
+  <p class="section-sub">رحلة أحمد من لحظة وقوع الحريق وحتى وصول فرق الإطفاء.</p>
+  <div class="journey-wrap">
+    <div class="journey-track">
+      <div class="journey-line"></div>
+      <div class="journey-stage"><div class="journey-emoji">😱</div><h4>وقوع الحادث</h4><div class="jrow"><b>الإجراء</b>يلاحظ الحريق ويتجه لهاتفه فورًا</div><div class="jrow"><b>الألم</b>ذعر يمنع التفكير المنظم</div><div class="jrow"><b>الفرصة</b>وصول سريع لشاشة الطوارئ من الشاشة الرئيسية</div></div>
+      <div class="journey-stage"><div class="journey-emoji">📱</div><h4>فتح التطبيق</h4><div class="jrow"><b>الإجراء</b>يفتح طوارئ ويضغط زر "حريق" الأحمر الكبير</div><div class="jrow"><b>الألم</b>لا وقت للتنقل بين قوائم</div><div class="jrow"><b>الفرصة</b>3 أزرار فقط في الشاشة الرئيسية</div></div>
+      <div class="journey-stage"><div class="journey-emoji">📍</div><h4>إرسال البلاغ</h4><div class="jrow"><b>الإجراء</b>التطبيق يرسل الموقع تلقائيًا مع نوع الطوارئ</div><div class="jrow"><b>الألم</b>القلق من عدم دقة GPS</div><div class="jrow"><b>الفرصة</b>عرض العنوان النصي المؤكَّد فوق الخريطة</div></div>
+      <div class="journey-stage"><div class="journey-emoji">⏳</div><h4>الانتظار والتتبع</h4><div class="jrow"><b>الإجراء</b>يتابع حالة البلاغ (تم الاستلام/في الطريق)</div><div class="jrow"><b>الألم</b>عدم اليقين من وصول المساعدة</div><div class="jrow"><b>الفرصة</b>شريط تقدم حي + وقت وصول تقديري</div></div>
+      <div class="journey-stage"><div class="journey-emoji">🚒</div><h4>وصول المساعدة</h4><div class="jrow"><b>الإجراء</b>فريق الإطفاء يصل للموقع الصحيح مباشرة</div><div class="jrow"><b>الألم</b>—</div><div class="jrow"><b>الفرصة</b>إشعار تلقائي وصل لعائلته بالتزامن</div></div>
+      <div class="journey-stage"><div class="journey-emoji">✅</div><h4>ما بعد الحادثة</h4><div class="jrow"><b>الإجراء</b>يقيّم سرعة الاستجابة داخل التطبيق</div><div class="jrow"><b>الألم</b>—</div><div class="jrow"><b>الفرصة</b>بناء ثقة تدفعه للتوصية بالتطبيق</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="features">
+  <div class="section-label">المرحلة الثالثة — البنية المعلوماتية</div>
+  <div class="section-title">الميزات السبع الأساسية</div>
+  <p class="section-sub">مرتبة حسب منهجية MoSCoW لتحديد أولويات الإصدار الأول.</p>
+  <div class="grid grid-3" style="grid-template-columns:repeat(3,1fr);">
+    <div class="feature-card feature-must"><span class="badge priority-must">Must Have</span><div class="feature-icon">🆘</div><h4>زر SOS بضغطة واحدة</h4><p style="font-size:13px;color:var(--cs-text-muted);">ثلاثة أزرار كبيرة وواضحة اللون (حريق/شرطة/إسعاف) في الشاشة الرئيسية مباشرة.</p><div class="feature-story">كمستخدم، أريد الإبلاغ عن طارئة بضغطة واحدة، لأتمكن من التصرف فورًا دون تفكير.</div><div class="feature-meta"><span>التعقيد: متوسط</span><span>الأثر: مرتفع جدًا</span></div></div>
+    <div class="feature-card feature-must"><span class="badge priority-must">Must Have</span><div class="feature-icon">📍</div><h4>الموقع التلقائي</h4><p style="font-size:13px;color:var(--cs-text-muted);">إرسال إحداثيات GPS دقيقة وعنوان نصي مؤكّد مع كل بلاغ دون تدخل يدوي.</p><div class="feature-story">كمستخدم، أريد أن يُرسل موقعي تلقائيًا، لأضمن وصول المساعدة للمكان الصحيح.</div><div class="feature-meta"><span>التعقيد: متوسط</span><span>الأثر: مرتفع جدًا</span></div></div>
+    <div class="feature-card feature-must"><span class="badge priority-must">Must Have</span><div class="feature-icon">📞</div><h4>اتصال مباشر احتياطي</h4><p style="font-size:13px;color:var(--cs-text-muted);">زر اتصال هاتفي فوري بالرقم الرسمي كخطة بديلة عند ضعف الإنترنت.</p><div class="feature-story">كمستخدم، أريد الاتصال المباشر إذا فشل الإبلاغ الرقمي، لضمان وصول بلاغي دائمًا.</div><div class="feature-meta"><span>التعقيد: منخفض</span><span>الأثر: مرتفع</span></div></div>
+
+    <div class="feature-card feature-should"><span class="badge priority-should">Should Have</span><div class="feature-icon">👨‍👩‍👧</div><h4>تنبيه جهات الطوارئ الشخصية</h4><p style="font-size:13px;color:var(--cs-text-muted);">إرسال رسالة SMS تلقائية لأفراد العائلة المسجلين تتضمن نوع الطارئة والموقع.</p><div class="feature-story">كمستخدم، أريد تنبيه عائلتي تلقائيًا، ليعرفوا وضعي دون الحاجة لاتصال منفصل.</div><div class="feature-meta"><span>التعقيد: منخفض</span><span>الأثر: مرتفع</span></div></div>
+    <div class="feature-card feature-should"><span class="badge priority-should">Should Have</span><div class="feature-icon">📊</div><h4>تتبع حالة البلاغ لحظيًا</h4><p style="font-size:13px;color:var(--cs-text-muted);">شاشة تعرض حالة البلاغ (تم الاستلام / في الطريق / وصل) مع وقت تقديري.</p><div class="feature-story">كمستخدم، أريد متابعة حالة بلاغي، لأشعر بالطمأنينة أثناء الانتظار.</div><div class="feature-meta"><span>التعقيد: متوسط</span><span>الأثر: متوسط</span></div></div>
+
+    <div class="feature-card feature-could"><span class="badge priority-could">Could Have</span><div class="feature-icon">🤫</div><h4>الوضع الصامت</h4><p style="font-size:13px;color:var(--cs-text-muted);">إرسال بلاغ سري دون صوت أو تفاعل ظاهر، مناسب لحالات السرقة أو التحرش أثناء وجود الجاني.</p><div class="feature-story">كمستخدمة، أريد الإبلاغ بصمت، لأحمي نفسي دون لفت انتباه من يهددني.</div><div class="feature-meta"><span>التعقيد: مرتفع</span><span>الأثر: متوسط</span></div></div>
+    <div class="feature-card feature-could"><span class="badge priority-could">Could Have</span><div class="feature-icon">🗺️</div><h4>خريطة أقرب نقاط الإنقاذ</h4><p style="font-size:13px;color:var(--cs-text-muted);">عرض أقرب نقاط إطفاء وإسعاف وشرطة مع المسافة التقديرية على خريطة تفاعلية.</p><div class="feature-story">كمستخدم، أريد رؤية أقرب نقطة إنقاذ، لأفهم زمن الاستجابة المتوقع.</div><div class="feature-meta"><span>التعقيد: مرتفع</span><span>الأثر: متوسط</span></div></div>
+  </div>
+  <p style="margin-top:16px;font-size:12px;color:var(--cs-text-muted);">⚪ <b>مؤجّل للإصدارات القادمة:</b> دردشة فيديو مباشرة مع المسعف، والذكاء الاصطناعي للتنبؤ بالمخاطر بناءً على الموقع والوقت.</p>
+</section>
+
+<section class="section reveal" id="architecture">
+  <div class="section-title">خريطة الموقع (Sitemap)</div>
+  <div class="card" style="overflow-x:auto;">
+    <div class="sitemap">
+      <div class="sitemap-node root">الشاشة الرئيسية (SOS)</div>
+      <div class="sitemap-level">
+        <div class="sitemap-node">الإعداد الأولي + الأذونات</div>
+        <div class="sitemap-node">تسجيل الدخول (OTP)</div>
+        <div class="sitemap-node">تأكيد البلاغ</div>
+        <div class="sitemap-node">جهات اتصال الطوارئ</div>
+        <div class="sitemap-node">السجل</div>
+        <div class="sitemap-node">الخريطة</div>
+        <div class="sitemap-node">الوضع الصامت</div>
+        <div class="sitemap-node">الإعدادات</div>
+      </div>
+      <div class="sitemap-level">
+        <div class="sitemap-node">تتبع الحالة</div>
+        <div class="sitemap-node">تم الإبلاغ</div>
+        <div class="sitemap-node">إضافة/تعديل فرد</div>
+        <div class="sitemap-node">تفاصيل بلاغ سابق</div>
+        <div class="sitemap-node">أقرب نقاط الإنقاذ</div>
+        <div class="sitemap-node">تفعيل الوضع الصامت</div>
+        <div class="sitemap-node">الملف الشخصي</div>
+        <div class="sitemap-node">اللغة والإشعارات</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-title">البنية المعلوماتية</div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4 style="font-family:var(--font-display);margin-bottom:14px;">نموذج التنقل</h4>
+      <ul class="pill-list good">
+        <li>شريط تنقل سفلي بـ 4 تبويبات: الرئيسية / الخريطة / السجل / الإعدادات</li>
+        <li>لا حاجة لزر إجراء عائم — الشاشة الرئيسية نفسها هي أزرار الطوارئ</li>
+        <li>تنقل سياقي عبر النوافذ المنبثقة لتأكيد البلاغ فقط</li>
+        <li>زر رجوع واضح في كل شاشة فرعية</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="font-family:var(--font-display);margin-bottom:14px;">تنظيم المحتوى</h4>
+      <ul class="pill-list good">
+        <li>تصنيف حسب نوع الطارئة (حريق/شرطة/إسعاف) بألوان مميزة لكل نوع</li>
+        <li>السجل مرتب زمنيًا من الأحدث للأقدم</li>
+        <li>جهات الاتصال مرتبة حسب الأولوية (عائلة أولًا)</li>
+        <li>تسميات بسيطة بلغة يومية مفهومة لكبار السن</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-title">تدفقات المستخدم الحرجة</div>
+  <div class="card" style="margin-bottom:18px;">
+    <h4 style="font-family:var(--font-display);margin-bottom:14px;color:var(--cs-accent-light);">1. تدفق الإبلاغ عن حريق</h4>
+    <div class="flow-row">
+      <div class="flow-step start">فتح التطبيق</div><div class="flow-arrow">◀</div>
+      <div class="flow-step">الضغط على زر "حريق"</div><div class="flow-arrow">◀</div>
+      <div class="flow-step decision">تأكيد الموقع؟</div><div class="flow-arrow">◀</div>
+      <div class="flow-step">إرسال البلاغ + إشعار العائلة</div><div class="flow-arrow">◀</div>
+      <div class="flow-step end">تتبع الحالة</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:18px;">
+    <h4 style="font-family:var(--font-display);margin-bottom:14px;color:var(--cs-accent-light);">2. تدفق إضافة جهة اتصال طوارئ</h4>
+    <div class="flow-row">
+      <div class="flow-step start">الإعدادات</div><div class="flow-arrow">◀</div>
+      <div class="flow-step">جهات اتصال الطوارئ</div><div class="flow-arrow">◀</div>
+      <div class="flow-step">إضافة فرد جديد</div><div class="flow-arrow">◀</div>
+      <div class="flow-step decision">بيانات صحيحة؟</div><div class="flow-arrow">◀</div>
+      <div class="flow-step end">تم الحفظ</div>
+    </div>
+  </div>
+  <div class="card">
+    <h4 style="font-family:var(--font-display);margin-bottom:14px;color:var(--cs-accent-light);">3. تدفق الوضع الصامت</h4>
+    <div class="flow-row">
+      <div class="flow-step start">تفعيل الوضع الصامت مسبقًا</div><div class="flow-arrow">◀</div>
+      <div class="flow-step">اهتزاز الهاتف 3 مرات متتالية</div><div class="flow-arrow">◀</div>
+      <div class="flow-step decision">تأكيد بدون صوت؟</div><div class="flow-arrow">◀</div>
+      <div class="flow-step">إرسال بلاغ صامت للشرطة</div><div class="flow-arrow">◀</div>
+      <div class="flow-step end">تتبع بصري صامت فقط</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="design-system">
+  <div class="section-label">المرحلة الرابعة — نظام التصميم</div>
+  <div class="section-title">هوية التطبيق البصرية</div>
+  <p class="section-sub">نظام ألوان عالي التباين ووضوح بصري قصوى — لأن كل ثانية قراءة مهمة في حالات الطوارئ.</p>
+
+  <h4 style="font-family:var(--font-display);margin:20px 0 12px;">الألوان</h4>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="preview" style="background:#E63946;"></div><div class="name">حريق — Fire</div><div class="hex">#E63946</div></div>
+    <div class="swatch"><div class="preview" style="background:#2A6FDB;"></div><div class="name">شرطة — Police</div><div class="hex">#2A6FDB</div></div>
+    <div class="swatch"><div class="preview" style="background:#2A9D8F;"></div><div class="name">إسعاف — Ambulance</div><div class="hex">#2A9D8F</div></div>
+    <div class="swatch"><div class="preview" style="background:#F7F8FA;border:1px solid #333;"></div><div class="name">الخلفية</div><div class="hex">#F7F8FA</div></div>
+    <div class="swatch"><div class="preview" style="background:#FFFFFF;border:1px solid #333;"></div><div class="name">السطح</div><div class="hex">#FFFFFF</div></div>
+    <div class="swatch"><div class="preview" style="background:#1A1A2E;"></div><div class="name">النص الأساسي</div><div class="hex">#1A1A2E</div></div>
+    <div class="swatch"><div class="preview" style="background:#6B7280;"></div><div class="name">النص الثانوي</div><div class="hex">#6B7280</div></div>
+    <div class="swatch"><div class="preview" style="background:#22C55E;"></div><div class="name">نجاح</div><div class="hex">#22C55E</div></div>
+    <div class="swatch"><div class="preview" style="background:#F59E0B;"></div><div class="name">تحذير</div><div class="hex">#F59E0B</div></div>
+  </div>
+
+  <h4 style="font-family:var(--font-display);margin:30px 0 12px;">الطباعة — Cairo (عناوين) / Tajawal (نص)</h4>
+  <div class="card">
+    <div class="type-sample"><div class="type-meta">Display / 32px / Bold</div><div style="font-family:var(--font-display);font-size:32px;font-weight:700;">طوارئ — بلّغ الآن</div></div>
+    <div class="type-sample"><div class="type-meta">Heading 1 / 24px / Semibold</div><div style="font-family:var(--font-display);font-size:24px;font-weight:600;">اختر نوع الطوارئ</div></div>
+    <div class="type-sample"><div class="type-meta">Heading 2 / 20px / Semibold</div><div style="font-family:var(--font-display);font-size:20px;font-weight:600;">جاري إرسال موقعك...</div></div>
+    <div class="type-sample"><div class="type-meta">Body / 16px / Regular</div><div style="font-family:var(--font-body);font-size:16px;">تم استلام بلاغك، فريق الإنقاذ في الطريق إليك.</div></div>
+    <div class="type-sample"><div class="type-meta">Caption / 13px / Regular</div><div style="font-family:var(--font-body);font-size:13px;color:var(--cs-text-muted);">آخر تحديث للموقع: منذ لحظات</div></div>
+  </div>
+
+  <h4 style="font-family:var(--font-display);margin:30px 0 12px;">المسافات ونصف القطر</h4>
+  <div class="grid grid-2">
+    <div class="card">
+      <div style="display:flex;align-items:end;gap:14px;margin-bottom:10px;">
+        <div class="space-demo" style="width:4px;height:24px;"></div>
+        <div class="space-demo" style="width:8px;height:24px;"></div>
+        <div class="space-demo" style="width:16px;height:24px;"></div>
+        <div class="space-demo" style="width:24px;height:24px;"></div>
+        <div class="space-demo" style="width:32px;height:24px;"></div>
+        <div class="space-demo" style="width:48px;height:24px;"></div>
+      </div>
+      <p style="font-size:12px;color:var(--cs-text-muted);font-family:monospace;">4 · 8 · 16 · 24 · 32 · 48 px</p>
+    </div>
+    <div class="card" style="display:flex;gap:14px;">
+      <div class="radius-demo" style="border-radius:4px;">4px</div>
+      <div class="radius-demo" style="border-radius:12px;">12px</div>
+      <div class="radius-demo" style="border-radius:20px;">20px</div>
+      <div class="radius-demo" style="border-radius:999px;">Full</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-title">مكتبة المكوّنات</div>
+  <div class="component-group">
+    <h4>الأزرار — كل نوع طارئة له لونه ونمط لمس كبير</h4>
+    <div class="component-row">
+      <button class="app-btn app-btn-fire">🔥 حريق</button>
+      <button class="app-btn app-btn-police">👮 شرطة</button>
+      <button class="app-btn app-btn-amb">🚑 إسعاف</button>
+      <button class="app-btn app-btn-outline">إلغاء</button>
+      <button class="app-btn app-btn-fire app-btn-disabled">جاري الإرسال...</button>
+    </div>
+  </div>
+  <div class="component-group">
+    <h4>الحقول والشرائح</h4>
+    <div class="component-row">
+      <input class="app-input-demo" placeholder="اسم جهة الاتصال">
+      <span class="app-chip">📍 موقع محدد</span>
+      <span class="app-chip">🔇 الوضع الصامت مفعّل</span>
+      <span class="app-chip">📶 يعمل دون إنترنت</span>
+    </div>
+  </div>
+  <div class="component-group">
+    <h4>الإشعارات والحالات</h4>
+    <div class="component-row" style="flex-direction:column;align-items:stretch;">
+      <div style="background:#22c55e18;border:1px solid #22c55e55;color:#4ade80;padding:12px 16px;border-radius:10px;font-size:13px;">✅ تم استلام بلاغك — فريق الإطفاء في الطريق</div>
+      <div style="background:#f59e0b18;border:1px solid #f59e0b55;color:#fbbf24;padding:12px 16px;border-radius:10px;font-size:13px;">⚠️ يرجى تفعيل خدمة الموقع لإرسال بلاغ دقيق</div>
+      <div style="background:#ef444418;border:1px solid #ef444455;color:#f87171;padding:12px 16px;border-radius:10px;font-size:13px;">❌ تعذر الاتصال بالشبكة — سيتم الإرسال عبر SMS احتياطي</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="wireframes">
+  <div class="section-label">المخططات الأولية</div>
+  <div class="section-title">Wireframes — الشاشات الرئيسية</div>
+  <div class="screen-gallery">
+    <div class="screen-item">
+      <div class="wireframe-screen">
+        <div class="wire-header"></div>
+        <div class="wire-text"></div><div class="wire-text short"></div>
+        <div style="margin-top:16px;"></div>
+        <div class="wire-btn">زر حريق</div>
+        <div class="wire-btn">زر شرطة</div>
+        <div class="wire-btn">زر إسعاف</div>
+        <div class="wire-nav"><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div></div>
+      </div>
+      <div class="wire-label">الشاشة الرئيسية</div>
+    </div>
+    <div class="screen-item">
+      <div class="wireframe-screen">
+        <div class="wire-header"></div>
+        <div style="height:120px;background:#E5E5E5;border-radius:10px;margin:12px 0;display:flex;align-items:center;justify-content:center;color:#999;font-size:11px;">خريطة الموقع</div>
+        <div class="wire-text"></div><div class="wire-text short"></div>
+        <div class="wire-btn" style="margin-top:14px;">تأكيد وإرسال</div>
+        <div class="wire-nav"><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div></div>
+      </div>
+      <div class="wire-label">تأكيد البلاغ</div>
+    </div>
+    <div class="screen-item">
+      <div class="wireframe-screen">
+        <div class="wire-header"></div>
+        <div style="width:90px;height:90px;border-radius:50%;background:#D9D9D9;margin:20px auto;"></div>
+        <div class="wire-text short" style="margin:0 auto 8px;width:70%;"></div>
+        <div class="wire-text" style="width:50%;margin:0 auto;"></div>
+        <div class="wire-nav"><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div></div>
+      </div>
+      <div class="wire-label">تتبع حالة البلاغ</div>
+    </div>
+    <div class="screen-item">
+      <div class="wireframe-screen">
+        <div class="wire-header"></div>
+        <div class="wire-text"></div><div class="wire-text"></div><div class="wire-text short"></div>
+        <div style="margin-top:14px;"></div>
+        <div class="wire-btn" style="height:36px;">إضافة فرد</div>
+        <div class="wire-text" style="margin-top:14px;"></div><div class="wire-text short"></div>
+        <div class="wire-nav"><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div></div>
+      </div>
+      <div class="wire-label">جهات اتصال الطوارئ</div>
+    </div>
+    <div class="screen-item">
+      <div class="wireframe-screen">
+        <div class="wire-header"></div>
+        <div class="wire-text"></div><div class="wire-text"></div>
+        <div class="wire-text"></div><div class="wire-text short"></div>
+        <div class="wire-nav"><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div></div>
+      </div>
+      <div class="wire-label">سجل البلاغات</div>
+    </div>
+    <div class="screen-item">
+      <div class="wireframe-screen">
+        <div class="wire-header"></div>
+        <div style="width:100%;height:60px;border:2px dashed #f87171;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#f87171;font-size:11px;margin:16px 0;">تفعيل الوضع الصامت</div>
+        <div class="wire-text"></div><div class="wire-text short"></div>
+        <div class="wire-nav"><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div><div class="wire-nav-item"></div></div>
+      </div>
+      <div class="wire-label">الوضع الصامت</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="final-ui">
+  <div class="section-label">المرحلة الخامسة — التصميم النهائي</div>
+  <div class="section-title">الواجهات عالية الدقة</div>
+  <div class="screen-gallery">
+
+    <div class="screen-item">
+      <div class="phone-mockup">
+        <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+        <div class="phone-content">
+          <div style="text-align:center;margin-bottom:16px;"><div style="font-family:var(--font-display);font-weight:800;font-size:17px;color:var(--app-text);">مرحبًا أحمد 👋</div><div style="font-size:11px;color:var(--app-text-muted);">اضغط لنوع الطارئة فورًا</div></div>
+          <div class="sos-btn" style="background:linear-gradient(135deg,#E63946,#ff6b7a);">🔥 حريق<small>إبلاغ الدفاع المدني فورًا</small></div>
+          <div class="sos-btn" style="background:linear-gradient(135deg,#2A6FDB,#6fa0f0);">👮 شرطة<small>إبلاغ عن سرقة أو اعتداء</small></div>
+          <div class="sos-btn" style="background:linear-gradient(135deg,#2A9D8F,#5fc2b5);">🚑 إسعاف<small>طلب مساعدة طبية عاجلة</small></div>
+          <div style="background:#fff;border:1px solid var(--app-border);border-radius:14px;padding:10px 14px;font-size:11px;color:var(--app-text-muted);margin-top:6px;">📍 موقعك الحالي: شارع التسعين، القاهرة الجديدة</div>
+        </div>
+        <div class="phone-nav"><span class="active">🏠 الرئيسية</span><span>🗺️ الخريطة</span><span>🕓 السجل</span><span>⚙️ الإعدادات</span></div>
+      </div>
+      <div class="label">الشاشة الرئيسية</div>
+    </div>
+
+    <div class="screen-item">
+      <div class="phone-mockup">
+        <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+        <div class="phone-content">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:16px;color:#E63946;text-align:center;margin-bottom:10px;">تأكيد بلاغ حريق</div>
+          <div style="height:130px;background:#e9edf3;border-radius:14px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:#8a93a5;font-size:11px;">🗺️ خريطة الموقع الحي</div>
+          <div style="background:#fff;border:1px solid var(--app-border);border-radius:10px;padding:10px;font-size:11px;color:var(--app-text-muted);margin-bottom:14px;">العنوان المؤكد: 12 شارع النصر، مدينة نصر</div>
+          <div class="sos-btn" style="background:#E63946;">تأكيد وإرسال البلاغ</div>
+          <div style="text-align:center;font-size:11px;color:var(--app-text-muted);">أو <b style="color:#E63946;">اتصل مباشرة بـ 180</b></div>
+        </div>
+        <div class="phone-nav"><span>🏠 الرئيسية</span><span>🗺️ الخريطة</span><span>🕓 السجل</span><span>⚙️ الإعدادات</span></div>
+      </div>
+      <div class="label">تأكيد البلاغ</div>
+    </div>
+
+    <div class="screen-item">
+      <div class="phone-mockup">
+        <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+        <div class="phone-content" style="text-align:center;">
+          <div style="width:76px;height:76px;border-radius:50%;background:#22c55e22;color:#22c55e;display:flex;align-items:center;justify-content:center;font-size:32px;margin:24px auto 14px;">✓</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--app-text);">تم استلام بلاغك</div>
+          <div style="font-size:11px;color:var(--app-text-muted);margin:8px 0 20px;">رقم البلاغ #EG-48213 — الوقت المتوقع 6 دقائق</div>
+          <div style="text-align:right;background:#fff;border:1px solid var(--app-border);border-radius:12px;padding:14px;font-size:11px;">
+            <div style="color:#22c55e;font-weight:700;margin-bottom:8px;">✓ تم الاستلام</div>
+            <div style="color:#22c55e;font-weight:700;margin-bottom:8px;">✓ الفريق في الطريق</div>
+            <div style="color:var(--app-text-muted);">○ الوصول للموقع</div>
+          </div>
+        </div>
+        <div class="phone-nav"><span>🏠 الرئيسية</span><span>🗺️ الخريطة</span><span class="active">🕓 السجل</span><span>⚙️ الإعدادات</span></div>
+      </div>
+      <div class="label">تتبع حالة البلاغ</div>
+    </div>
+
+    <div class="screen-item">
+      <div class="phone-mockup">
+        <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+        <div class="phone-content">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--app-text);text-align:center;margin-bottom:14px;">جهات اتصال الطوارئ</div>
+          <div style="display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--app-border);border-radius:12px;padding:10px;margin-bottom:8px;"><div style="width:34px;height:34px;border-radius:50%;background:#E63946;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">من</div><div><div style="font-size:12px;font-weight:700;color:var(--app-text);">منى فتحي (الزوجة)</div><div style="font-size:10px;color:var(--app-text-muted);">01xxxxxxxxx</div></div></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--app-border);border-radius:12px;padding:10px;margin-bottom:14px;"><div style="width:34px;height:34px;border-radius:50%;background:#2A6FDB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">سع</div><div><div style="font-size:12px;font-weight:700;color:var(--app-text);">سعيد فتحي (الأخ)</div><div style="font-size:10px;color:var(--app-text-muted);">01xxxxxxxxx</div></div></div>
+          <div class="sos-btn app-btn-outline" style="background:transparent;border:2px dashed var(--app-border);color:var(--app-text-muted);">+ إضافة فرد جديد</div>
+        </div>
+        <div class="phone-nav"><span>🏠 الرئيسية</span><span>🗺️ الخريطة</span><span>🕓 السجل</span><span class="active">⚙️ الإعدادات</span></div>
+      </div>
+      <div class="label">جهات اتصال الطوارئ</div>
+    </div>
+
+    <div class="screen-item">
+      <div class="phone-mockup">
+        <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+        <div class="phone-content" style="text-align:center;">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--app-text);margin-bottom:6px;">الوضع الصامت 🤫</div>
+          <div style="font-size:11px;color:var(--app-text-muted);margin-bottom:18px;">إبلاغ سري بدون صوت أو ظهور على الشاشة</div>
+          <div style="width:100px;height:56px;background:#E63946;border-radius:999px;margin:0 auto 18px;position:relative;"><div style="position:absolute;top:4px;right:4px;width:48px;height:48px;background:#fff;border-radius:50%;"></div></div>
+          <div style="font-size:11px;color:var(--app-text-muted);">مُفعّل — اهتز الهاتف 3 مرات لإرسال بلاغ صامت للشرطة</div>
+        </div>
+        <div class="phone-nav"><span>🏠 الرئيسية</span><span>🗺️ الخريطة</span><span>🕓 السجل</span><span class="active">⚙️ الإعدادات</span></div>
+      </div>
+      <div class="label">الوضع الصامت</div>
+    </div>
+
+    <div class="screen-item">
+      <div class="phone-mockup">
+        <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+        <div class="phone-content">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--app-text);text-align:center;margin-bottom:14px;">سجل البلاغات</div>
+          <div style="background:#fff;border-right:4px solid #E63946;border-radius:10px;padding:10px;margin-bottom:8px;font-size:11px;"><b style="color:var(--app-text);">🔥 حريق — تم الحل</b><div style="color:var(--app-text-muted);margin-top:3px;">أمس، 8:14 م — مدينة نصر</div></div>
+          <div style="background:#fff;border-right:4px solid #2A6FDB;border-radius:10px;padding:10px;margin-bottom:8px;font-size:11px;"><b style="color:var(--app-text);">👮 شرطة — تم الحل</b><div style="color:var(--app-text-muted);margin-top:3px;">3 أيام — وسط البلد</div></div>
+          <div style="background:#fff;border-right:4px solid #2A9D8F;border-radius:10px;padding:10px;font-size:11px;"><b style="color:var(--app-text);">🚑 إسعاف — تم الحل</b><div style="color:var(--app-text-muted);margin-top:3px;">أسبوع — الإسكندرية</div></div>
+        </div>
+        <div class="phone-nav"><span>🏠 الرئيسية</span><span>🗺️ الخريطة</span><span class="active">🕓 السجل</span><span>⚙️ الإعدادات</span></div>
+      </div>
+      <div class="label">سجل البلاغات</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section reveal" id="conclusion">
+  <div class="section-label">الخلاصة</div>
+  <div class="section-title">ما تعلمناه وما التالي</div>
+  <div class="conclusion-grid">
+    <div class="card"><h5 style="color:var(--cs-accent-light);margin-bottom:10px;">القرارات الأهم</h5><p style="font-size:13px;color:var(--cs-text-muted);">تبسيط الشاشة الرئيسية لثلاثة أزرار فقط بدلًا من قائمة خدمات، لأن البحث أظهر أن كل ثانية تفكير إضافية تقلل احتمالية إتمام البلاغ في حالة الذعر.</p></div>
+    <div class="card"><h5 style="color:var(--cs-accent-light);margin-bottom:10px;">أكبر تحدٍ</h5><p style="font-size:13px;color:var(--cs-text-muted);">تصميم الوضع الصامت بحيث يكون فعالًا وآمنًا دون أن يستدعي أي تفاعل بصري ملحوظ قد يعرّض المستخدمة للخطر.</p></div>
+    <div class="card"><h5 style="color:var(--cs-accent-light);margin-bottom:10px;">الخطوات القادمة</h5><p style="font-size:13px;color:var(--cs-text-muted);">اختبار قابلية استخدام مع كبار السن، التفاوض على شراكة رسمية مع وزارة الداخلية والصحة، وبناء نموذج أولي قابل للنقر لاختبار الوضع الصامت ميدانيًا.</p></div>
+  </div>
+</section>
+
+<footer>
+  دراسة حالة UX/UI — تطبيق طوارئ · مصر 2026
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
