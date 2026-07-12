@@ -40,7 +40,9 @@ export default function HistoryScreen() {
           return (
             <View key={r.id} style={styles.card}>
               <View style={styles.row}>
-                <AppText style={styles.icon}>{icon}</AppText>
+                <View style={styles.iconBadge}>
+                  <AppText style={styles.icon}>{icon}</AppText>
+                </View>
                 <View style={styles.info}>
                   <AppText weight="bodyBold" style={styles.name}>
                     {r.serviceName} · #{r.id}
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
     padding: spacing.md,
   },
   row: {
@@ -119,8 +121,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
+  iconBadge: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   icon: {
-    fontSize: 22,
+    fontSize: 18,
   },
   info: {
     flex: 1,

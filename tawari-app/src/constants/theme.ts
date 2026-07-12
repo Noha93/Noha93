@@ -13,6 +13,12 @@ export const colors = {
   success: '#22C55E',
   warn: '#F59E0B',
   overlay: 'rgba(10,10,15,0.55)',
+  // modern redesign accents — dark hero band + voice CTA
+  ink: '#14141A',
+  inkMuted: '#2A2A33',
+  onInk: 'rgba(255,255,255,0.7)',
+  voice: '#8B5CF6',
+  voiceDark: '#6D28D9',
 } as const;
 
 export const radius = {

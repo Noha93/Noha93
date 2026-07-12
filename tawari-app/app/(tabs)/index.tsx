@@ -3,7 +3,8 @@ import { AppState, AppStateStatus, Pressable, ScrollView, StyleSheet, View } fro
 import { useRouter } from 'expo-router';
 import { AppText } from '../../src/components/AppText';
 import { BottomSheet } from '../../src/components/BottomSheet';
-import { SosButton } from '../../src/components/SosButton';
+import { SosCircle } from '../../src/components/SosCircle';
+import { VoiceReportButton } from '../../src/components/VoiceReportButton';
 import { OtherServiceButton } from '../../src/components/OtherServiceButton';
 import { ContactRow } from '../../src/components/ContactRow';
 import { ReportConfirmSheet } from '../../src/components/sheets/ReportConfirmSheet';
@@ -11,7 +12,9 @@ import { ReportSuccessSheet } from '../../src/components/sheets/ReportSuccessShe
 import { CallConfirmSheet } from '../../src/components/sheets/CallConfirmSheet';
 import { PostCallSheet } from '../../src/components/sheets/PostCallSheet';
 import { ShareLocationSheet } from '../../src/components/sheets/ShareLocationSheet';
+import { VoiceListenSheet } from '../../src/components/sheets/VoiceListenSheet';
 import { useLocation } from '../../src/hooks/useLocation';
+import { useVoiceReport } from '../../src/hooks/useVoiceReport';
 import { useContacts } from '../../src/context/ContactsContext';
 import { useReports } from '../../src/context/ReportsContext';
 import { useToast } from '../../src/context/ToastContext';
@@ -20,11 +23,12 @@ import { sosServices, otherServices, findService, type SosKey, type ServiceKey }
 import { placeCall, emergencyMessage, shareViaWhatsApp, shareViaSms, shareViaSheet, copyLocationLink } from '../../src/utils/share';
 
 type SheetView =
-  | { type: 'report'; key: SosKey }
+  | { type: 'report'; key: SosKey; fromVoice?: boolean }
   | { type: 'report-success'; key: SosKey; reportId: string }
   | { type: 'call-confirm'; key: ServiceKey }
   | { type: 'post-call'; key: SosKey }
-  | { type: 'share-location'; key: SosKey; auto?: boolean };
+  | { type: 'share-location'; key: SosKey; auto?: boolean }
+  | { type: 'voice-listening' };
 
 function isSosKey(key: ServiceKey): key is SosKey {
   return key in sosServices;
@@ -70,9 +74,24 @@ export default function HomeScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const closeSheet = () => setSheet(null);
+  const closeSheet = () => {
+    setSheet(null);
+    stopListening();
+  };
 
   const openReportSheet = (key: SosKey) => setSheet({ type: 'report', key });
+
+  const { status: voiceStatus, transcript: voiceTranscript, startListening, stopListening } = useVoiceReport({
+    onMatch: (key) => {
+      showToast(`سمعناكِ — بنفتحلك بلاغ ${sosServices[key].name}`);
+      setSheet({ type: 'report', key, fromVoice: true });
+    },
+  });
+
+  const openVoiceSheet = () => {
+    setSheet({ type: 'voice-listening' });
+    startListening();
+  };
 
   const openCallConfirm = (key: ServiceKey) => setSheet({ type: 'call-confirm', key });
 
@@ -156,61 +175,52 @@ export default function HomeScreen() {
   return (
     <>
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <View style={styles.topbar}>
-        <View style={styles.brand}>
-          <AppText style={styles.brandEmoji}>🚨</AppText>
-          <AppText weight="displayExtraBold" color={colors.fire} style={styles.brandText}>
-            طوارئ
+      <View style={styles.heroBand}>
+        <View style={styles.topbar}>
+          <View style={styles.brand}>
+            <AppText style={styles.brandEmoji}>🚨</AppText>
+            <AppText weight="displayExtraBold" color="#fff" style={styles.brandText}>
+              طوارئ
+            </AppText>
+          </View>
+          <Pressable onPress={requestLocation} style={styles.locPill}>
+            <View
+              style={[
+                styles.locDot,
+                locationStatus === 'on' && { backgroundColor: colors.success },
+                locationStatus === 'off' && { backgroundColor: colors.fire },
+              ]}
+            />
+            <AppText color={colors.onInk} style={styles.locText}>
+              {locationStatus === 'on'
+                ? 'الموقع مفعّل'
+                : locationStatus === 'locating'
+                ? 'جارِ التحديد...'
+                : locationStatus === 'off'
+                ? 'فعّل إذن الموقع'
+                : 'تفعيل الموقع'}
+            </AppText>
+          </Pressable>
+        </View>
+
+        <View style={styles.greeting}>
+          <AppText weight="displayExtraBold" color="#fff" style={styles.h1}>
+            مرحبًا 👋
+          </AppText>
+          <AppText color={colors.onInk} style={styles.hSub}>
+            دوسي على نوع الطارئة، أو استخدمي صوتك — أو اضغطي مطولًا 3 ثوانٍ للاتصال الفوري
           </AppText>
         </View>
-        <Pressable onPress={requestLocation} style={styles.locPill}>
-          <View
-            style={[
-              styles.locDot,
-              locationStatus === 'on' && { backgroundColor: colors.success },
-              locationStatus === 'off' && { backgroundColor: colors.fire },
-            ]}
-          />
-          <AppText color={colors.textMuted} style={styles.locText}>
-            {locationStatus === 'on'
-              ? 'الموقع مفعّل'
-              : locationStatus === 'locating'
-              ? 'جارِ التحديد...'
-              : locationStatus === 'off'
-              ? 'فعّل إذن الموقع'
-              : 'تفعيل الموقع'}
-          </AppText>
-        </Pressable>
-      </View>
 
-      <View style={styles.greeting}>
-        <AppText weight="displayExtraBold" style={styles.h1}>
-          مرحبًا 👋
-        </AppText>
-        <AppText color={colors.textMuted} style={styles.hSub}>
-          اضغطي على نوع الطارئة لإرسال بلاغ فوري، أو اضغطي مطولًا 3 ثوانٍ للاتصال الفوري
-        </AppText>
-      </View>
+        <View style={styles.sosRow}>
+          <SosCircle service={sosServices.fire} onPress={() => openReportSheet('fire')} onAutoTrigger={() => autoTriggerSos('fire')} />
+          <SosCircle service={sosServices.police} onPress={() => openReportSheet('police')} onAutoTrigger={() => autoTriggerSos('police')} />
+          <SosCircle service={sosServices.amb} onPress={() => openReportSheet('amb')} onAutoTrigger={() => autoTriggerSos('amb')} />
+        </View>
 
-      <View style={styles.sosWrap}>
-        <SosButton
-          service={sosServices.fire}
-          subtitle="إبلاغ الحماية المدنية والمطافي فورًا"
-          onPress={() => openReportSheet('fire')}
-          onAutoTrigger={() => autoTriggerSos('fire')}
-        />
-        <SosButton
-          service={sosServices.police}
-          subtitle="الإبلاغ عن سرقة أو اعتداء أو خطر"
-          onPress={() => openReportSheet('police')}
-          onAutoTrigger={() => autoTriggerSos('police')}
-        />
-        <SosButton
-          service={sosServices.amb}
-          subtitle="طلب مساعدة طبية عاجلة"
-          onPress={() => openReportSheet('amb')}
-          onAutoTrigger={() => autoTriggerSos('amb')}
-        />
+        <View style={styles.voiceWrap}>
+          <VoiceReportButton onPress={openVoiceSheet} />
+        </View>
       </View>
 
       <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
@@ -292,6 +302,15 @@ export default function HomeScreen() {
           onDismiss={closeSheet}
         />
       ) : null}
+
+      {sheet?.type === 'voice-listening' ? (
+        <VoiceListenSheet
+          status={voiceStatus}
+          transcript={voiceTranscript}
+          onRetry={startListening}
+          onCancel={closeSheet}
+        />
+      ) : null}
     </BottomSheet>
     </>
   );
@@ -304,6 +323,12 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingBottom: 40,
+  },
+  heroBand: {
+    backgroundColor: colors.ink,
+    borderBottomLeftRadius: radius.xl,
+    borderBottomRightRadius: radius.xl,
+    paddingBottom: spacing.xl,
   },
   topbar: {
     flexDirection: 'row-reverse',
@@ -328,9 +353,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: colors.surface,
+    backgroundColor: 'rgba(255,255,255,0.1)',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'rgba(255,255,255,0.16)',
     borderRadius: radius.pill,
     paddingVertical: 6,
     paddingHorizontal: 12,
@@ -355,9 +380,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 2,
   },
-  sosWrap: {
+  sosRow: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-around',
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.sm,
+  },
+  voiceWrap: {
     paddingHorizontal: spacing.lg,
-    gap: 14,
+    paddingTop: spacing.lg,
   },
   sectionH: {
     paddingHorizontal: spacing.lg,
