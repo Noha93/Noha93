@@ -8,12 +8,8 @@ export type OtherKey =
   | 'water'
   | 'traffic'
   | 'tourist'
-  | 'child'
   | 'health'
-  | 'rail'
-  | 'women'
-  | 'addiction'
-  | 'prosecution';
+  | 'women';
 export type ServiceKey = SosKey | OtherKey;
 
 export interface SosService {
@@ -29,6 +25,9 @@ export interface OtherService {
   key: OtherKey;
   number: string;
   icon: IconName;
+  // Distinct accent per category for the glass-badge glow treatment (matches
+  // the curated palette used in the Figma "Midnight Glass" redesign).
+  glowColor: string;
 }
 
 // Names and labels are NOT stored here — they're looked up via
@@ -62,17 +61,13 @@ export const sosServices: Record<SosKey, SosService> = {
 };
 
 export const otherServices: Record<OtherKey, OtherService> = {
-  gas: { key: 'gas', number: '129', icon: 'cloud-outline' },
-  elec: { key: 'elec', number: '121', icon: 'flash-outline' },
-  water: { key: 'water', number: '125', icon: 'water-outline' },
-  traffic: { key: 'traffic', number: '128', icon: 'car-outline' },
-  tourist: { key: 'tourist', number: '126', icon: 'business-outline' },
-  child: { key: 'child', number: '16000', icon: 'happy-outline' },
-  health: { key: 'health', number: '137', icon: 'medical-outline' },
-  rail: { key: 'rail', number: '145', icon: 'train-outline' },
-  women: { key: 'women', number: '15115', icon: 'woman-outline' },
-  addiction: { key: 'addiction', number: '08008880700', icon: 'leaf-outline' },
-  prosecution: { key: 'prosecution', number: '15888', icon: 'hammer-outline' },
+  elec: { key: 'elec', number: '121', icon: 'flash-outline', glowColor: '#FBBF24' },
+  gas: { key: 'gas', number: '129', icon: 'cloud-outline', glowColor: '#38BDF8' },
+  traffic: { key: 'traffic', number: '128', icon: 'car-outline', glowColor: '#FB7185' },
+  water: { key: 'water', number: '125', icon: 'water-outline', glowColor: '#22D3EE' },
+  tourist: { key: 'tourist', number: '126', icon: 'business-outline', glowColor: '#A78BFA' },
+  health: { key: 'health', number: '137', icon: 'medical-outline', glowColor: '#F472B6' },
+  women: { key: 'women', number: '15115', icon: 'woman-outline', glowColor: '#FB923C' },
 };
 
 export function findService(key: ServiceKey): SosService | OtherService {

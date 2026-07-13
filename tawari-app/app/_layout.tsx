@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts, IBMPlexSansArabic_400Regular, IBMPlexSansArabic_500Medium, IBMPlexSansArabic_600SemiBold, IBMPlexSansArabic_700Bold } from '@expo-google-fonts/ibm-plex-sans-arabic';
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold } from '@expo-google-fonts/inter';
 import { ContactsProvider } from '../src/context/ContactsContext';
+import { MedicalProvider } from '../src/context/MedicalContext';
 import { ReportsProvider } from '../src/context/ReportsContext';
 import { ToastProvider } from '../src/context/ToastContext';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
@@ -54,9 +55,11 @@ export default function RootLayout() {
           <ThemeProvider>
             <ToastProvider>
               <ContactsProvider>
-                <ReportsProvider>
-                  <AppShell />
-                </ReportsProvider>
+                <MedicalProvider>
+                  <ReportsProvider>
+                    <AppShell />
+                  </ReportsProvider>
+                </MedicalProvider>
               </ContactsProvider>
             </ToastProvider>
           </ThemeProvider>

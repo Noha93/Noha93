@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { AppText } from '../AppText';
+import { AppIcon } from '../AppIcon';
 import { SheetButton } from '../SheetButton';
 import { LocationBox } from '../LocationBox';
-import { colors, spacing } from '../../constants/theme';
+import { colors, glow, radius, spacing } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
-import { useLocale } from '../../context/LocaleContext';
+import { useLocale, rowDir } from '../../context/LocaleContext';
+import { useMedical } from '../../context/MedicalContext';
 import type { Coords } from '../../utils/share';
 import type { LocationStatus } from '../../hooks/useLocation';
 
@@ -32,8 +34,9 @@ export function ShareLocationSheet({
   onCopyLink,
   onDismiss,
 }: Props) {
-  const { colors: themeColors } = useTheme();
-  const { t } = useLocale();
+  const { colors: themeColors, scheme } = useTheme();
+  const { dir, t } = useLocale();
+  const { profile, hasData } = useMedical();
   return (
     <>
       <AppText weight="displayExtraBold" style={styles.title}>
@@ -44,6 +47,24 @@ export function ShareLocationSheet({
       </AppText>
 
       <LocationBox coords={coords} />
+
+      {coords && hasData ? (
+        <View
+          style={[
+            styles.medicalChip,
+            { flexDirection: rowDir(dir), borderColor: colors.fire },
+            scheme === 'dark' && glow(colors.fire, 0.25, 12),
+          ]}
+        >
+          <AppIcon name="water-outline" size={14} color={colors.fire} />
+          <AppText color={themeColors.text} style={[styles.medicalChipText, { textAlign: dir === 'rtl' ? 'right' : 'left' }]}>
+            {t('shareLocation.medicalChip', {
+              bloodType: profile.bloodType || '—',
+              allergies: profile.allergies || '—',
+            })}
+          </AppText>
+        </View>
+      ) : null}
 
       {!coords ? (
         <SheetButton
@@ -82,6 +103,21 @@ const styles = StyleSheet.create({
     fontSize: 10.5,
     textAlign: 'center',
     marginBottom: spacing.md,
+    lineHeight: 16,
+  },
+  medicalChip: {
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: 'rgba(230,57,70,0.1)',
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingVertical: 10,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.md,
+  },
+  medicalChipText: {
+    fontSize: 11.5,
+    flex: 1,
     lineHeight: 16,
   },
 });

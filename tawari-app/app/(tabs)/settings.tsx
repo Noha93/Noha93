@@ -4,6 +4,7 @@ import { AppText } from '../../src/components/AppText';
 import { AppIcon, type IconName } from '../../src/components/AppIcon';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { ContactRow } from '../../src/components/ContactRow';
+import { MedicalSection } from '../../src/components/MedicalSection';
 import { SheetButton } from '../../src/components/SheetButton';
 import { useContacts, MAX_CONTACTS } from '../../src/context/ContactsContext';
 import { useToast } from '../../src/context/ToastContext';
@@ -154,6 +155,10 @@ export default function SettingsScreen() {
         <AppText color={colors.textMuted} style={styles.note}>
           {t('settings.note')}
         </AppText>
+
+        <View style={styles.medicalSpacer}>
+          <MedicalSection />
+        </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -235,6 +240,9 @@ function createStyles(colors: ThemeColors, dir: Dir) {
       marginTop: spacing.lg,
       fontSize: 11,
       lineHeight: 17,
+    },
+    medicalSpacer: {
+      marginTop: spacing.lg,
     },
   });
 }

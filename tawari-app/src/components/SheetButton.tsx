@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { AppText } from './AppText';
 import { AppIcon, type IconName } from './AppIcon';
-import { radius, spacing } from '../constants/theme';
+import { glow, radius, spacing } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import { useLocale, rowDir } from '../context/LocaleContext';
 
@@ -16,11 +16,12 @@ interface Props {
 }
 
 export function SheetButton({ label, onPress, variant = 'solid', color, icon, style }: Props) {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const { dir } = useLocale();
   const bg = variant === 'solid' ? color ?? colors.police : variant === 'secondary' ? colors.bg : 'transparent';
   const textColor = variant === 'solid' ? '#fff' : colors.text;
   const border = variant === 'outline' ? colors.border : variant === 'secondary' ? colors.border : 'transparent';
+  const solidGlow = variant === 'solid' && scheme === 'dark' ? glow(color ?? colors.police, 0.45, 16) : null;
 
   return (
     <Pressable
@@ -28,6 +29,7 @@ export function SheetButton({ label, onPress, variant = 'solid', color, icon, st
       style={({ pressed }) => [
         styles.btn,
         { flexDirection: rowDir(dir), backgroundColor: bg, borderColor: border, borderWidth: variant === 'solid' ? 0 : 1.5 },
+        solidGlow,
         pressed && styles.pressed,
         style,
       ]}

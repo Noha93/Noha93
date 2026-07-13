@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const STORAGE_KEYS = {
   contacts: 'tawari:contacts',
   reports: 'tawari:reports',
+  medical: 'tawari:medical',
 } as const;
 
 export async function readJSON<T>(key: string, fallback: T): Promise<T> {

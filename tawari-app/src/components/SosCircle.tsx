@@ -4,6 +4,8 @@ import Svg, { Circle } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';
 import { AppText } from './AppText';
 import { AppIcon } from './AppIcon';
+import { glow } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import { useLocale } from '../context/LocaleContext';
 import type { SosService } from '../constants/services';
 
@@ -23,6 +25,7 @@ interface Props {
 
 export function SosCircle({ service, onPress, onAutoTrigger }: Props) {
   const { t } = useLocale();
+  const { scheme } = useTheme();
   const progress = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const pulse = useRef(new Animated.Value(0)).current;
@@ -115,7 +118,7 @@ export function SosCircle({ service, onPress, onAutoTrigger }: Props) {
       </Svg>
       <Animated.View style={{ transform: [{ scale }] }}>
         <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={styles.pressable}>
-          <View style={[styles.core, { backgroundColor: service.color }]}>
+          <View style={[styles.core, { backgroundColor: service.color }, scheme === 'dark' && glow(service.color, 0.65, 20)]}>
             <AppIcon name={service.icon} size={34} color="#fff" />
           </View>
         </Pressable>

@@ -31,15 +31,18 @@ export const lightColors = {
   onInk: 'rgba(255,255,255,0.7)',
 } as const;
 
+// "Midnight Glass": near-black base + translucent-white glass surfaces +
+// neon glow accents (mirrors the Figma dark-mode redesign). Light mode keeps
+// its original flat-card look — glassmorphism only reads well over a dark base.
 export const darkColors = {
   ...semanticColors,
-  bg: '#0D1625',
-  surface: '#16213A',
+  bg: '#0A0A0F',
+  surface: 'rgba(255,255,255,0.05)',
   text: '#F5F6FA',
   textMuted: '#93A0B4',
-  border: 'rgba(255,255,255,0.12)',
+  border: 'rgba(255,255,255,0.13)',
   overlay: 'rgba(0,0,0,0.65)',
-  ink: '#5C0F18',
+  ink: '#120A10',
   inkMuted: '#7A1B22',
   onInk: 'rgba(255,255,255,0.7)',
 } as const;
@@ -119,3 +122,17 @@ export const elevation = {
   md: { shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 4 },
   lg: { shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
 };
+
+// Colored drop-shadow "glow" for the Midnight Glass dark theme — used on SOS
+// buttons, service badges, and primary CTAs instead of a plain black shadow.
+// Only worth applying when scheme === 'dark' (a neon shadow reads as murky on
+// a light surface); callers gate on that themselves.
+export function glow(hexColor: string, opacity = 0.5, radius = 16) {
+  return {
+    shadowColor: hexColor,
+    shadowOpacity: opacity,
+    shadowRadius: radius,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: Math.round(radius / 2),
+  };
+}
