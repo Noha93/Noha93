@@ -1,16 +1,18 @@
 import React, { useMemo } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
-import { AppIcon } from '../../src/components/AppIcon';
+import { AppIcon, type IconName } from '../../src/components/AppIcon';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { useReports } from '../../src/context/ReportsContext';
 import { useTheme } from '../../src/context/ThemeContext';
-import { sosServices } from '../../src/constants/services';
+import { useLocale, rowDir, textAlignDir, type Dir } from '../../src/context/LocaleContext';
+import { sosServices, otherServices, type ServiceKey } from '../../src/constants/services';
 import { mapsLink } from '../../src/utils/share';
 import { radius, spacing, type ThemeColors } from '../../src/constants/theme';
+import type { Locale } from '../../src/i18n/strings';
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleString('ar-EG', {
+function formatDate(iso: string, locale: Locale): string {
+  return new Date(iso).toLocaleString(locale === 'en' ? 'en-US' : 'ar-EG', {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
@@ -19,40 +21,48 @@ function formatDate(iso: string): string {
   });
 }
 
+function serviceIcon(key: ServiceKey): IconName {
+  return (
+    (sosServices as Record<string, { icon: IconName }>)[key]?.icon ??
+    (otherServices as Record<string, { icon: IconName }>)[key]?.icon ??
+    'lifebuoy'
+  );
+}
+
 export default function HistoryScreen() {
   const { reports } = useReports();
   const { colors } = useTheme();
-  const styles = useMemo(() => createStyles(colors), [colors]);
+  const { locale, dir, t } = useLocale();
+  const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <ScreenHeader title="سجل البلاغات" subtitle="البلاغات والمكالمات محفوظة محليًا على جهازك فقط" icon="history" />
+      <ScreenHeader title={t('history.title')} subtitle={t('history.subtitle')} icon="history" />
 
       <View style={styles.body}>
       {reports.length === 0 ? (
         <AppText color={colors.textMuted} style={styles.empty}>
-          سجل البلاغات فارغ حاليًا
+          {t('history.empty')}
         </AppText>
       ) : (
         reports.map((r) => {
-          const icon = sosServices[r.serviceKey as keyof typeof sosServices]?.icon ?? 'lifebuoy';
           return (
             <View key={r.id} style={styles.card}>
               <View style={styles.row}>
                 <View style={styles.iconBadge}>
-                  <AppIcon name={icon} size={18} color={colors.text} />
+                  <AppIcon name={serviceIcon(r.serviceKey)} size={18} color={colors.text} />
                 </View>
                 <View style={styles.info}>
                   <AppText weight="bodyBold" style={styles.name}>
-                    {r.serviceName} · #{r.id}
+                    {t(`services.${r.serviceKey}.name`)} · #{r.id}
                   </AppText>
                   <AppText color={colors.textMuted} style={styles.date}>
-                    {formatDate(r.createdAt)}
+                    {formatDate(r.createdAt, locale)}
                   </AppText>
                 </View>
                 <View style={[styles.badge, { backgroundColor: r.resolved ? '#22c55e18' : '#E6394618' }]}>
                   <AppText style={styles.badgeText} color={r.resolved ? colors.success : colors.fire}>
-                    {r.resolved ? 'تم الحل' : 'محتاج متابعة'}
+                    {r.resolved ? t('history.resolvedBadge') : t('history.followUpBadge')}
                   </AppText>
                 </View>
               </View>
@@ -60,7 +70,7 @@ export default function HistoryScreen() {
                 <Pressable style={styles.linkRow} onPress={() => Linking.openURL(mapsLink(r.coords!))}>
                   <AppIcon name="map" size={13} color={colors.police} />
                   <AppText color={colors.police} style={styles.link}>
-                    عرض الموقع وقت البلاغ
+                    {t('history.viewLocation')}
                   </AppText>
                 </Pressable>
               ) : null}
@@ -73,7 +83,7 @@ export default function HistoryScreen() {
   );
 }
 
-function createStyles(colors: ThemeColors) {
+function createStyles(colors: ThemeColors, dir: Dir) {
   return StyleSheet.create({
     screen: {
       flex: 1,
@@ -99,7 +109,7 @@ function createStyles(colors: ThemeColors) {
       padding: spacing.md,
     },
     row: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 10,
     },
@@ -131,14 +141,14 @@ function createStyles(colors: ThemeColors) {
       fontSize: 10,
     },
     linkRow: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 4,
       marginTop: spacing.sm,
     },
     link: {
       fontSize: 11.5,
-      textAlign: 'right',
+      textAlign: textAlignDir(dir),
     },
   });
 }

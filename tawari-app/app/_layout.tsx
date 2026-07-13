@@ -5,11 +5,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts, IBMPlexSansArabic_400Regular, IBMPlexSansArabic_500Medium, IBMPlexSansArabic_600SemiBold, IBMPlexSansArabic_700Bold } from '@expo-google-fonts/ibm-plex-sans-arabic';
-import { Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold } from '@expo-google-fonts/inter';
 import { ContactsProvider } from '../src/context/ContactsContext';
 import { ReportsProvider } from '../src/context/ReportsContext';
 import { ToastProvider } from '../src/context/ToastContext';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
+import { LocaleProvider } from '../src/context/LocaleContext';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -31,7 +32,9 @@ export default function RootLayout() {
     IBMPlexSansArabic_700Bold,
     Inter_400Regular,
     Inter_500Medium,
+    Inter_600SemiBold,
     Inter_700Bold,
+    Inter_800ExtraBold,
   });
 
   useEffect(() => {
@@ -47,15 +50,17 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <ThemeProvider>
-          <ToastProvider>
-            <ContactsProvider>
-              <ReportsProvider>
-                <AppShell />
-              </ReportsProvider>
-            </ContactsProvider>
-          </ToastProvider>
-        </ThemeProvider>
+        <LocaleProvider>
+          <ThemeProvider>
+            <ToastProvider>
+              <ContactsProvider>
+                <ReportsProvider>
+                  <AppShell />
+                </ReportsProvider>
+              </ContactsProvider>
+            </ToastProvider>
+          </ThemeProvider>
+        </LocaleProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

@@ -18,6 +18,7 @@ import { useContacts } from '../../src/context/ContactsContext';
 import { useReports } from '../../src/context/ReportsContext';
 import { useToast } from '../../src/context/ToastContext';
 import { useTheme } from '../../src/context/ThemeContext';
+import { useLocale, rowDir, type Dir } from '../../src/context/LocaleContext';
 import { radius, spacing, type ThemeColors } from '../../src/constants/theme';
 import { sosServices, otherServices, findService, type SosKey, type ServiceKey } from '../../src/constants/services';
 import { placeCall, emergencyMessage, shareViaWhatsApp, shareViaSms, shareViaSheet, copyLocationLink } from '../../src/utils/share';
@@ -39,7 +40,8 @@ export default function HomeScreen() {
   const { addReport } = useReports();
   const { showToast } = useToast();
   const { colors } = useTheme();
-  const styles = useMemo(() => createStyles(colors), [colors]);
+  const { locale, dir, t } = useLocale();
+  const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
 
   const [sheet, setSheet] = useState<SheetView | null>(null);
   const pendingCallRef = useRef<{ key: SosKey; auto: boolean } | null>(null);
@@ -80,8 +82,9 @@ export default function HomeScreen() {
   };
 
   const { status: voiceStatus, transcript: voiceTranscript, startListening, stopListening } = useVoiceReport({
+    locale,
     onMatch: (key) => {
-      showToast(`سمعناكِ — بنفتحلك الاتصال بـ ${sosServices[key].name}`);
+      showToast(t('home.toastHeard', { name: t(`services.${key}.name`) }));
       setSheet({ type: 'call-confirm', key });
     },
   });
@@ -104,7 +107,7 @@ export default function HomeScreen() {
 
   const autoTriggerSos = async (key: SosKey) => {
     const svc = sosServices[key];
-    showToast(`جارٍ الاتصال بـ ${svc.label}...`);
+    showToast(t('home.callingLabel', { label: t(`services.${key}.label`) }));
     await placeCall(svc.number);
     pendingCallRef.current = { key, auto: true };
   };
@@ -115,44 +118,40 @@ export default function HomeScreen() {
     }
     setSheet({ type: 'share-location', key, auto: true });
     setTimeout(async () => {
-      const svc = sosServices[key];
-      const message = emergencyMessage(coordsRef.current, svc.label);
+      const message = emergencyMessage(coordsRef.current, t(`services.${key}.label`), locale);
       const ok = await shareViaWhatsApp(message);
-      if (!ok) showToast('واتساب مش متاح على الجهاز ده — جرّبي طريقة تانية بالأسفل');
+      if (!ok) showToast(t('home.toastWhatsappUnavailableTryAnother'));
     }, 400);
   };
 
   const handleResolved = async (key: SosKey) => {
-    const svc = sosServices[key];
-    await addReport({ serviceKey: key, serviceName: svc.name, coords: coordsRef.current, resolved: true });
+    await addReport({ serviceKey: key, coords: coordsRef.current, resolved: true });
     closeSheet();
-    showToast('الحمد لله على السلامة');
+    showToast(t('home.toastResolved'));
   };
 
   const handleNotResolved = async (key: SosKey) => {
-    const svc = sosServices[key];
-    await addReport({ serviceKey: key, serviceName: svc.name, coords: coordsRef.current, resolved: false });
+    await addReport({ serviceKey: key, coords: coordsRef.current, resolved: false });
     setSheet({ type: 'share-location', key, auto: false });
   };
 
   const contactPhones = contacts.map((c) => c.phone);
 
   const shareHandlers = (key: SosKey) => {
-    const svc = sosServices[key];
-    const message = emergencyMessage(coordsRef.current, svc.label);
+    const message = emergencyMessage(coordsRef.current, t(`services.${key}.label`), locale);
     return {
       onWhatsApp: async () => {
         const ok = await shareViaWhatsApp(message);
-        if (!ok) showToast('واتساب مش متاح على الجهاز ده');
+        if (!ok) showToast(t('home.toastWhatsappUnavailable'));
       },
       onSms: async () => {
         const result = await shareViaSms(message, contactPhones);
-        if (result === 'unsupported') showToast('الرسائل النصية مش متاحة على الجهاز ده');
+        if (result === 'unsupported') showToast(t('home.toastSmsUnavailable'));
       },
       onShareSheet: () => shareViaSheet(message),
       onCopyLink: async () => {
         const link = await copyLocationLink(coordsRef.current);
-        showToast(link ? 'تم نسخ رابط الموقع' : 'فعّلي الموقع الأول');
+        showToast(link ? t('home.toastLinkCopied') : t('home.toastEnableLocationFirst'));
       },
     };
   };
@@ -165,7 +164,7 @@ export default function HomeScreen() {
           <View style={styles.brand}>
             <AppIcon name="alarm-light" size={20} color="#fff" />
             <AppText weight="displayExtraBold" color="#fff" style={styles.brandText}>
-              طوارئ
+              {t('brand.name')}
             </AppText>
           </View>
           <Pressable onPress={requestLocation} style={styles.locPill}>
@@ -178,22 +177,25 @@ export default function HomeScreen() {
             />
             <AppText color={colors.onInk} style={styles.locText}>
               {locationStatus === 'on'
-                ? 'الموقع مفعّل'
+                ? t('location.on')
                 : locationStatus === 'locating'
-                ? 'جارِ التحديد...'
+                ? t('location.locating')
                 : locationStatus === 'off'
-                ? 'فعّل إذن الموقع'
-                : 'تفعيل الموقع'}
+                ? t('location.off')
+                : t('location.default')}
             </AppText>
           </Pressable>
         </View>
 
         <View style={styles.greeting}>
-          <AppText weight="displayExtraBold" color="#fff" style={styles.h1}>
-            مرحبًا 👋
-          </AppText>
+          <View style={styles.greetingRow}>
+            <AppIcon name="hand-wave" size={20} color="#fff" />
+            <AppText weight="displayExtraBold" color="#fff" style={styles.h1}>
+              {t('home.greeting')}
+            </AppText>
+          </View>
           <AppText color={colors.onInk} style={styles.hSub}>
-            دوسي على نوع الطارئة عشان تتصلي بيها (هنأكد معاكِ الأول)، أو استخدمي صوتك، أو اضغطي مطولًا 3 ثوانٍ للاتصال الفوري
+            {t('home.subtitle')}
           </AppText>
         </View>
 
@@ -208,10 +210,17 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      <View style={styles.trustRow}>
+        <AppIcon name="shield-check" size={13} color={colors.textMuted} />
+        <AppText color={colors.textMuted} style={styles.trustText}>
+          {t('trust.disclaimer')}
+        </AppText>
+      </View>
+
       <View style={styles.sectionHRow}>
         <AppIcon name="lifebuoy" size={16} color={colors.textMuted} />
         <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
-          خدمات طوارئ أخرى قد تفيدك
+          {t('home.otherServicesHeader')}
         </AppText>
       </View>
       <View style={styles.otherGrid}>
@@ -223,19 +232,19 @@ export default function HomeScreen() {
       <View style={styles.sectionHRow}>
         <AppIcon name="account-group" size={16} color={colors.textMuted} />
         <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
-          جهات اتصال الطوارئ الخاصة بك
+          {t('home.contactsHeader')}
         </AppText>
       </View>
       {contacts.length === 0 ? (
         <AppText color={colors.textMuted} style={styles.emptyContacts}>
-          لسه معنديش جهات اتصال محفوظة — أضيفي جهة عشان تقدري تشاركي موقعك معاها بسرعة.
+          {t('home.emptyContacts')}
         </AppText>
       ) : (
         contacts.map((c) => <ContactRow key={c.id} contact={c} />)
       )}
       <Pressable style={styles.addContact} onPress={() => router.push('/settings')}>
         <AppText color={colors.textMuted} style={styles.addContactText}>
-          + إضافة فرد من العائلة
+          {t('home.addContact')}
         </AppText>
       </Pressable>
     </ScrollView>
@@ -243,7 +252,7 @@ export default function HomeScreen() {
     <BottomSheet visible={!!sheet} onClose={closeSheet}>
       {sheet?.type === 'call-confirm' ? (
         <CallConfirmSheet
-          label={findService(sheet.key).label}
+          label={t(`services.${sheet.key}.label`)}
           number={findService(sheet.key).number}
           color={isSosKey(sheet.key) ? sosServices[sheet.key].color : colors.police}
           onConfirm={() => performCall(sheet.key)}
@@ -253,7 +262,7 @@ export default function HomeScreen() {
 
       {sheet?.type === 'post-call' ? (
         <PostCallSheet
-          serviceLabel={sosServices[sheet.key].label}
+          serviceLabel={t(`services.${sheet.key}.label`)}
           onResolved={() => handleResolved(sheet.key)}
           onNotResolved={() => handleNotResolved(sheet.key)}
         />
@@ -286,7 +295,7 @@ export default function HomeScreen() {
   );
 }
 
-function createStyles(colors: ThemeColors) {
+function createStyles(colors: ThemeColors, dir: Dir) {
   return StyleSheet.create({
     screen: {
       flex: 1,
@@ -302,7 +311,7 @@ function createStyles(colors: ThemeColors) {
       paddingBottom: spacing.xl,
     },
     topbar: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: spacing.lg,
@@ -310,7 +319,7 @@ function createStyles(colors: ThemeColors) {
       paddingBottom: spacing.sm,
     },
     brand: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 8,
     },
@@ -318,7 +327,7 @@ function createStyles(colors: ThemeColors) {
       fontSize: 20,
     },
     locPill: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 6,
       backgroundColor: 'rgba(255,255,255,0.1)',
@@ -341,15 +350,21 @@ function createStyles(colors: ThemeColors) {
       paddingHorizontal: spacing.lg,
       paddingBottom: 14,
     },
+    greetingRow: {
+      flexDirection: rowDir(dir),
+      alignItems: 'center',
+      gap: 8,
+    },
     h1: {
       fontSize: 19,
     },
     hSub: {
       fontSize: 12,
-      marginTop: 2,
+      marginTop: 6,
+      lineHeight: 18,
     },
     sosRow: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       justifyContent: 'space-around',
       paddingHorizontal: spacing.md,
       paddingTop: spacing.sm,
@@ -358,19 +373,31 @@ function createStyles(colors: ThemeColors) {
       paddingHorizontal: spacing.lg,
       paddingTop: spacing.lg,
     },
-    sectionHRow: {
-      flexDirection: 'row-reverse',
+    trustRow: {
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 6,
       paddingHorizontal: spacing.lg,
-      paddingTop: 26,
+      paddingTop: spacing.sm,
+    },
+    trustText: {
+      fontSize: 10.5,
+      flexShrink: 1,
+      lineHeight: 15,
+    },
+    sectionHRow: {
+      flexDirection: rowDir(dir),
+      alignItems: 'center',
+      gap: 6,
+      paddingHorizontal: spacing.lg,
+      paddingTop: 22,
       paddingBottom: 10,
     },
     sectionH: {
       fontSize: 14,
     },
     otherGrid: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       flexWrap: 'wrap',
       paddingHorizontal: spacing.lg,
       gap: 10,

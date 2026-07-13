@@ -8,39 +8,49 @@ import { SheetButton } from '../../src/components/SheetButton';
 import { useContacts, MAX_CONTACTS } from '../../src/context/ContactsContext';
 import { useToast } from '../../src/context/ToastContext';
 import { useTheme, type ThemeMode } from '../../src/context/ThemeContext';
-import { fonts, radius, spacing, type ThemeColors } from '../../src/constants/theme';
+import { useLocale, rowDir, textAlignDir, type Dir, type Locale } from '../../src/context/LocaleContext';
+import { fontForWeight, radius, spacing, type ThemeColors } from '../../src/constants/theme';
 
-const THEME_OPTIONS: { mode: ThemeMode; label: string; icon: IconName }[] = [
-  { mode: 'light', label: 'فاتح', icon: 'white-balance-sunny' },
-  { mode: 'dark', label: 'غامق', icon: 'weather-night' },
-  { mode: 'system', label: 'تلقائي', icon: 'theme-light-dark' },
+const THEME_OPTIONS: { mode: ThemeMode; icon: IconName }[] = [
+  { mode: 'light', icon: 'white-balance-sunny' },
+  { mode: 'dark', icon: 'weather-night' },
+  { mode: 'system', icon: 'theme-light-dark' },
+];
+
+const LANGUAGE_OPTIONS: { locale: Locale; key: string }[] = [
+  { locale: 'ar', key: 'settings.languageArabic' },
+  { locale: 'en', key: 'settings.languageEnglish' },
 ];
 
 export default function SettingsScreen() {
   const { contacts, addContact, removeContact } = useContacts();
   const { showToast } = useToast();
   const { colors, mode, setMode } = useTheme();
-  const styles = useMemo(() => createStyles(colors), [colors]);
+  const { locale, dir, t, setLocale } = useLocale();
+  const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
   const canAddMore = contacts.length < MAX_CONTACTS;
 
+  const themeLabel = (m: ThemeMode) =>
+    m === 'light' ? t('settings.themeLight') : m === 'dark' ? t('settings.themeDark') : t('settings.themeSystem');
+
   const handleAdd = async () => {
     const trimmedName = name.trim();
     const trimmedPhone = phone.trim();
     if (!trimmedName || !trimmedPhone) {
-      showToast('من فضلك اكتبي الاسم ورقم الهاتف');
+      showToast(t('settings.toastMissingFields'));
       return;
     }
     const ok = await addContact({ name: trimmedName, phone: trimmedPhone });
     if (!ok) {
-      showToast(`أقصى عدد جهات اتصال هو ${MAX_CONTACTS}`);
+      showToast(t('settings.toastMaxReached', { max: MAX_CONTACTS }));
       return;
     }
     setName('');
     setPhone('');
-    showToast('تمت إضافة جهة الاتصال');
+    showToast(t('settings.toastAdded'));
   };
 
   return (
@@ -49,11 +59,36 @@ export default function SettingsScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <ScreenHeader title="الإعدادات" subtitle={`جهات اتصال الطوارئ الخاصة بك (حتى ${MAX_CONTACTS})`} icon="cog-outline" />
+        <ScreenHeader title={t('settings.title')} subtitle={t('settings.subtitle', { max: MAX_CONTACTS })} icon="cog-outline" />
 
         <View style={styles.body}>
         <AppText weight="bodyBold" style={styles.sectionTitle}>
-          المظهر
+          {t('settings.language')}
+        </AppText>
+        <View style={styles.themeRow}>
+          {LANGUAGE_OPTIONS.map((opt) => {
+            const active = locale === opt.locale;
+            return (
+              <Pressable
+                key={opt.locale}
+                onPress={() => setLocale(opt.locale)}
+                style={[styles.themeOption, active && styles.themeOptionActive]}
+              >
+                <AppIcon name="translate" size={18} color={active ? '#fff' : colors.textMuted} />
+                <AppText
+                  weight={active ? 'bodyBold' : 'body'}
+                  color={active ? '#fff' : colors.textMuted}
+                  style={styles.themeLabel}
+                >
+                  {t(opt.key)}
+                </AppText>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <AppText weight="bodyBold" style={styles.sectionTitle}>
+          {t('settings.appearance')}
         </AppText>
         <View style={styles.themeRow}>
           {THEME_OPTIONS.map((opt) => {
@@ -70,7 +105,7 @@ export default function SettingsScreen() {
                   color={active ? '#fff' : colors.textMuted}
                   style={styles.themeLabel}
                 >
-                  {opt.label}
+                  {themeLabel(opt.mode)}
                 </AppText>
               </Pressable>
             );
@@ -78,11 +113,11 @@ export default function SettingsScreen() {
         </View>
 
         <AppText weight="bodyBold" style={styles.sectionTitle}>
-          جهات اتصال الطوارئ
+          {t('settings.contactsHeader')}
         </AppText>
         {contacts.length === 0 ? (
           <AppText color={colors.textMuted} style={styles.empty}>
-            لسه معنديش جهات اتصال محفوظة
+            {t('settings.emptyContacts')}
           </AppText>
         ) : (
           contacts.map((c) => <ContactRow key={c.id} contact={c} onRemove={() => removeContact(c.id)} />)
@@ -90,34 +125,34 @@ export default function SettingsScreen() {
 
         <View style={styles.form}>
           <AppText weight="bodyBold" style={styles.formTitle}>
-            {canAddMore ? '+ إضافة جهة اتصال جديدة' : `وصلتي للحد الأقصى (${MAX_CONTACTS} جهات اتصال)`}
+            {canAddMore ? t('settings.addNewContact') : t('settings.maxReached', { max: MAX_CONTACTS })}
           </AppText>
           {canAddMore ? (
             <>
               <TextInput
                 value={name}
                 onChangeText={setName}
-                placeholder="الاسم (مثال: منى - الزوجة)"
+                placeholder={t('settings.namePlaceholder')}
                 placeholderTextColor={colors.textMuted}
                 style={styles.input}
-                textAlign="right"
+                textAlign={textAlignDir(dir)}
               />
               <TextInput
                 value={phone}
                 onChangeText={setPhone}
-                placeholder="رقم الهاتف (مثال: 01012345678)"
+                placeholder={t('settings.phonePlaceholder')}
                 placeholderTextColor={colors.textMuted}
                 style={styles.input}
                 keyboardType="phone-pad"
-                textAlign="right"
+                textAlign={textAlignDir(dir)}
               />
-              <SheetButton label="إضافة" color={colors.primary} onPress={handleAdd} />
+              <SheetButton label={t('settings.addButton')} color={colors.primary} onPress={handleAdd} />
             </>
           ) : null}
         </View>
 
         <AppText color={colors.textMuted} style={styles.note}>
-          جهات الاتصال دي بتظهر جاهزة كل ما تحبي تشاركي موقعك عبر رسالة SMS بعد أي بلاغ طوارئ.
+          {t('settings.note')}
         </AppText>
         </View>
       </ScrollView>
@@ -125,7 +160,7 @@ export default function SettingsScreen() {
   );
 }
 
-function createStyles(colors: ThemeColors) {
+function createStyles(colors: ThemeColors, dir: Dir) {
   return StyleSheet.create({
     screen: {
       flex: 1,
@@ -144,7 +179,7 @@ function createStyles(colors: ThemeColors) {
       marginBottom: spacing.xs,
     },
     themeRow: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       gap: spacing.xs,
       paddingHorizontal: spacing.lg,
       marginBottom: spacing.lg,
@@ -183,7 +218,7 @@ function createStyles(colors: ThemeColors) {
     formTitle: {
       fontSize: 13,
       marginBottom: spacing.sm,
-      textAlign: 'right',
+      textAlign: textAlignDir(dir),
     },
     input: {
       borderWidth: 1,
@@ -192,7 +227,7 @@ function createStyles(colors: ThemeColors) {
       paddingHorizontal: spacing.md,
       paddingVertical: 10,
       marginBottom: spacing.sm,
-      fontFamily: fonts.body,
+      fontFamily: fontForWeight('body', dir === 'rtl' ? 'ar' : 'en'),
       color: colors.text,
     },
     note: {

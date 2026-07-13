@@ -1,6 +1,7 @@
 import { Linking, Share } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import * as SMS from 'expo-sms';
+import type { Locale } from '../i18n/strings';
 
 export interface Coords {
   lat: number;
@@ -11,8 +12,8 @@ export function mapsLink(coords: Coords): string {
   return `https://maps.google.com/?q=${coords.lat.toFixed(6)},${coords.lng.toFixed(6)}`;
 }
 
-function formatTimestamp(date: Date): string {
-  return date.toLocaleString('ar-EG', {
+function formatTimestamp(date: Date, locale: Locale): string {
+  return date.toLocaleString(locale === 'en' ? 'en-US' : 'ar-EG', {
     hour: '2-digit',
     minute: '2-digit',
     day: '2-digit',
@@ -21,13 +22,35 @@ function formatTimestamp(date: Date): string {
   });
 }
 
-export function emergencyMessage(coords: Coords | null, contextLabel?: string): string {
-  const lines = ['🚨 حالة طوارئ', 'أحتاج إلى المساعدة.'];
-  if (contextLabel) lines.push(`(بعد الاتصال بـ ${contextLabel})`);
-  lines.push('هذا هو موقعي الحالي:');
-  lines.push(coords ? mapsLink(coords) : 'الموقع غير متاح حاليًا');
-  lines.push('يرجى التواصل معي أو إرسال المساعدة.');
-  lines.push(`🕓 ${formatTimestamp(new Date())}`);
+// Message text sent to a real contact via WhatsApp/SMS — kept as plain
+// strings (not app-UI icons) since it has to render in a third-party app.
+const MESSAGE_TEMPLATE: Record<Locale, { header: string; body: string; context: string; locationIntro: string; locationUnavailable: string; footer: string }> = {
+  ar: {
+    header: '🚨 حالة طوارئ',
+    body: 'محتاج مساعدة.',
+    context: '(بعد الاتصال بـ {{label}})',
+    locationIntro: 'ده مكاني دلوقتي:',
+    locationUnavailable: 'المكان مش متاح دلوقتي',
+    footer: 'من فضلك تواصل معايا أو ابعتلي مساعدة.',
+  },
+  en: {
+    header: '🚨 Emergency',
+    body: 'I need help.',
+    context: '(after calling {{label}})',
+    locationIntro: 'This is my current location:',
+    locationUnavailable: "Location isn't available right now",
+    footer: 'Please contact me or send help.',
+  },
+};
+
+export function emergencyMessage(coords: Coords | null, contextLabel?: string, locale: Locale = 'ar'): string {
+  const t = MESSAGE_TEMPLATE[locale];
+  const lines = [t.header, t.body];
+  if (contextLabel) lines.push(t.context.replace('{{label}}', contextLabel));
+  lines.push(t.locationIntro);
+  lines.push(coords ? mapsLink(coords) : t.locationUnavailable);
+  lines.push(t.footer);
+  lines.push(`🕓 ${formatTimestamp(new Date(), locale)}`);
   return lines.join('\n');
 }
 

@@ -5,6 +5,7 @@ import { SheetButton } from '../SheetButton';
 import { LocationBox } from '../LocationBox';
 import { colors, spacing } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
+import { useLocale } from '../../context/LocaleContext';
 import type { Coords } from '../../utils/share';
 import type { LocationStatus } from '../../hooks/useLocation';
 
@@ -32,37 +33,36 @@ export function ShareLocationSheet({
   onDismiss,
 }: Props) {
   const { colors: themeColors } = useTheme();
+  const { t } = useLocale();
   return (
     <>
       <AppText weight="displayExtraBold" style={styles.title}>
-        شارك موقعك
+        {t('shareLocation.title')}
       </AppText>
       <AppText color={themeColors.textMuted} style={styles.sub}>
-        {autoOpened
-          ? 'فتحنالك واتساب تلقائيًا — اختاري جهة الاتصال اللي تحبي تبعتيلها موقعك'
-          : 'اختاري الطريقة اللي تحبي تشاركي بيها موقعك الحالي'}
+        {autoOpened ? t('shareLocation.subtitleAuto') : t('shareLocation.subtitleManual')}
       </AppText>
 
       <LocationBox coords={coords} />
 
       {!coords ? (
         <SheetButton
-          label={locationStatus === 'locating' ? 'جارِ تحديد الموقع...' : 'تفعيل الموقع أولًا'}
+          label={locationStatus === 'locating' ? t('shareLocation.locating') : t('shareLocation.enableLocationFirst')}
           variant="secondary"
           onPress={onRequestLocation}
         />
       ) : (
         <>
-          <SheetButton label="مشاركة عبر واتساب" icon="whatsapp" color={colors.amb} onPress={onWhatsApp} />
-          <SheetButton label="مشاركة عبر رسالة SMS" icon="message-text" color={colors.police} onPress={onSms} />
-          <SheetButton label="مشاركة عبر أي تطبيق" icon="share-variant" variant="secondary" onPress={onShareSheet} />
-          <SheetButton label="نسخ رابط الموقع" icon="content-copy" variant="secondary" onPress={onCopyLink} />
+          <SheetButton label={t('shareLocation.viaWhatsapp')} icon="whatsapp" color={colors.amb} onPress={onWhatsApp} />
+          <SheetButton label={t('shareLocation.viaSms')} icon="message-text" color={colors.police} onPress={onSms} />
+          <SheetButton label={t('shareLocation.viaAnyApp')} icon="share-variant" variant="secondary" onPress={onShareSheet} />
+          <SheetButton label={t('shareLocation.copyLink')} icon="content-copy" variant="secondary" onPress={onCopyLink} />
         </>
       )}
       <AppText color={themeColors.textMuted} style={styles.note}>
-        هتختاري جهة الاتصال بنفسك جوه واتساب أو الرسائل — التطبيق مش بيقدر يبعت تلقائيًا لحد من غير موافقتك.
+        {t('shareLocation.privacyNote')}
       </AppText>
-      <SheetButton label="لا شكرًا" variant="outline" onPress={onDismiss} />
+      <SheetButton label={t('common.noThanks')} variant="outline" onPress={onDismiss} />
     </>
   );
 }

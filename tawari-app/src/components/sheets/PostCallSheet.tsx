@@ -4,6 +4,7 @@ import { AppText } from '../AppText';
 import { SheetButton } from '../SheetButton';
 import { colors, spacing } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
+import { useLocale } from '../../context/LocaleContext';
 
 interface Props {
   serviceLabel: string;
@@ -13,16 +14,17 @@ interface Props {
 
 export function PostCallSheet({ serviceLabel, onResolved, onNotResolved }: Props) {
   const { colors: themeColors } = useTheme();
+  const { t } = useLocale();
   return (
     <>
       <AppText weight="displayExtraBold" style={styles.title}>
-        انتهيت من المكالمة؟
+        {t('postCall.title')}
       </AppText>
       <AppText color={themeColors.textMuted} style={styles.sub}>
-        هل تم حل المشكلة بعد اتصالك بـ {serviceLabel}؟
+        {t('postCall.question', { label: serviceLabel })}
       </AppText>
-      <SheetButton label="نعم، تم الحل" icon="check-circle" color={colors.success} onPress={onResolved} />
-      <SheetButton label="لا، لسه محتاج مساعدة" icon="alert-circle" color={colors.fire} onPress={onNotResolved} />
+      <SheetButton label={t('postCall.resolved')} icon="check-circle" color={colors.success} onPress={onResolved} />
+      <SheetButton label={t('postCall.notResolved')} icon="alert-circle" color={colors.fire} onPress={onNotResolved} />
     </>
   );
 }

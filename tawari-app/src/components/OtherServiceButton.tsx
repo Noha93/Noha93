@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
 import { AppIcon } from './AppIcon';
-import { radius, spacing, type ThemeColors } from '../constants/theme';
+import { elevation, radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
+import { useLocale } from '../context/LocaleContext';
 import type { OtherService } from '../constants/services';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 
 export function OtherServiceButton({ service, onPress }: Props) {
   const { colors } = useTheme();
+  const { t } = useLocale();
   const styles = useMemo(() => createStyles(colors), [colors]);
   return (
     <Pressable
@@ -23,7 +25,7 @@ export function OtherServiceButton({ service, onPress }: Props) {
         <AppIcon name={service.icon} size={20} color={colors.text} />
       </View>
       <AppText weight="bodyBold" style={styles.name}>
-        {service.name}
+        {t(`services.${service.key}.name`)}
       </AppText>
       <AppText color={colors.textMuted} style={styles.number}>
         {service.number}
@@ -44,6 +46,7 @@ function createStyles(colors: ThemeColors) {
       paddingHorizontal: spacing.sm,
       alignItems: 'center',
       gap: 8,
+      ...elevation.sm,
     },
     pressed: {
       opacity: 0.7,

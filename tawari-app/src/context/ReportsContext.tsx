@@ -6,7 +6,6 @@ import type { Coords } from '../utils/share';
 export interface ReportEntry {
   id: string;
   serviceKey: ServiceKey;
-  serviceName: string;
   coords: Coords | null;
   createdAt: string;
   resolved: boolean;

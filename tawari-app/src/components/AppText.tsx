@@ -1,28 +1,25 @@
 import React from 'react';
-import { Text, TextProps, StyleSheet } from 'react-native';
-import { fonts } from '../constants/theme';
+import { Text, TextProps } from 'react-native';
+import { fontForWeight, type FontWeight } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
-
-type Weight = 'body' | 'bodyMedium' | 'bodyBold' | 'display' | 'displayExtraBold';
+import { useLocale, textAlignDir } from '../context/LocaleContext';
 
 interface Props extends TextProps {
-  weight?: Weight;
+  weight?: FontWeight;
   color?: string;
 }
 
 export function AppText({ style, weight = 'body', color, ...props }: Props) {
   const { colors } = useTheme();
+  const { locale, dir } = useLocale();
   return (
     <Text
       {...props}
-      style={[styles.base, { fontFamily: fonts[weight], color: color ?? colors.text }, style]}
+      style={[
+        { textAlign: textAlignDir(dir), writingDirection: dir },
+        { fontFamily: fontForWeight(weight, locale), color: color ?? colors.text },
+        style,
+      ]}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  base: {
-    textAlign: 'right',
-    writingDirection: 'rtl',
-  },
-});

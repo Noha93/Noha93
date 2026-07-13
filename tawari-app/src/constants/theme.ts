@@ -72,9 +72,8 @@ export const spacing = {
   xxl: 40,
 };
 
-// Arabic (RTL, primary): IBM Plex Sans Arabic — one family across the whole
-// type scale, matching the design-system brief. English (Inter) is loaded
-// too, ready for the bilingual UI this app doesn't render yet.
+// Arabic: IBM Plex Sans Arabic. English: Inter — same weight scale, swapped
+// in per-string by AppText based on the active locale (see fontForWeight).
 export const fonts = {
   display: 'IBMPlexSansArabic_600SemiBold',
   displayExtraBold: 'IBMPlexSansArabic_700Bold',
@@ -83,8 +82,24 @@ export const fonts = {
   bodyBold: 'IBMPlexSansArabic_600SemiBold',
   englishRegular: 'Inter_400Regular',
   englishMedium: 'Inter_500Medium',
+  englishSemiBold: 'Inter_600SemiBold',
   englishBold: 'Inter_700Bold',
+  englishExtraBold: 'Inter_800ExtraBold',
 };
+
+export type FontWeight = 'body' | 'bodyMedium' | 'bodyBold' | 'display' | 'displayExtraBold';
+
+const FONT_BY_WEIGHT: Record<FontWeight, { ar: string; en: string }> = {
+  body: { ar: fonts.body, en: fonts.englishRegular },
+  bodyMedium: { ar: fonts.bodyMedium, en: fonts.englishMedium },
+  bodyBold: { ar: fonts.bodyBold, en: fonts.englishSemiBold },
+  display: { ar: fonts.display, en: fonts.englishSemiBold },
+  displayExtraBold: { ar: fonts.displayExtraBold, en: fonts.englishExtraBold },
+};
+
+export function fontForWeight(weight: FontWeight, locale: 'ar' | 'en'): string {
+  return FONT_BY_WEIGHT[weight][locale];
+}
 
 // Formal type scale (size + line-height), 8pt-grid aligned. Components can
 // keep using bespoke sizes, but new/updated UI should read from here.

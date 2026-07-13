@@ -1,0 +1,293 @@
+export type Locale = 'ar' | 'en';
+
+// Arabic copy uses neutral, gender-free phrasing (masculine-default imperative,
+// the standard convention for addressing an unknown user in Arabic UI) and
+// short sentences so the app stays usable for a child in an emergency.
+type Dict = { [key: string]: string | Dict };
+
+const ar: Dict = {
+  common: {
+    cancel: 'إلغاء',
+    noThanks: 'لا شكرًا',
+  },
+  brand: {
+    name: 'طوارئ',
+  },
+  location: {
+    on: 'الموقع شغال',
+    locating: 'بيحدد المكان...',
+    off: 'فعّل تحديد المكان',
+    default: 'تحديد المكان',
+  },
+  home: {
+    greeting: 'أهلاً بيك',
+    subtitle: 'اضغط على نوع الطوارئ للاتصال. أو احكي بصوتك. أو اضغط مطوّل 3 ثواني عشان يتصل فورًا.',
+    otherServicesHeader: 'خدمات طوارئ تانية',
+    contactsHeader: 'جهات اتصال الطوارئ',
+    emptyContacts: 'مفيش جهات اتصال لسه. ضيف حد من عيلتك عشان تقدر تبعتله مكانك بسرعة.',
+    addContact: '+ ضيف حد من العيلة',
+    voiceTitle: 'بلّغ بصوتك',
+    voiceSubtitle: 'قول مثلاً "في حريق" وهنفتحلك الزرار الصح',
+    toastHeard: 'سمعناك — هنفتحلك الاتصال بـ {{name}}',
+    toastWhatsappUnavailable: 'واتساب مش موجود على الجهاز ده',
+    toastWhatsappUnavailableTryAnother: 'واتساب مش موجود على الجهاز ده — جرّب طريقة تانية تحت',
+    toastSmsUnavailable: 'الرسايل النصية مش متاحة على الجهاز ده',
+    toastLinkCopied: 'اتنسخ رابط المكان',
+    toastEnableLocationFirst: 'فعّل تحديد المكان الأول',
+    toastResolved: 'الحمد لله على السلامة',
+    callingLabel: 'بيتصل بـ {{label}}...',
+  },
+  services: {
+    fire: { name: 'حريق', label: 'الحماية المدنية والمطافي' },
+    police: { name: 'شرطة', label: 'شرطة النجدة' },
+    amb: { name: 'إسعاف', label: 'الإسعاف المصري' },
+    gas: { name: 'تسرب غاز', label: 'شركة الغاز الطبيعي' },
+    elec: { name: 'عطل كهرباء', label: 'شركة الكهرباء' },
+    water: { name: 'عطل مياه', label: 'شركة المياه' },
+    traffic: { name: 'حادث طريق', label: 'شرطة المرور' },
+    tourist: { name: 'الشرطة السياحية', label: 'الشرطة السياحية والآثار' },
+    child: { name: 'خط نجدة الطفل', label: 'المجلس القومي للطفولة والأمومة' },
+    health: { name: 'طوارئ الصحة', label: 'وزارة الصحة والسكان' },
+    rail: { name: 'شرطة السكة الحديد', label: 'شرطة السكة الحديد' },
+    women: { name: 'خط نجدة المرأة', label: 'المجلس القومي للمرأة' },
+    addiction: { name: 'مكافحة الإدمان', label: 'صندوق مكافحة وعلاج الإدمان' },
+    prosecution: { name: 'بلاغ للنيابة', label: 'النيابة العامة' },
+  },
+  callConfirm: {
+    title: 'تأكيد الاتصال',
+    question: 'هتتصل بـ {{label}} على الرقم {{number}}. متأكد؟',
+    confirm: 'أيوه، اتصل دلوقتي',
+  },
+  postCall: {
+    title: 'خلصت المكالمة؟',
+    question: 'اتحلت المشكلة بعد ما اتصلت بـ {{label}}؟',
+    resolved: 'أيوه، اتحلت',
+    notResolved: 'لأ، لسه محتاج مساعدة',
+  },
+  shareLocation: {
+    title: 'شارك مكانك',
+    subtitleAuto: 'فتحنالك واتساب على طول — اختار مين تبعتله مكانك',
+    subtitleManual: 'اختار الطريقة اللي تحب تشارك بيها مكانك دلوقتي',
+    enableLocationFirst: 'فعّل تحديد المكان الأول',
+    locating: 'بيحدد المكان...',
+    viaWhatsapp: 'شارك عبر واتساب',
+    viaSms: 'شارك برسالة SMS',
+    viaAnyApp: 'شارك بأي تطبيق',
+    copyLink: 'انسخ رابط المكان',
+    privacyNote: 'هتختار جهة الاتصال بنفسك في واتساب أو الرسايل — التطبيق مش بيبعت لحد من غير ما توافق.',
+    locationReady: 'المكان جاهز يتبعت',
+    locationOff: 'المكان مش متفعّل',
+    locationLine: 'لقينا مكانك بدقة ({{lat}}, {{lng}})',
+    locationLineOff: 'لسه ما حددناش المكان — فعّله عشان البلاغ يبقى أدق',
+  },
+  voice: {
+    listeningTitle: 'بنسمعك...',
+    noMatchTitle: 'معرفناش نوع الطوارئ',
+    errorTitle: 'معرفناش نوصل للميكروفون',
+    idleTitle: 'بلّغ بصوتك',
+    listeningHint: 'قول مثلاً: "في حريق" أو "في سرقة" أو "محتاج إسعاف"',
+    noMatchHint: 'سمعنا: "{{transcript}}" — جرّب تقول نوع الطوارئ بوضوح',
+    errorHint: 'اتأكد من إذن الميكروفون في إعدادات الجهاز وجرّب تاني',
+    retry: 'جرّب تاني',
+  },
+  settings: {
+    title: 'الإعدادات',
+    subtitle: 'جهات اتصال الطوارئ بتاعتك (لحد {{max}})',
+    appearance: 'المظهر',
+    themeLight: 'فاتح',
+    themeDark: 'غامق',
+    themeSystem: 'تلقائي',
+    language: 'اللغة',
+    languageArabic: 'العربية',
+    languageEnglish: 'English',
+    contactsHeader: 'جهات اتصال الطوارئ',
+    emptyContacts: 'مفيش جهات اتصال محفوظة لسه',
+    addNewContact: '+ ضيف جهة اتصال جديدة',
+    maxReached: 'وصلت لأقصى عدد ({{max}} جهات اتصال)',
+    namePlaceholder: 'الاسم (مثال: أحمد)',
+    phonePlaceholder: 'رقم الموبايل (مثال: 01012345678)',
+    addButton: 'ضيف',
+    note: 'جهات الاتصال دي هتظهر جاهزة كل ما تحب تشارك مكانك برسالة SMS بعد أي بلاغ.',
+    toastMissingFields: 'اكتب الاسم ورقم الموبايل من فضلك',
+    toastMaxReached: 'أقصى عدد جهات اتصال هو {{max}}',
+    toastAdded: 'اتضافت جهة الاتصال',
+    remove: 'احذف',
+  },
+  history: {
+    title: 'سجل البلاغات',
+    subtitle: 'البلاغات والمكالمات محفوظة على جهازك بس',
+    empty: 'السجل فاضي دلوقتي',
+    viewLocation: 'شوف المكان وقت البلاغ',
+    resolvedBadge: 'اتحلت',
+    followUpBadge: 'محتاج متابعة',
+  },
+  map: {
+    title: 'الخريطة',
+    subtitle: 'أقرب نقاط الإنقاذ حواليك',
+    placeholderTitle: 'خريطة أقرب نقاط الإنقاذ',
+    placeholderSubtitle: 'هنعرض هنا أقرب نقاط إطفاء وإسعاف وشرطة — قريب في مرحلة تانية من التطبيق',
+  },
+  nav: {
+    home: 'الرئيسية',
+    map: 'الخريطة',
+    history: 'السجل',
+    settings: 'الإعدادات',
+  },
+  trust: {
+    disclaimer: 'تطبيق مجتمعي لتسهيل التواصل مع أرقام الطوارئ الرسمية في مصر',
+  },
+};
+
+const en: Dict = {
+  common: {
+    cancel: 'Cancel',
+    noThanks: 'No thanks',
+  },
+  brand: {
+    name: 'Tawari',
+  },
+  location: {
+    on: 'Location on',
+    locating: 'Finding you...',
+    off: 'Turn on location',
+    default: 'Location',
+  },
+  home: {
+    greeting: 'Hi there',
+    subtitle: 'Tap the emergency type to call. Or talk to report by voice. Or press and hold for 3 seconds to call right away.',
+    otherServicesHeader: 'Other emergency services',
+    contactsHeader: 'Emergency contacts',
+    emptyContacts: "No contacts yet. Add someone from your family so you can send them your location quickly.",
+    addContact: '+ Add a family member',
+    voiceTitle: 'Report by voice',
+    voiceSubtitle: 'Say something like "there\'s a fire" and we\'ll open the right button',
+    toastHeard: 'We heard you — opening the call to {{name}}',
+    toastWhatsappUnavailable: "WhatsApp isn't available on this device",
+    toastWhatsappUnavailableTryAnother: "WhatsApp isn't available on this device — try another way below",
+    toastSmsUnavailable: "Text messages aren't available on this device",
+    toastLinkCopied: 'Location link copied',
+    toastEnableLocationFirst: 'Turn on location first',
+    toastResolved: "Glad you're safe",
+    callingLabel: 'Calling {{label}}...',
+  },
+  services: {
+    fire: { name: 'Fire', label: 'Civil Defense & Fire Brigade' },
+    police: { name: 'Police', label: 'Emergency Police' },
+    amb: { name: 'Ambulance', label: 'Egyptian Ambulance' },
+    gas: { name: 'Gas leak', label: 'Natural Gas Company' },
+    elec: { name: 'Power outage', label: 'Electricity Company' },
+    water: { name: 'Water outage', label: 'Water Company' },
+    traffic: { name: 'Road accident', label: 'Traffic Police' },
+    tourist: { name: 'Tourist Police', label: 'Tourist & Antiquities Police' },
+    child: { name: 'Child Helpline', label: 'National Council for Childhood & Motherhood' },
+    health: { name: 'Health emergency', label: 'Ministry of Health & Population' },
+    rail: { name: 'Railway Police', label: 'Railway Police' },
+    women: { name: "Women's Helpline", label: 'National Council for Women' },
+    addiction: { name: 'Addiction Helpline', label: 'Addiction Treatment Fund' },
+    prosecution: { name: 'Report to Prosecution', label: 'Public Prosecution' },
+  },
+  callConfirm: {
+    title: 'Confirm call',
+    question: "You're about to call {{label}} at {{number}}. Are you sure?",
+    confirm: 'Yes, call now',
+  },
+  postCall: {
+    title: 'Call finished?',
+    question: 'Was the problem solved after calling {{label}}?',
+    resolved: "Yes, it's resolved",
+    notResolved: 'No, still need help',
+  },
+  shareLocation: {
+    title: 'Share your location',
+    subtitleAuto: 'We opened WhatsApp for you — choose who to send your location to',
+    subtitleManual: "Choose how you'd like to share your current location",
+    enableLocationFirst: 'Turn on location first',
+    locating: 'Finding you...',
+    viaWhatsapp: 'Share via WhatsApp',
+    viaSms: 'Share via SMS',
+    viaAnyApp: 'Share via any app',
+    copyLink: 'Copy location link',
+    privacyNote: 'You choose the contact yourself in WhatsApp or Messages — the app never sends to anyone without your approval.',
+    locationReady: 'Location ready to send',
+    locationOff: 'Location is off',
+    locationLine: 'Found your location accurately ({{lat}}, {{lng}})',
+    locationLineOff: "We haven't found your location yet — turn it on for a more accurate report",
+  },
+  voice: {
+    listeningTitle: 'Listening...',
+    noMatchTitle: "Couldn't recognize the emergency type",
+    errorTitle: "Couldn't reach the microphone",
+    idleTitle: 'Report by voice',
+    listeningHint: 'Say something like: "there\'s a fire", "I\'ve been robbed", or "I need an ambulance"',
+    noMatchHint: 'We heard: "{{transcript}}" — try saying the emergency type clearly',
+    errorHint: 'Check the microphone permission in your device settings and try again',
+    retry: 'Try again',
+  },
+  settings: {
+    title: 'Settings',
+    subtitle: 'Your emergency contacts (up to {{max}})',
+    appearance: 'Appearance',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    themeSystem: 'Auto',
+    language: 'Language',
+    languageArabic: 'العربية',
+    languageEnglish: 'English',
+    contactsHeader: 'Emergency contacts',
+    emptyContacts: 'No saved contacts yet',
+    addNewContact: '+ Add a new contact',
+    maxReached: "You've reached the limit ({{max}} contacts)",
+    namePlaceholder: 'Name (e.g. Ahmed)',
+    phonePlaceholder: 'Phone number (e.g. 01012345678)',
+    addButton: 'Add',
+    note: "These contacts will show up ready whenever you want to share your location by SMS after a report.",
+    toastMissingFields: 'Please enter the name and phone number',
+    toastMaxReached: 'The maximum number of contacts is {{max}}',
+    toastAdded: 'Contact added',
+    remove: 'Remove',
+  },
+  history: {
+    title: 'Report history',
+    subtitle: 'Reports and calls are saved on your device only',
+    empty: 'No reports yet',
+    viewLocation: 'View location at report time',
+    resolvedBadge: 'Resolved',
+    followUpBadge: 'Needs follow-up',
+  },
+  map: {
+    title: 'Map',
+    subtitle: 'Nearest rescue points around you',
+    placeholderTitle: 'Nearest rescue points map',
+    placeholderSubtitle: "We'll show the nearest fire, ambulance, and police points here — coming in a future update",
+  },
+  nav: {
+    home: 'Home',
+    map: 'Map',
+    history: 'History',
+    settings: 'Settings',
+  },
+  trust: {
+    disclaimer: "A community app that makes it easier to reach Egypt's official emergency numbers",
+  },
+};
+
+export const dictionaries: Record<Locale, Dict> = { ar, en };
+
+export function translate(locale: Locale, key: string, vars?: Record<string, string | number>): string {
+  const parts = key.split('.');
+  let node: string | Dict | undefined = dictionaries[locale];
+  for (const part of parts) {
+    if (typeof node !== 'object' || node === null) {
+      node = undefined;
+      break;
+    }
+    node = node[part];
+  }
+  let result = typeof node === 'string' ? node : key;
+  if (vars) {
+    for (const [varKey, varValue] of Object.entries(vars)) {
+      result = result.replace(new RegExp(`{{${varKey}}}`, 'g'), String(varValue));
+    }
+  }
+  return result;
+}

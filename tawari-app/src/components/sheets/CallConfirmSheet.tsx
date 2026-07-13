@@ -4,6 +4,7 @@ import { AppText } from '../AppText';
 import { SheetButton } from '../SheetButton';
 import { spacing } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
+import { useLocale } from '../../context/LocaleContext';
 
 interface Props {
   label: string;
@@ -15,20 +16,17 @@ interface Props {
 
 export function CallConfirmSheet({ label, number, color, onConfirm, onCancel }: Props) {
   const { colors } = useTheme();
+  const { t } = useLocale();
   return (
     <>
       <AppText weight="displayExtraBold" color={color} style={styles.title}>
-        تأكيد الاتصال
+        {t('callConfirm.title')}
       </AppText>
       <AppText color={colors.textMuted} style={styles.sub}>
-        هل أنت متأكد أنك تريد الاتصال بـ{'\n'}
-        <AppText weight="bodyBold" color={color}>
-          {label}
-        </AppText>{' '}
-        على الرقم <AppText weight="bodyBold">{number}</AppText>؟
+        {t('callConfirm.question', { label, number })}
       </AppText>
-      <SheetButton label="نعم، اتصل الآن" icon="phone" color={color} onPress={onConfirm} />
-      <SheetButton label="إلغاء" variant="outline" onPress={onCancel} />
+      <SheetButton label={t('callConfirm.confirm')} icon="phone" color={color} onPress={onConfirm} />
+      <SheetButton label={t('common.cancel')} variant="outline" onPress={onCancel} />
     </>
   );
 }

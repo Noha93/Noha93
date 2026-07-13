@@ -2,17 +2,21 @@ import { useCallback, useRef, useState } from 'react';
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
 import { matchVoiceIntent } from '../utils/voiceIntent';
 import type { SosKey } from '../constants/services';
+import type { Locale } from '../i18n/strings';
 
 export type VoiceStatus = 'idle' | 'listening' | 'no-match' | 'error';
 
 interface UseVoiceReportOptions {
+  locale: Locale;
   onMatch: (key: SosKey, transcript: string) => void;
 }
 
-export function useVoiceReport({ onMatch }: UseVoiceReportOptions) {
+export function useVoiceReport({ locale, onMatch }: UseVoiceReportOptions) {
   const [status, setStatus] = useState<VoiceStatus>('idle');
   const [transcript, setTranscript] = useState('');
   const transcriptRef = useRef('');
+  const localeRef = useRef(locale);
+  localeRef.current = locale;
 
   useSpeechRecognitionEvent('start', () => {
     transcriptRef.current = '';
@@ -32,7 +36,7 @@ export function useVoiceReport({ onMatch }: UseVoiceReportOptions) {
       setStatus('idle');
       return;
     }
-    const { key } = matchVoiceIntent(finalText);
+    const { key } = matchVoiceIntent(finalText, localeRef.current);
     if (key) {
       setStatus('idle');
       onMatch(key, finalText);
@@ -52,7 +56,7 @@ export function useVoiceReport({ onMatch }: UseVoiceReportOptions) {
       return;
     }
     ExpoSpeechRecognitionModule.start({
-      lang: 'ar-EG',
+      lang: localeRef.current === 'en' ? 'en-US' : 'ar-EG',
       interimResults: true,
       continuous: false,
     });

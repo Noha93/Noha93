@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
 import { AppIcon } from './AppIcon';
-import { radius, spacing, type ThemeColors } from '../constants/theme';
+import { elevation, radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
+import { useLocale, rowDir, type Dir } from '../context/LocaleContext';
 import type { EmergencyContact } from '../context/ContactsContext';
 
 interface Props {
@@ -13,7 +14,8 @@ interface Props {
 
 export function ContactRow({ contact, onRemove }: Props) {
   const { colors } = useTheme();
-  const styles = useMemo(() => createStyles(colors), [colors]);
+  const { dir, t } = useLocale();
+  const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
   const initials = contact.name.trim().slice(0, 2);
   return (
     <View style={styles.card}>
@@ -35,7 +37,7 @@ export function ContactRow({ contact, onRemove }: Props) {
       {onRemove ? (
         <Pressable onPress={onRemove} hitSlop={10}>
           <AppText color={colors.fire} style={styles.remove}>
-            حذف
+            {t('settings.remove')}
           </AppText>
         </Pressable>
       ) : (
@@ -45,7 +47,7 @@ export function ContactRow({ contact, onRemove }: Props) {
   );
 }
 
-function createStyles(colors: ThemeColors) {
+function createStyles(colors: ThemeColors, dir: Dir) {
   return StyleSheet.create({
     card: {
       marginHorizontal: spacing.lg,
@@ -55,13 +57,14 @@ function createStyles(colors: ThemeColors) {
       borderColor: colors.border,
       borderRadius: radius.md,
       padding: spacing.md,
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: spacing.sm,
+      ...elevation.sm,
     },
     row: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 10,
     },

@@ -4,6 +4,7 @@ import { AppText } from './AppText';
 import { AppIcon, type IconName } from './AppIcon';
 import { radius, spacing } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
+import { useLocale, rowDir } from '../context/LocaleContext';
 
 interface Props {
   label: string;
@@ -16,6 +17,7 @@ interface Props {
 
 export function SheetButton({ label, onPress, variant = 'solid', color, icon, style }: Props) {
   const { colors } = useTheme();
+  const { dir } = useLocale();
   const bg = variant === 'solid' ? color ?? colors.police : variant === 'secondary' ? colors.bg : 'transparent';
   const textColor = variant === 'solid' ? '#fff' : colors.text;
   const border = variant === 'outline' ? colors.border : variant === 'secondary' ? colors.border : 'transparent';
@@ -25,7 +27,7 @@ export function SheetButton({ label, onPress, variant = 'solid', color, icon, st
       onPress={onPress}
       style={({ pressed }) => [
         styles.btn,
-        { backgroundColor: bg, borderColor: border, borderWidth: variant === 'solid' ? 0 : 1.5 },
+        { flexDirection: rowDir(dir), backgroundColor: bg, borderColor: border, borderWidth: variant === 'solid' ? 0 : 1.5 },
         pressed && styles.pressed,
         style,
       ]}
@@ -41,7 +43,6 @@ export function SheetButton({ label, onPress, variant = 'solid', color, icon, st
 const styles = StyleSheet.create({
   btn: {
     width: '100%',
-    flexDirection: 'row-reverse',
     borderRadius: radius.md,
     paddingVertical: 15,
     marginBottom: spacing.sm,

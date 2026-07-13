@@ -4,6 +4,7 @@ import { AppText } from './AppText';
 import { AppIcon, type IconName } from './AppIcon';
 import { radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
+import { useLocale, rowDir, type Dir } from '../context/LocaleContext';
 
 interface Props {
   title: string;
@@ -13,7 +14,8 @@ interface Props {
 
 export function ScreenHeader({ title, subtitle, icon }: Props) {
   const { colors } = useTheme();
-  const styles = useMemo(() => createStyles(colors), [colors]);
+  const { dir } = useLocale();
+  const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
   return (
     <View style={styles.band}>
       <View style={styles.titleRow}>
@@ -31,7 +33,7 @@ export function ScreenHeader({ title, subtitle, icon }: Props) {
   );
 }
 
-function createStyles(colors: ThemeColors) {
+function createStyles(colors: ThemeColors, dir: Dir) {
   return StyleSheet.create({
     band: {
       backgroundColor: colors.ink,
@@ -42,7 +44,7 @@ function createStyles(colors: ThemeColors) {
       paddingHorizontal: spacing.lg,
     },
     titleRow: {
-      flexDirection: 'row-reverse',
+      flexDirection: rowDir(dir),
       alignItems: 'center',
       gap: 8,
     },

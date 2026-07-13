@@ -5,6 +5,7 @@ import { AppIcon } from '../AppIcon';
 import { SheetButton } from '../SheetButton';
 import { colors, spacing, type ThemeColors } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
+import { useLocale } from '../../context/LocaleContext';
 import type { VoiceStatus } from '../../hooks/useVoiceReport';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 
 export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Props) {
   const { colors: themeColors } = useTheme();
+  const { t } = useLocale();
   const styles = useMemo(() => createStyles(themeColors), [themeColors]);
   const pulse = useRef(new Animated.Value(0)).current;
 
@@ -43,16 +45,16 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
       </View>
 
       <AppText weight="displayExtraBold" style={styles.title}>
-        {status === 'listening' && 'بنسمعك...'}
-        {status === 'no-match' && 'معرفناش نفهم نوع الطارئة'}
-        {status === 'error' && 'مقدرناش نوصل للميكروفون'}
-        {status === 'idle' && 'بلّغي بصوتك'}
+        {status === 'listening' && t('voice.listeningTitle')}
+        {status === 'no-match' && t('voice.noMatchTitle')}
+        {status === 'error' && t('voice.errorTitle')}
+        {status === 'idle' && t('voice.idleTitle')}
       </AppText>
 
       <AppText color={themeColors.textMuted} style={styles.sub}>
-        {status === 'listening' && 'قولي مثلاً: "عايزة أبلغ عن حريق" أو "في سرقة" أو "محتاجة إسعاف"'}
-        {status === 'no-match' && `سمعنا: "${transcript || '—'}" — جربي تقولي نوع الطارئة بوضوح`}
-        {status === 'error' && 'تأكدي من إذن الميكروفون في إعدادات الجهاز وحاولي تاني'}
+        {status === 'listening' && t('voice.listeningHint')}
+        {status === 'no-match' && t('voice.noMatchHint', { transcript: transcript || '—' })}
+        {status === 'error' && t('voice.errorHint')}
         {status === 'idle' && ''}
       </AppText>
 
@@ -63,9 +65,9 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
       ) : null}
 
       {status === 'no-match' || status === 'error' ? (
-        <SheetButton label="حاولي تاني" icon="microphone" color={colors.voice} onPress={onRetry} />
+        <SheetButton label={t('voice.retry')} icon="microphone" color={colors.voice} onPress={onRetry} />
       ) : null}
-      <SheetButton label="إلغاء" variant="outline" onPress={onCancel} />
+      <SheetButton label={t('common.cancel')} variant="outline" onPress={onCancel} />
     </View>
   );
 }

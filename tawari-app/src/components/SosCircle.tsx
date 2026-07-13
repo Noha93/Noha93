@@ -4,6 +4,7 @@ import Svg, { Circle } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';
 import { AppText } from './AppText';
 import { AppIcon } from './AppIcon';
+import { useLocale } from '../context/LocaleContext';
 import type { SosService } from '../constants/services';
 
 const HOLD_DURATION = 3000;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export function SosCircle({ service, onPress, onAutoTrigger }: Props) {
+  const { t } = useLocale();
   const progress = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const pulse = useRef(new Animated.Value(0)).current;
@@ -119,7 +121,7 @@ export function SosCircle({ service, onPress, onAutoTrigger }: Props) {
         </Pressable>
       </Animated.View>
       <AppText weight="displayExtraBold" color="#fff" style={styles.label}>
-        {service.name}
+        {t(`services.${service.key}.name`)}
       </AppText>
     </View>
   );
