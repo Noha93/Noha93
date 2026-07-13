@@ -162,7 +162,7 @@ export default function HomeScreen() {
       <View style={styles.heroBand}>
         <View style={styles.topbar}>
           <View style={styles.brand}>
-            <AppIcon name="alarm-light" size={20} color="#fff" />
+            <AppIcon name="megaphone-outline" size={20} color="#fff" />
             <AppText weight="displayExtraBold" color="#fff" style={styles.brandText}>
               {t('brand.name')}
             </AppText>
@@ -189,7 +189,7 @@ export default function HomeScreen() {
 
         <View style={styles.greeting}>
           <View style={styles.greetingRow}>
-            <AppIcon name="hand-wave" size={20} color="#fff" />
+            <AppIcon name="hand-right-outline" size={20} color="#fff" />
             <AppText weight="displayExtraBold" color="#fff" style={styles.h1}>
               {t('home.greeting')}
             </AppText>
@@ -211,14 +211,14 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.trustRow}>
-        <AppIcon name="shield-check" size={13} color={colors.textMuted} />
+        <AppIcon name="shield-checkmark-outline" size={13} color={colors.textMuted} />
         <AppText color={colors.textMuted} style={styles.trustText}>
           {t('trust.disclaimer')}
         </AppText>
       </View>
 
       <View style={styles.sectionHRow}>
-        <AppIcon name="lifebuoy" size={16} color={colors.textMuted} />
+        <AppIcon name="help-buoy-outline" size={16} color={colors.textMuted} />
         <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
           {t('home.otherServicesHeader')}
         </AppText>
@@ -230,7 +230,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.sectionHRow}>
-        <AppIcon name="account-group" size={16} color={colors.textMuted} />
+        <AppIcon name="people-outline" size={16} color={colors.textMuted} />
         <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
           {t('home.contactsHeader')}
         </AppText>

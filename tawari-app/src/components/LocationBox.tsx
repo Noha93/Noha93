@@ -18,13 +18,13 @@ export function LocationBox({ coords }: Props) {
   return (
     <View style={styles.box}>
       <View style={styles.row}>
-        <AppIcon name={coords ? 'check-circle' : 'alert-circle'} size={15} color={coords ? colors.success : colors.warn} />
+        <AppIcon name={coords ? 'checkmark-circle-outline' : 'alert-circle-outline'} size={15} color={coords ? colors.success : colors.warn} />
         <AppText weight="bodyBold" style={styles.status}>
           {coords ? t('shareLocation.locationReady') : t('shareLocation.locationOff')}
         </AppText>
       </View>
       <View style={styles.row}>
-        <AppIcon name="map-marker" size={14} color={colors.textMuted} />
+        <AppIcon name="location-outline" size={14} color={colors.textMuted} />
         <AppText color={colors.textMuted} style={styles.line}>
           {coords
             ? t('shareLocation.locationLine', { lat: coords.lat.toFixed(4), lng: coords.lng.toFixed(4) })

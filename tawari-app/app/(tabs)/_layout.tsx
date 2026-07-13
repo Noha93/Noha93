@@ -27,28 +27,28 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: t('nav.home'),
-          tabBarIcon: ({ color }) => <TabIcon icon="home-variant" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="home-outline" color={color} />,
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
           title: t('nav.map'),
-          tabBarIcon: ({ color }) => <TabIcon icon="map-marker-radius" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="map-outline" color={color} />,
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
           title: t('nav.history'),
-          tabBarIcon: ({ color }) => <TabIcon icon="history" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="time-outline" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: t('nav.settings'),
-          tabBarIcon: ({ color }) => <TabIcon icon="cog-outline" color={color} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="settings-outline" color={color} />,
         }}
       />
     </Tabs>

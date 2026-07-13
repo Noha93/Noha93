@@ -23,8 +23,8 @@ export function PostCallSheet({ serviceLabel, onResolved, onNotResolved }: Props
       <AppText color={themeColors.textMuted} style={styles.sub}>
         {t('postCall.question', { label: serviceLabel })}
       </AppText>
-      <SheetButton label={t('postCall.resolved')} icon="check-circle" color={colors.success} onPress={onResolved} />
-      <SheetButton label={t('postCall.notResolved')} icon="alert-circle" color={colors.fire} onPress={onNotResolved} />
+      <SheetButton label={t('postCall.resolved')} icon="checkmark-circle-outline" color={colors.success} onPress={onResolved} />
+      <SheetButton label={t('postCall.notResolved')} icon="alert-circle-outline" color={colors.fire} onPress={onNotResolved} />
     </>
   );
 }

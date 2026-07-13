@@ -41,7 +41,7 @@ export function ContactRow({ contact, onRemove }: Props) {
           </AppText>
         </Pressable>
       ) : (
-        <AppIcon name="check" size={18} color={colors.success} />
+        <AppIcon name="checkmark-circle-outline" size={18} color={colors.success} />
       )}
     </View>
   );

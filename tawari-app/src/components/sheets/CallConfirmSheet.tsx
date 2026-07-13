@@ -25,7 +25,7 @@ export function CallConfirmSheet({ label, number, color, onConfirm, onCancel }: 
       <AppText color={colors.textMuted} style={styles.sub}>
         {t('callConfirm.question', { label, number })}
       </AppText>
-      <SheetButton label={t('callConfirm.confirm')} icon="phone" color={color} onPress={onConfirm} />
+      <SheetButton label={t('callConfirm.confirm')} icon="call-outline" color={color} onPress={onConfirm} />
       <SheetButton label={t('common.cancel')} variant="outline" onPress={onCancel} />
     </>
   );

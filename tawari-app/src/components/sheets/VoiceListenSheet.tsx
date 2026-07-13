@@ -40,7 +40,7 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
           <Animated.View style={[styles.ring, { transform: [{ scale: ringScale }], opacity: ringOpacity }]} />
         ) : null}
         <View style={[styles.micCore, status === 'error' && { backgroundColor: colors.fire }]}>
-          <AppIcon name="microphone" size={32} color="#fff" />
+          <AppIcon name="mic-outline" size={32} color="#fff" />
         </View>
       </View>
 
@@ -65,7 +65,7 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
       ) : null}
 
       {status === 'no-match' || status === 'error' ? (
-        <SheetButton label={t('voice.retry')} icon="microphone" color={colors.voice} onPress={onRetry} />
+        <SheetButton label={t('voice.retry')} icon="mic-outline" color={colors.voice} onPress={onRetry} />
       ) : null}
       <SheetButton label={t('common.cancel')} variant="outline" onPress={onCancel} />
     </View>

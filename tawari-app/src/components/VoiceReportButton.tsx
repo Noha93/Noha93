@@ -15,7 +15,7 @@ export function VoiceReportButton({ onPress }: Props) {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.btn, pressed && styles.pressed]}>
       <View style={styles.iconWrap}>
-        <AppIcon name="microphone" size={20} color="#fff" />
+        <AppIcon name="mic-outline" size={20} color="#fff" />
       </View>
       <View style={styles.textWrap}>
         <AppText weight="bodyBold" color="#fff" style={styles.title}>

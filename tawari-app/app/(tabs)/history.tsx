@@ -37,7 +37,7 @@ export default function HistoryScreen() {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <ScreenHeader title={t('history.title')} subtitle={t('history.subtitle')} icon="history" />
+      <ScreenHeader title={t('history.title')} subtitle={t('history.subtitle')} icon="time-outline" />
 
       <View style={styles.body}>
       {reports.length === 0 ? (
@@ -68,7 +68,7 @@ export default function HistoryScreen() {
               </View>
               {r.coords ? (
                 <Pressable style={styles.linkRow} onPress={() => Linking.openURL(mapsLink(r.coords!))}>
-                  <AppIcon name="map" size={13} color={colors.police} />
+                  <AppIcon name="map-outline" size={13} color={colors.police} />
                   <AppText color={colors.police} style={styles.link}>
                     {t('history.viewLocation')}
                   </AppText>

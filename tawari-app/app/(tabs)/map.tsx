@@ -13,9 +13,9 @@ export default function MapScreen() {
   const styles = useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.screen}>
-      <ScreenHeader title={t('map.title')} subtitle={t('map.subtitle')} icon="map-marker-radius" />
+      <ScreenHeader title={t('map.title')} subtitle={t('map.subtitle')} icon="map-outline" />
       <View style={styles.placeholder}>
-        <AppIcon name="map-marker-radius" size={44} color={colors.textMuted} />
+        <AppIcon name="map-outline" size={44} color={colors.textMuted} />
         <AppText weight="displayExtraBold" style={styles.title}>
           {t('map.placeholderTitle')}
         </AppText>

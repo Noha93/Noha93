@@ -12,9 +12,9 @@ import { useLocale, rowDir, textAlignDir, type Dir, type Locale } from '../../sr
 import { fontForWeight, radius, spacing, type ThemeColors } from '../../src/constants/theme';
 
 const THEME_OPTIONS: { mode: ThemeMode; icon: IconName }[] = [
-  { mode: 'light', icon: 'white-balance-sunny' },
-  { mode: 'dark', icon: 'weather-night' },
-  { mode: 'system', icon: 'theme-light-dark' },
+  { mode: 'light', icon: 'sunny-outline' },
+  { mode: 'dark', icon: 'moon-outline' },
+  { mode: 'system', icon: 'contrast-outline' },
 ];
 
 const LANGUAGE_OPTIONS: { locale: Locale; key: string }[] = [
@@ -59,7 +59,7 @@ export default function SettingsScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <ScreenHeader title={t('settings.title')} subtitle={t('settings.subtitle', { max: MAX_CONTACTS })} icon="cog-outline" />
+        <ScreenHeader title={t('settings.title')} subtitle={t('settings.subtitle', { max: MAX_CONTACTS })} icon="settings-outline" />
 
         <View style={styles.body}>
         <AppText weight="bodyBold" style={styles.sectionTitle}>
@@ -74,7 +74,7 @@ export default function SettingsScreen() {
                 onPress={() => setLocale(opt.locale)}
                 style={[styles.themeOption, active && styles.themeOptionActive]}
               >
-                <AppIcon name="translate" size={18} color={active ? '#fff' : colors.textMuted} />
+                <AppIcon name="language-outline" size={18} color={active ? '#fff' : colors.textMuted} />
                 <AppText
                   weight={active ? 'bodyBold' : 'body'}
                   color={active ? '#fff' : colors.textMuted}
