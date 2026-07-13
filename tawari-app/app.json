@@ -13,7 +13,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.tawari.app",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "طوارئ يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصلي بيها أو تشاركيه مع جهات اتصالك.",
+        "NSLocationWhenInUseUsageDescription": "طوارئ يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصل بيها أو تشاركه مع جهات اتصالك.",
         "UIBackgroundModes": []
       }
     },
@@ -49,7 +49,7 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "طوارئ يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصلي بيها أو تشاركيه مع جهات اتصالك."
+          "locationWhenInUsePermission": "طوارئ يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصل بيها أو تشاركه مع جهات اتصالك."
         }
       ],
       [

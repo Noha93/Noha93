@@ -26,8 +26,8 @@ export const lightColors = {
   textMuted: '#6B7280',
   border: '#E5E7EB',
   overlay: 'rgba(10,10,15,0.55)',
-  ink: '#14141A',
-  inkMuted: '#2A2A33',
+  ink: '#8C1620',
+  inkMuted: '#A32A34',
   onInk: 'rgba(255,255,255,0.7)',
 } as const;
 
@@ -39,8 +39,8 @@ export const darkColors = {
   textMuted: '#93A0B4',
   border: 'rgba(255,255,255,0.12)',
   overlay: 'rgba(0,0,0,0.65)',
-  ink: '#08111F',
-  inkMuted: '#1C2740',
+  ink: '#5C0F18',
+  inkMuted: '#7A1B22',
   onInk: 'rgba(255,255,255,0.7)',
 } as const;
 
