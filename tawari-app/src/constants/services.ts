@@ -1,4 +1,5 @@
 import { colors } from './theme';
+import type { IconName } from '../components/AppIcon';
 
 export type SosKey = 'fire' | 'police' | 'amb';
 export type OtherKey =
@@ -21,7 +22,7 @@ export interface SosService {
   number: string;
   label: string;
   eta: string;
-  icon: string;
+  icon: IconName;
   color: string;
   colorDark: string;
 }
@@ -31,7 +32,7 @@ export interface OtherService {
   name: string;
   number: string;
   label: string;
-  icon: string;
+  icon: IconName;
 }
 
 // أرقام الطوارئ المصرية الرسمية
@@ -42,7 +43,7 @@ export const sosServices: Record<SosKey, SosService> = {
     number: '180',
     label: 'الحماية المدنية / المطافي',
     eta: '6',
-    icon: '🔥',
+    icon: 'fire',
     color: colors.fire,
     colorDark: colors.fireDark,
   },
@@ -52,7 +53,7 @@ export const sosServices: Record<SosKey, SosService> = {
     number: '122',
     label: 'شرطة النجدة',
     eta: '8',
-    icon: '👮',
+    icon: 'shield-account',
     color: colors.police,
     colorDark: colors.policeDark,
   },
@@ -62,24 +63,24 @@ export const sosServices: Record<SosKey, SosService> = {
     number: '123',
     label: 'الإسعاف المصري',
     eta: '9',
-    icon: '🚑',
+    icon: 'ambulance',
     color: colors.amb,
     colorDark: colors.ambDark,
   },
 };
 
 export const otherServices: Record<OtherKey, OtherService> = {
-  gas: { key: 'gas', name: 'تسرب غاز', number: '129', label: 'شركة الغاز الطبيعي', icon: '🧯' },
-  elec: { key: 'elec', name: 'أعطال كهرباء', number: '121', label: 'شركة الكهرباء', icon: '⚡' },
-  water: { key: 'water', name: 'أعطال مياه', number: '125', label: 'شركة المياه', icon: '🚰' },
-  traffic: { key: 'traffic', name: 'حوادث طرق / مرور', number: '128', label: 'شرطة المرور', icon: '🚗' },
-  tourist: { key: 'tourist', name: 'الشرطة السياحية', number: '126', label: 'الشرطة السياحية والآثار', icon: '🕌' },
-  child: { key: 'child', name: 'خط نجدة الطفل', number: '16000', label: 'المجلس القومي للطفولة والأمومة', icon: '🧒' },
-  health: { key: 'health', name: 'طوارئ وزارة الصحة', number: '137', label: 'وزارة الصحة والسكان', icon: '🏥' },
-  rail: { key: 'rail', name: 'شرطة السكة الحديد', number: '145', label: 'شرطة السكة الحديد', icon: '🚆' },
-  women: { key: 'women', name: 'خط نجدة المرأة', number: '15115', label: 'المجلس القومي للمرأة', icon: '🆘' },
-  addiction: { key: 'addiction', name: 'مكافحة الإدمان', number: '08008880700', label: 'صندوق مكافحة وعلاج الإدمان', icon: '💊' },
-  prosecution: { key: 'prosecution', name: 'بلاغ للنيابة العامة', number: '15888', label: 'النيابة العامة', icon: '⚖️' },
+  gas: { key: 'gas', name: 'تسرب غاز', number: '129', label: 'شركة الغاز الطبيعي', icon: 'gas-cylinder' },
+  elec: { key: 'elec', name: 'أعطال كهرباء', number: '121', label: 'شركة الكهرباء', icon: 'flash' },
+  water: { key: 'water', name: 'أعطال مياه', number: '125', label: 'شركة المياه', icon: 'water-pump' },
+  traffic: { key: 'traffic', name: 'حوادث طرق / مرور', number: '128', label: 'شرطة المرور', icon: 'car-emergency' },
+  tourist: { key: 'tourist', name: 'الشرطة السياحية', number: '126', label: 'الشرطة السياحية والآثار', icon: 'mosque' },
+  child: { key: 'child', name: 'خط نجدة الطفل', number: '16000', label: 'المجلس القومي للطفولة والأمومة', icon: 'account-child' },
+  health: { key: 'health', name: 'طوارئ وزارة الصحة', number: '137', label: 'وزارة الصحة والسكان', icon: 'hospital-box' },
+  rail: { key: 'rail', name: 'شرطة السكة الحديد', number: '145', label: 'شرطة السكة الحديد', icon: 'train' },
+  women: { key: 'women', name: 'خط نجدة المرأة', number: '15115', label: 'المجلس القومي للمرأة', icon: 'human-female' },
+  addiction: { key: 'addiction', name: 'مكافحة الإدمان', number: '08008880700', label: 'صندوق مكافحة وعلاج الإدمان', icon: 'pill' },
+  prosecution: { key: 'prosecution', name: 'بلاغ للنيابة العامة', number: '15888', label: 'النيابة العامة', icon: 'gavel' },
 };
 
 export function findService(key: ServiceKey): SosService | OtherService {

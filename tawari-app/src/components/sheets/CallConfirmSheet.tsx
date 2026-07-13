@@ -27,7 +27,7 @@ export function CallConfirmSheet({ label, number, color, onConfirm, onCancel }: 
         </AppText>{' '}
         على الرقم <AppText weight="bodyBold">{number}</AppText>؟
       </AppText>
-      <SheetButton label="✅ نعم، اتصل الآن" color={color} onPress={onConfirm} />
+      <SheetButton label="نعم، اتصل الآن" icon="phone" color={color} onPress={onConfirm} />
       <SheetButton label="إلغاء" variant="outline" onPress={onCancel} />
     </>
   );

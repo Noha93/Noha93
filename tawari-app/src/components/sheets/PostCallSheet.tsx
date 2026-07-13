@@ -21,8 +21,8 @@ export function PostCallSheet({ serviceLabel, onResolved, onNotResolved }: Props
       <AppText color={themeColors.textMuted} style={styles.sub}>
         هل تم حل المشكلة بعد اتصالك بـ {serviceLabel}؟
       </AppText>
-      <SheetButton label="🔘 نعم، تم الحل" color={colors.success} onPress={onResolved} />
-      <SheetButton label="🔘 لا، لسه محتاج مساعدة" color={colors.fire} onPress={onNotResolved} />
+      <SheetButton label="نعم، تم الحل" icon="check-circle" color={colors.success} onPress={onResolved} />
+      <SheetButton label="لا، لسه محتاج مساعدة" icon="alert-circle" color={colors.fire} onPress={onNotResolved} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
+import { AppIcon } from './AppIcon';
 import { radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import type { EmergencyContact } from '../context/ContactsContext';
@@ -38,7 +39,7 @@ export function ContactRow({ contact, onRemove }: Props) {
           </AppText>
         </Pressable>
       ) : (
-        <AppText style={styles.check}>✓</AppText>
+        <AppIcon name="check" size={18} color={colors.success} />
       )}
     </View>
   );
@@ -81,9 +82,6 @@ function createStyles(colors: ThemeColors) {
     phone: {
       fontSize: 10.5,
       marginTop: 2,
-    },
-    check: {
-      fontSize: 16,
     },
     remove: {
       fontSize: 12,

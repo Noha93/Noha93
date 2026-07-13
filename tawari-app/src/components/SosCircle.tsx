@@ -3,6 +3,7 @@ import { Animated, Easing, Pressable, StyleSheet, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';
 import { AppText } from './AppText';
+import { AppIcon } from './AppIcon';
 import type { SosService } from '../constants/services';
 
 const HOLD_DURATION = 3000;
@@ -113,7 +114,7 @@ export function SosCircle({ service, onPress, onAutoTrigger }: Props) {
       <Animated.View style={{ transform: [{ scale }] }}>
         <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={styles.pressable}>
           <View style={[styles.core, { backgroundColor: service.color }]}>
-            <AppText style={styles.icon}>{service.icon}</AppText>
+            <AppIcon name={service.icon} size={34} color="#fff" />
           </View>
         </Pressable>
       </Animated.View>
@@ -160,9 +161,6 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 6 },
     elevation: 5,
-  },
-  icon: {
-    fontSize: 32,
   },
   label: {
     marginTop: 10,

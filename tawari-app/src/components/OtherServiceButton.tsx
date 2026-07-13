@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
+import { AppIcon } from './AppIcon';
 import { radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import type { OtherService } from '../constants/services';
@@ -19,7 +20,7 @@ export function OtherServiceButton({ service, onPress }: Props) {
       style={({ pressed }) => [styles.btn, pressed && styles.pressed]}
     >
       <View style={styles.badge}>
-        <AppText style={styles.icon}>{service.icon}</AppText>
+        <AppIcon name={service.icon} size={20} color={colors.text} />
       </View>
       <AppText weight="bodyBold" style={styles.name}>
         {service.name}
@@ -54,9 +55,6 @@ function createStyles(colors: ThemeColors) {
       backgroundColor: colors.bg,
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    icon: {
-      fontSize: 20,
     },
     name: {
       fontSize: 12.5,

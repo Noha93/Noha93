@@ -1,13 +1,12 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { AppText } from '../../src/components/AppText';
+import type { ColorValue } from 'react-native';
+import { AppIcon, type IconName } from '../../src/components/AppIcon';
 import { fonts } from '../../src/constants/theme';
 import { useTheme } from '../../src/context/ThemeContext';
 
-function TabIcon({ icon, focused }: { icon: string; focused: boolean }) {
-  return (
-    <AppText style={{ fontSize: 18, opacity: focused ? 1 : 0.6 }}>{icon}</AppText>
-  );
+function TabIcon({ icon, color }: { icon: IconName; color: ColorValue }) {
+  return <AppIcon name={icon} size={20} color={color as string} />;
 }
 
 export default function TabsLayout() {
@@ -26,28 +25,28 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: 'الرئيسية',
-          tabBarIcon: ({ focused }) => <TabIcon icon="🏠" focused={focused} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="home-variant" color={color} />,
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
           title: 'الخريطة',
-          tabBarIcon: ({ focused }) => <TabIcon icon="🗺️" focused={focused} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="map-marker-radius" color={color} />,
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
           title: 'السجل',
-          tabBarIcon: ({ focused }) => <TabIcon icon="🕓" focused={focused} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="history" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'الإعدادات',
-          tabBarIcon: ({ focused }) => <TabIcon icon="⚙️" focused={focused} />,
+          tabBarIcon: ({ color }) => <TabIcon icon="cog-outline" color={color} />,
         }}
       />
     </Tabs>

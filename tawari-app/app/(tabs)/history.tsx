@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
-import { Linking, ScrollView, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
+import { AppIcon } from '../../src/components/AppIcon';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { useReports } from '../../src/context/ReportsContext';
 import { useTheme } from '../../src/context/ThemeContext';
@@ -25,7 +26,7 @@ export default function HistoryScreen() {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <ScreenHeader title="سجل البلاغات" subtitle="البلاغات والمكالمات محفوظة محليًا على جهازك فقط" icon="🕓" />
+      <ScreenHeader title="سجل البلاغات" subtitle="البلاغات والمكالمات محفوظة محليًا على جهازك فقط" icon="history" />
 
       <View style={styles.body}>
       {reports.length === 0 ? (
@@ -34,12 +35,12 @@ export default function HistoryScreen() {
         </AppText>
       ) : (
         reports.map((r) => {
-          const icon = sosServices[r.serviceKey as keyof typeof sosServices]?.icon ?? '🛟';
+          const icon = sosServices[r.serviceKey as keyof typeof sosServices]?.icon ?? 'lifebuoy';
           return (
             <View key={r.id} style={styles.card}>
               <View style={styles.row}>
                 <View style={styles.iconBadge}>
-                  <AppText style={styles.icon}>{icon}</AppText>
+                  <AppIcon name={icon} size={18} color={colors.text} />
                 </View>
                 <View style={styles.info}>
                   <AppText weight="bodyBold" style={styles.name}>
@@ -56,13 +57,12 @@ export default function HistoryScreen() {
                 </View>
               </View>
               {r.coords ? (
-                <AppText
-                  color={colors.police}
-                  style={styles.link}
-                  onPress={() => Linking.openURL(mapsLink(r.coords!))}
-                >
-                  🗺️ عرض الموقع وقت البلاغ
-                </AppText>
+                <Pressable style={styles.linkRow} onPress={() => Linking.openURL(mapsLink(r.coords!))}>
+                  <AppIcon name="map" size={13} color={colors.police} />
+                  <AppText color={colors.police} style={styles.link}>
+                    عرض الموقع وقت البلاغ
+                  </AppText>
+                </Pressable>
               ) : null}
             </View>
           );
@@ -111,9 +111,6 @@ function createStyles(colors: ThemeColors) {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    icon: {
-      fontSize: 18,
-    },
     info: {
       flex: 1,
     },
@@ -133,9 +130,14 @@ function createStyles(colors: ThemeColors) {
     badgeText: {
       fontSize: 10,
     },
+    linkRow: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+      gap: 4,
+      marginTop: spacing.sm,
+    },
     link: {
       fontSize: 11.5,
-      marginTop: spacing.sm,
       textAlign: 'right',
     },
   });

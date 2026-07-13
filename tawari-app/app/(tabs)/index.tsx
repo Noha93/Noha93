@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, AppStateStatus, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { AppText } from '../../src/components/AppText';
+import { AppIcon } from '../../src/components/AppIcon';
 import { BottomSheet } from '../../src/components/BottomSheet';
 import { SosCircle } from '../../src/components/SosCircle';
 import { VoiceReportButton } from '../../src/components/VoiceReportButton';
@@ -125,7 +126,7 @@ export default function HomeScreen() {
     const svc = sosServices[key];
     await addReport({ serviceKey: key, serviceName: svc.name, coords: coordsRef.current, resolved: true });
     closeSheet();
-    showToast('الحمد لله على السلامة 🤍');
+    showToast('الحمد لله على السلامة');
   };
 
   const handleNotResolved = async (key: SosKey) => {
@@ -162,7 +163,7 @@ export default function HomeScreen() {
       <View style={styles.heroBand}>
         <View style={styles.topbar}>
           <View style={styles.brand}>
-            <AppText style={styles.brandEmoji}>🚨</AppText>
+            <AppIcon name="alarm-light" size={20} color="#fff" />
             <AppText weight="displayExtraBold" color="#fff" style={styles.brandText}>
               طوارئ
             </AppText>
@@ -207,18 +208,24 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
-        🛟 خدمات طوارئ أخرى قد تفيدك
-      </AppText>
+      <View style={styles.sectionHRow}>
+        <AppIcon name="lifebuoy" size={16} color={colors.textMuted} />
+        <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
+          خدمات طوارئ أخرى قد تفيدك
+        </AppText>
+      </View>
       <View style={styles.otherGrid}>
         {Object.values(otherServices).map((svc) => (
           <OtherServiceButton key={svc.key} service={svc} onPress={() => openCallConfirm(svc.key)} />
         ))}
       </View>
 
-      <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
-        👨‍👩‍👧 جهات اتصال الطوارئ الخاصة بك
-      </AppText>
+      <View style={styles.sectionHRow}>
+        <AppIcon name="account-group" size={16} color={colors.textMuted} />
+        <AppText weight="displayExtraBold" color={colors.textMuted} style={styles.sectionH}>
+          جهات اتصال الطوارئ الخاصة بك
+        </AppText>
+      </View>
       {contacts.length === 0 ? (
         <AppText color={colors.textMuted} style={styles.emptyContacts}>
           لسه معنديش جهات اتصال محفوظة — أضيفي جهة عشان تقدري تشاركي موقعك معاها بسرعة.
@@ -307,9 +314,6 @@ function createStyles(colors: ThemeColors) {
       alignItems: 'center',
       gap: 8,
     },
-    brandEmoji: {
-      fontSize: 20,
-    },
     brandText: {
       fontSize: 20,
     },
@@ -354,10 +358,15 @@ function createStyles(colors: ThemeColors) {
       paddingHorizontal: spacing.lg,
       paddingTop: spacing.lg,
     },
-    sectionH: {
+    sectionHRow: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center',
+      gap: 6,
       paddingHorizontal: spacing.lg,
       paddingTop: 26,
       paddingBottom: 10,
+    },
+    sectionH: {
       fontSize: 14,
     },
     otherGrid: {

@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
+import { AppIcon, type IconName } from '../../src/components/AppIcon';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { ContactRow } from '../../src/components/ContactRow';
 import { SheetButton } from '../../src/components/SheetButton';
@@ -9,10 +10,10 @@ import { useToast } from '../../src/context/ToastContext';
 import { useTheme, type ThemeMode } from '../../src/context/ThemeContext';
 import { fonts, radius, spacing, type ThemeColors } from '../../src/constants/theme';
 
-const THEME_OPTIONS: { mode: ThemeMode; label: string; icon: string }[] = [
-  { mode: 'light', label: 'فاتح', icon: '☀️' },
-  { mode: 'dark', label: 'غامق', icon: '🌙' },
-  { mode: 'system', label: 'تلقائي', icon: '⚙️' },
+const THEME_OPTIONS: { mode: ThemeMode; label: string; icon: IconName }[] = [
+  { mode: 'light', label: 'فاتح', icon: 'white-balance-sunny' },
+  { mode: 'dark', label: 'غامق', icon: 'weather-night' },
+  { mode: 'system', label: 'تلقائي', icon: 'theme-light-dark' },
 ];
 
 export default function SettingsScreen() {
@@ -48,7 +49,7 @@ export default function SettingsScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <ScreenHeader title="الإعدادات" subtitle={`جهات اتصال الطوارئ الخاصة بك (حتى ${MAX_CONTACTS})`} icon="⚙️" />
+        <ScreenHeader title="الإعدادات" subtitle={`جهات اتصال الطوارئ الخاصة بك (حتى ${MAX_CONTACTS})`} icon="cog-outline" />
 
         <View style={styles.body}>
         <AppText weight="bodyBold" style={styles.sectionTitle}>
@@ -63,7 +64,7 @@ export default function SettingsScreen() {
                 onPress={() => setMode(opt.mode)}
                 style={[styles.themeOption, active && styles.themeOptionActive]}
               >
-                <AppText style={styles.themeIcon}>{opt.icon}</AppText>
+                <AppIcon name={opt.icon} size={18} color={active ? '#fff' : colors.textMuted} />
                 <AppText
                   weight={active ? 'bodyBold' : 'body'}
                   color={active ? '#fff' : colors.textMuted}
@@ -161,9 +162,6 @@ function createStyles(colors: ThemeColors) {
     themeOptionActive: {
       backgroundColor: colors.primary,
       borderColor: colors.primary,
-    },
-    themeIcon: {
-      fontSize: 18,
     },
     themeLabel: {
       fontSize: 11.5,

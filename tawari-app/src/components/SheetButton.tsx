@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, ViewStyle } from 'react-native';
 import { AppText } from './AppText';
+import { AppIcon, type IconName } from './AppIcon';
 import { radius, spacing } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 
@@ -9,10 +10,11 @@ interface Props {
   onPress: () => void;
   variant?: 'solid' | 'secondary' | 'outline';
   color?: string;
+  icon?: IconName;
   style?: ViewStyle;
 }
 
-export function SheetButton({ label, onPress, variant = 'solid', color, style }: Props) {
+export function SheetButton({ label, onPress, variant = 'solid', color, icon, style }: Props) {
   const { colors } = useTheme();
   const bg = variant === 'solid' ? color ?? colors.police : variant === 'secondary' ? colors.bg : 'transparent';
   const textColor = variant === 'solid' ? '#fff' : colors.text;
@@ -28,6 +30,7 @@ export function SheetButton({ label, onPress, variant = 'solid', color, style }:
         style,
       ]}
     >
+      {icon ? <AppIcon name={icon} size={19} color={textColor} /> : null}
       <AppText weight="bodyBold" color={textColor} style={styles.label}>
         {label}
       </AppText>
@@ -38,11 +41,13 @@ export function SheetButton({ label, onPress, variant = 'solid', color, style }:
 const styles = StyleSheet.create({
   btn: {
     width: '100%',
+    flexDirection: 'row-reverse',
     borderRadius: radius.md,
     paddingVertical: 15,
     marginBottom: spacing.sm,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 8,
   },
   pressed: {
     opacity: 0.85,

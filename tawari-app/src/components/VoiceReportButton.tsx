@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
+import { AppIcon } from './AppIcon';
 import { colors, radius, spacing } from '../constants/theme';
 
 interface Props {
@@ -11,7 +12,7 @@ export function VoiceReportButton({ onPress }: Props) {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.btn, pressed && styles.pressed]}>
       <View style={styles.iconWrap}>
-        <AppText style={styles.icon}>🎙️</AppText>
+        <AppIcon name="microphone" size={20} color="#fff" />
       </View>
       <View style={styles.textWrap}>
         <AppText weight="bodyBold" color="#fff" style={styles.title}>
@@ -45,9 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.22)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  icon: {
-    fontSize: 20,
   },
   textWrap: {
     flex: 1,

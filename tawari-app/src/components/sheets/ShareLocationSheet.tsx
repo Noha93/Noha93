@@ -53,10 +53,10 @@ export function ShareLocationSheet({
         />
       ) : (
         <>
-          <SheetButton label="🟢 مشاركة عبر واتساب" color={colors.amb} onPress={onWhatsApp} />
-          <SheetButton label="💬 مشاركة عبر رسالة SMS" color={colors.police} onPress={onSms} />
-          <SheetButton label="📱 مشاركة عبر أي تطبيق" variant="secondary" onPress={onShareSheet} />
-          <SheetButton label="📋 نسخ رابط الموقع" variant="secondary" onPress={onCopyLink} />
+          <SheetButton label="مشاركة عبر واتساب" icon="whatsapp" color={colors.amb} onPress={onWhatsApp} />
+          <SheetButton label="مشاركة عبر رسالة SMS" icon="message-text" color={colors.police} onPress={onSms} />
+          <SheetButton label="مشاركة عبر أي تطبيق" icon="share-variant" variant="secondary" onPress={onShareSheet} />
+          <SheetButton label="نسخ رابط الموقع" icon="content-copy" variant="secondary" onPress={onCopyLink} />
         </>
       )}
       <AppText color={themeColors.textMuted} style={styles.note}>

@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
+import { AppIcon, type IconName } from './AppIcon';
 import { radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 
 interface Props {
   title: string;
   subtitle?: string;
-  icon?: string;
+  icon?: IconName;
 }
 
 export function ScreenHeader({ title, subtitle, icon }: Props) {
@@ -16,7 +17,7 @@ export function ScreenHeader({ title, subtitle, icon }: Props) {
   return (
     <View style={styles.band}>
       <View style={styles.titleRow}>
-        {icon ? <AppText style={styles.icon}>{icon}</AppText> : null}
+        {icon ? <AppIcon name={icon} size={20} color="#fff" /> : null}
         <AppText weight="displayExtraBold" color="#fff" style={styles.title}>
           {title}
         </AppText>
@@ -44,9 +45,6 @@ function createStyles(colors: ThemeColors) {
       flexDirection: 'row-reverse',
       alignItems: 'center',
       gap: 8,
-    },
-    icon: {
-      fontSize: 20,
     },
     title: {
       fontSize: 20,

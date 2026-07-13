@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from '../../src/components/AppText';
+import { AppIcon } from '../../src/components/AppIcon';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
 import { spacing, type ThemeColors } from '../../src/constants/theme';
 import { useTheme } from '../../src/context/ThemeContext';
@@ -10,9 +11,9 @@ export default function MapScreen() {
   const styles = useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.screen}>
-      <ScreenHeader title="الخريطة" subtitle="أقرب نقاط الإنقاذ حواليكِ" icon="🗺️" />
+      <ScreenHeader title="الخريطة" subtitle="أقرب نقاط الإنقاذ حواليكِ" icon="map-marker-radius" />
       <View style={styles.placeholder}>
-        <AppText style={styles.icon}>🗺️</AppText>
+        <AppIcon name="map-marker-radius" size={44} color={colors.textMuted} />
         <AppText weight="displayExtraBold" style={styles.title}>
           خريطة أقرب نقاط الإنقاذ
         </AppText>
@@ -36,11 +37,8 @@ function createStyles(colors: ThemeColors) {
       justifyContent: 'center',
       paddingHorizontal: spacing.xl,
     },
-    icon: {
-      fontSize: 44,
-      marginBottom: spacing.md,
-    },
     title: {
+      marginTop: spacing.md,
       fontSize: 17,
       marginBottom: 6,
       textAlign: 'center',

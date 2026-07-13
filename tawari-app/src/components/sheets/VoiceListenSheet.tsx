@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { AppText } from '../AppText';
+import { AppIcon } from '../AppIcon';
 import { SheetButton } from '../SheetButton';
 import { colors, spacing, type ThemeColors } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
@@ -37,7 +38,7 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
           <Animated.View style={[styles.ring, { transform: [{ scale: ringScale }], opacity: ringOpacity }]} />
         ) : null}
         <View style={[styles.micCore, status === 'error' && { backgroundColor: colors.fire }]}>
-          <AppText style={styles.micIcon}>🎙️</AppText>
+          <AppIcon name="microphone" size={32} color="#fff" />
         </View>
       </View>
 
@@ -62,7 +63,7 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
       ) : null}
 
       {status === 'no-match' || status === 'error' ? (
-        <SheetButton label="🎙️ حاولي تاني" color={colors.voice} onPress={onRetry} />
+        <SheetButton label="حاولي تاني" icon="microphone" color={colors.voice} onPress={onRetry} />
       ) : null}
       <SheetButton label="إلغاء" variant="outline" onPress={onCancel} />
     </View>
@@ -96,9 +97,6 @@ function createStyles(colors: ThemeColors) {
       backgroundColor: colors.voice,
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    micIcon: {
-      fontSize: 32,
     },
     title: {
       fontSize: 17,
