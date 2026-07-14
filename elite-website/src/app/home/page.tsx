@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
@@ -8,7 +7,8 @@ import { CTA } from "@/components/sections/CTA";
 export default function HomePreviewPage() {
   return (
     <>
-      <Navbar />
+      {/* Hero carries its own overlay nav, matching the full-bleed editorial
+          reference layouts — no separate sticky bar stacked on top of it. */}
       <main>
         <Hero />
         <TrustMarquee />
