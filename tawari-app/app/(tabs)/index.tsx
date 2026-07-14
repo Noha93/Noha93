@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { AppText } from '../../src/components/AppText';
 import { AppIcon } from '../../src/components/AppIcon';
 import { BottomSheet } from '../../src/components/BottomSheet';
+import { OfflineBanner } from '../../src/components/OfflineBanner';
 import { SosCircle } from '../../src/components/SosCircle';
 import { VoiceReportButton } from '../../src/components/VoiceReportButton';
 import { OtherServiceButton } from '../../src/components/OtherServiceButton';
@@ -209,6 +210,8 @@ export default function HomeScreen() {
           <VoiceReportButton onPress={openVoiceSheet} />
         </View>
       </View>
+
+      <OfflineBanner />
 
       <View style={styles.trustRow}>
         <AppIcon name="shield-checkmark-outline" size={13} color={colors.textMuted} />

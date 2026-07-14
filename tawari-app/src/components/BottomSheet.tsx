@@ -33,6 +33,9 @@ function createStyles(colors: ThemeColors) {
     },
     sheet: {
       backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderBottomWidth: 0,
       borderTopLeftRadius: radius.xl,
       borderTopRightRadius: radius.xl,
       paddingHorizontal: spacing.lg,

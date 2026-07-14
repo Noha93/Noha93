@@ -3,7 +3,7 @@ import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { AppText } from '../AppText';
 import { AppIcon } from '../AppIcon';
 import { SheetButton } from '../SheetButton';
-import { colors, spacing, type ThemeColors } from '../../constants/theme';
+import { colors, glow, spacing, type ThemeColors } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
 import { useLocale } from '../../context/LocaleContext';
 import type { VoiceStatus } from '../../hooks/useVoiceReport';
@@ -16,10 +16,12 @@ interface Props {
 }
 
 export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Props) {
-  const { colors: themeColors } = useTheme();
+  const { colors: themeColors, scheme } = useTheme();
   const { t } = useLocale();
   const styles = useMemo(() => createStyles(themeColors), [themeColors]);
   const pulse = useRef(new Animated.Value(0)).current;
+  const micColor = status === 'error' ? colors.fire : colors.voice;
+  const isDark = scheme === 'dark';
 
   useEffect(() => {
     if (status !== 'listening') return;
@@ -39,7 +41,7 @@ export function VoiceListenSheet({ status, transcript, onRetry, onCancel }: Prop
         {status === 'listening' ? (
           <Animated.View style={[styles.ring, { transform: [{ scale: ringScale }], opacity: ringOpacity }]} />
         ) : null}
-        <View style={[styles.micCore, status === 'error' && { backgroundColor: colors.fire }]}>
+        <View style={[styles.micCore, { backgroundColor: micColor }, isDark && glow(micColor, 0.6, 20)]}>
           <AppIcon name="mic-outline" size={32} color="#fff" />
         </View>
       </View>
@@ -113,6 +115,8 @@ function createStyles(colors: ThemeColors) {
     },
     transcriptBox: {
       backgroundColor: colors.bg,
+      borderWidth: 1,
+      borderColor: colors.border,
       borderRadius: 12,
       paddingVertical: 10,
       paddingHorizontal: 14,

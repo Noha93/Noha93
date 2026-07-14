@@ -147,6 +147,11 @@ const ar: Dict = {
   trust: {
     disclaimer: 'تطبيق مجتمعي لتسهيل التواصل مع أرقام الطوارئ الرسمية في مصر',
   },
+  offline: {
+    banner: 'انت أوفلاين دلوقتي — لسه تقدر تتصل وتبعت SMS، بس مشاركة واتساب محتاجة إنترنت.',
+    whatsappNeedsInternet: 'واتساب محتاج إنترنت — انت أوفلاين دلوقتي. جرّب SMS أو انسخ الرابط',
+    shareNeedsInternet: 'المشاركة دي محتاجة إنترنت — انت أوفلاين دلوقتي. جرّب SMS أو انسخ الرابط',
+  },
 };
 
 const en: Dict = {
@@ -290,6 +295,11 @@ const en: Dict = {
   },
   trust: {
     disclaimer: "A community app that makes it easier to reach Egypt's official emergency numbers",
+  },
+  offline: {
+    banner: "You're offline right now — you can still call and send SMS, but WhatsApp sharing needs internet.",
+    whatsappNeedsInternet: "WhatsApp needs internet and you're offline right now. Try SMS or copy the link instead",
+    shareNeedsInternet: "This sharing option needs internet and you're offline right now. Try SMS or copy the link instead",
   },
 };
 

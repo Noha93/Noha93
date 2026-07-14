@@ -8,7 +8,7 @@ import { useTheme } from '../../src/context/ThemeContext';
 import { useLocale, rowDir, textAlignDir, type Dir } from '../../src/context/LocaleContext';
 import { sosServices, otherServices, type ServiceKey } from '../../src/constants/services';
 import { mapsLink } from '../../src/utils/share';
-import { radius, spacing, type ThemeColors } from '../../src/constants/theme';
+import { glow, radius, spacing, type ThemeColors } from '../../src/constants/theme';
 import type { Locale } from '../../src/i18n/strings';
 
 function formatDate(iso: string, locale: Locale): string {
@@ -29,11 +29,20 @@ function serviceIcon(key: ServiceKey): IconName {
   );
 }
 
+function serviceAccentColor(key: ServiceKey): string {
+  return (
+    (sosServices as Record<string, { color: string }>)[key]?.color ??
+    (otherServices as Record<string, { glowColor: string }>)[key]?.glowColor ??
+    '#93A0B4'
+  );
+}
+
 export default function HistoryScreen() {
   const { reports } = useReports();
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const { locale, dir, t } = useLocale();
   const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
+  const isDark = scheme === 'dark';
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
@@ -46,11 +55,22 @@ export default function HistoryScreen() {
         </AppText>
       ) : (
         reports.map((r) => {
+          const accent = serviceAccentColor(r.serviceKey);
+          const statusColor = r.resolved ? colors.success : colors.warn;
           return (
             <View key={r.id} style={styles.card}>
               <View style={styles.row}>
-                <View style={styles.iconBadge}>
-                  <AppIcon name={serviceIcon(r.serviceKey)} size={18} color={colors.text} />
+                <View
+                  style={[
+                    styles.iconBadge,
+                    isDark && {
+                      backgroundColor: withAlpha(accent, 0.16),
+                      borderWidth: 1,
+                      borderColor: withAlpha(accent, 0.4),
+                    },
+                  ]}
+                >
+                  <AppIcon name={serviceIcon(r.serviceKey)} size={18} color={isDark ? accent : colors.text} />
                 </View>
                 <View style={styles.info}>
                   <AppText weight="bodyBold" style={styles.name}>
@@ -60,15 +80,21 @@ export default function HistoryScreen() {
                     {formatDate(r.createdAt, locale)}
                   </AppText>
                 </View>
-                <View style={[styles.badge, { backgroundColor: r.resolved ? '#22c55e18' : '#E6394618' }]}>
-                  <AppText style={styles.badgeText} color={r.resolved ? colors.success : colors.fire}>
+                <View
+                  style={[
+                    styles.badge,
+                    { backgroundColor: withAlpha(statusColor, 0.14), borderWidth: 1, borderColor: withAlpha(statusColor, 0.4) },
+                    isDark && glow(statusColor, 0.35, 8),
+                  ]}
+                >
+                  <AppText weight="bodyMedium" style={styles.badgeText} color={statusColor}>
                     {r.resolved ? t('history.resolvedBadge') : t('history.followUpBadge')}
                   </AppText>
                 </View>
               </View>
               {r.coords ? (
                 <Pressable style={styles.linkRow} onPress={() => Linking.openURL(mapsLink(r.coords!))}>
-                  <AppIcon name="map-outline" size={13} color={colors.police} />
+                  <AppIcon name="map-outline" size={13} color={colors.police} style={isDark ? glow(colors.police, 0.5, 6) : undefined} />
                   <AppText color={colors.police} style={styles.link}>
                     {t('history.viewLocation')}
                   </AppText>
@@ -81,6 +107,14 @@ export default function HistoryScreen() {
       </View>
     </ScrollView>
   );
+}
+
+function withAlpha(hex: string, alpha: number): string {
+  const v = hex.replace('#', '');
+  const r = parseInt(v.substring(0, 2), 16);
+  const g = parseInt(v.substring(2, 4), 16);
+  const b = parseInt(v.substring(4, 6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
 }
 
 function createStyles(colors: ThemeColors, dir: Dir) {

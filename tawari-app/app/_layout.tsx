@@ -8,6 +8,7 @@ import { useFonts, IBMPlexSansArabic_400Regular, IBMPlexSansArabic_500Medium, IB
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold } from '@expo-google-fonts/inter';
 import { ContactsProvider } from '../src/context/ContactsContext';
 import { MedicalProvider } from '../src/context/MedicalContext';
+import { NetworkProvider } from '../src/context/NetworkContext';
 import { ReportsProvider } from '../src/context/ReportsContext';
 import { ToastProvider } from '../src/context/ToastContext';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
@@ -54,13 +55,15 @@ export default function RootLayout() {
         <LocaleProvider>
           <ThemeProvider>
             <ToastProvider>
-              <ContactsProvider>
-                <MedicalProvider>
-                  <ReportsProvider>
-                    <AppShell />
-                  </ReportsProvider>
-                </MedicalProvider>
-              </ContactsProvider>
+              <NetworkProvider>
+                <ContactsProvider>
+                  <MedicalProvider>
+                    <ReportsProvider>
+                      <AppShell />
+                    </ReportsProvider>
+                  </MedicalProvider>
+                </ContactsProvider>
+              </NetworkProvider>
             </ToastProvider>
           </ThemeProvider>
         </LocaleProvider>

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from './AppText';
 import { AppIcon } from './AppIcon';
-import { elevation, radius, spacing, type ThemeColors } from '../constants/theme';
+import { elevation, glow, radius, spacing, type ThemeColors } from '../constants/theme';
 import { useTheme } from '../context/ThemeContext';
 import { useLocale, rowDir, type Dir } from '../context/LocaleContext';
 import type { EmergencyContact } from '../context/ContactsContext';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function ContactRow({ contact, onRemove }: Props) {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const { dir, t } = useLocale();
   const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
   const initials = contact.name.trim().slice(0, 2);
@@ -41,7 +41,12 @@ export function ContactRow({ contact, onRemove }: Props) {
           </AppText>
         </Pressable>
       ) : (
-        <AppIcon name="checkmark-circle-outline" size={18} color={colors.success} />
+        <AppIcon
+          name="checkmark-circle-outline"
+          size={18}
+          color={colors.success}
+          style={scheme === 'dark' ? glow(colors.success, 0.5, 8) : undefined}
+        />
       )}
     </View>
   );

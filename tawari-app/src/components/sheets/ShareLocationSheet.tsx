@@ -8,6 +8,8 @@ import { colors, glow, radius, spacing } from '../../constants/theme';
 import { useTheme } from '../../context/ThemeContext';
 import { useLocale, rowDir } from '../../context/LocaleContext';
 import { useMedical } from '../../context/MedicalContext';
+import { useNetwork } from '../../context/NetworkContext';
+import { useToast } from '../../context/ToastContext';
 import type { Coords } from '../../utils/share';
 import type { LocationStatus } from '../../hooks/useLocation';
 
@@ -37,6 +39,17 @@ export function ShareLocationSheet({
   const { colors: themeColors, scheme } = useTheme();
   const { dir, t } = useLocale();
   const { profile, hasData } = useMedical();
+  const { isOnline } = useNetwork();
+  const { showToast } = useToast();
+
+  const guardOnline = (action: () => void, messageKey: 'offline.whatsappNeedsInternet' | 'offline.shareNeedsInternet') => {
+    if (!isOnline) {
+      showToast(t(messageKey));
+      return;
+    }
+    action();
+  };
+
   return (
     <>
       <AppText weight="displayExtraBold" style={styles.title}>
@@ -74,9 +87,19 @@ export function ShareLocationSheet({
         />
       ) : (
         <>
-          <SheetButton label={t('shareLocation.viaWhatsapp')} icon="logo-whatsapp" color={colors.amb} onPress={onWhatsApp} />
+          <SheetButton
+            label={isOnline ? t('shareLocation.viaWhatsapp') : `${t('shareLocation.viaWhatsapp')} ⚠`}
+            icon="logo-whatsapp"
+            color={colors.amb}
+            onPress={() => guardOnline(onWhatsApp, 'offline.whatsappNeedsInternet')}
+          />
           <SheetButton label={t('shareLocation.viaSms')} icon="chatbubble-outline" color={colors.police} onPress={onSms} />
-          <SheetButton label={t('shareLocation.viaAnyApp')} icon="share-social-outline" variant="secondary" onPress={onShareSheet} />
+          <SheetButton
+            label={isOnline ? t('shareLocation.viaAnyApp') : `${t('shareLocation.viaAnyApp')} ⚠`}
+            icon="share-social-outline"
+            variant="secondary"
+            onPress={() => guardOnline(onShareSheet, 'offline.shareNeedsInternet')}
+          />
           <SheetButton label={t('shareLocation.copyLink')} icon="copy-outline" variant="secondary" onPress={onCopyLink} />
         </>
       )}
