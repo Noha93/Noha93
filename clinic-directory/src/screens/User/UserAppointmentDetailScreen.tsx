@@ -172,6 +172,26 @@ export default function UserAppointmentDetailScreen() {
         </View>
 
         {/* Actions */}
+        {status === 'completed' && doctor && (
+          <View style={styles.actions}>
+            <Button
+              title={isRTL ? 'تقييم الطبيب' : 'Rate Doctor'}
+              onPress={() => navigation.navigate('Rating', { doctorId: doctor.id, appointmentId: appointment.id })}
+              variant="gold"
+              fullWidth
+              size="lg"
+              style={{ marginBottom: 10 }}
+            />
+            <Button
+              title={isRTL ? 'حجز موعد جديد' : 'Rebook'}
+              onPress={() => navigation.navigate('Booking', { doctorId: doctor.id })}
+              variant="outline"
+              fullWidth
+              size="md"
+            />
+          </View>
+        )}
+
         {status !== 'cancelled' && status !== 'completed' && (
           <View style={styles.actions}>
             {doctor && (

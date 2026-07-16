@@ -25,6 +25,8 @@ import UserAppointmentDetailScreen from '../screens/User/UserAppointmentDetailSc
 import MapViewScreen from '../screens/User/MapViewScreen';
 import HelpSupportScreen from '../screens/User/HelpSupportScreen';
 import AboutAppScreen from '../screens/User/AboutAppScreen';
+import RatingScreen from '../screens/User/RatingScreen';
+import SpecialtiesScreen from '../screens/User/SpecialtiesScreen';
 
 const Tab = createBottomTabNavigator<UserTabParamList>();
 const Stack = createNativeStackNavigator<UserStackParamList>();
@@ -39,6 +41,8 @@ function HomeStack() {
       <Stack.Screen name="Reviews" component={ReviewsScreen} />
       <Stack.Screen name="MyAppointments" component={MyAppointmentsScreen} />
       <Stack.Screen name="AppointmentDetail" component={UserAppointmentDetailScreen} />
+      <Stack.Screen name="Rating" component={RatingScreen} />
+      <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
       <Stack.Screen name="MapView" component={MapViewScreen} />
       <Stack.Screen name="EditUserProfile" component={EditUserProfileScreen} />
       <Stack.Screen name="FavoriteDoctors" component={FavoriteDoctorsScreen} />
@@ -90,6 +94,8 @@ function ProfileStack() {
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="MyAppointments" component={MyAppointmentsScreen} />
       <Stack.Screen name="AppointmentDetail" component={UserAppointmentDetailScreen} />
+      <Stack.Screen name="Rating" component={RatingScreen} />
+      <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
       <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />
       <Stack.Screen name="AboutApp" component={AboutAppScreen} />
       <Stack.Screen name="DoctorDetail" component={DoctorDetailScreen} />

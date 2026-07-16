@@ -17,7 +17,7 @@ export default function SearchScreen() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const [query, setQuery] = useState(route.params?.query || '');
-  const [selectedSpec, setSelectedSpec] = useState('');
+  const [selectedSpec, setSelectedSpec] = useState(route.params?.specialization || '');
   const [openNow, setOpenNow] = useState(false);
   const [activeTab, setActiveTab] = useState<'doctors' | 'hospitals'>('doctors');
   const [results, setResults] = useState<Doctor[]>(MOCK_DOCTORS);

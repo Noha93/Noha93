@@ -146,7 +146,7 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <View style={[styles.sectionHeader, isRTL && styles.rtlRow]}>
             <Text style={[styles.sectionTitle, isRTL && styles.rtlText]}>{t('home.specializations')}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Search', {})}>
+            <TouchableOpacity onPress={() => navigation.navigate('Specialties')}>
               <Text style={styles.seeAll}>{t('common.seeAll')}</Text>
             </TouchableOpacity>
           </View>
