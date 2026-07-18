@@ -8,8 +8,7 @@ export type OtherKey =
   | 'water'
   | 'traffic'
   | 'tourist'
-  | 'health'
-  | 'women';
+  | 'health';
 export type ServiceKey = SosKey | OtherKey;
 
 export interface SosService {
@@ -67,7 +66,6 @@ export const otherServices: Record<OtherKey, OtherService> = {
   water: { key: 'water', number: '125', icon: 'water-outline', glowColor: '#22D3EE' },
   tourist: { key: 'tourist', number: '126', icon: 'business-outline', glowColor: '#A78BFA' },
   health: { key: 'health', number: '137', icon: 'medical-outline', glowColor: '#F472B6' },
-  women: { key: 'women', number: '15115', icon: 'woman-outline', glowColor: '#FB923C' },
 };
 
 export function findService(key: ServiceKey): SosService | OtherService {

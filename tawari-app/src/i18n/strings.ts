@@ -47,7 +47,6 @@ const ar: Dict = {
     traffic: { name: 'حادث طريق', label: 'شرطة المرور' },
     tourist: { name: 'الشرطة السياحية', label: 'الشرطة السياحية والآثار' },
     health: { name: 'طوارئ الصحة', label: 'وزارة الصحة والسكان' },
-    women: { name: 'خط نجدة المرأة', label: 'المجلس القومي للمرأة' },
   },
   callConfirm: {
     title: 'تأكيد الاتصال',
@@ -196,7 +195,6 @@ const en: Dict = {
     traffic: { name: 'Road accident', label: 'Traffic Police' },
     tourist: { name: 'Tourist Police', label: 'Tourist & Antiquities Police' },
     health: { name: 'Health emergency', label: 'Ministry of Health & Population' },
-    women: { name: "Women's Helpline", label: 'National Council for Women' },
   },
   callConfirm: {
     title: 'Confirm call',
