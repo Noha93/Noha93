@@ -1,0 +1,160 @@
+import React, { useMemo } from 'react';
+import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { AppText } from '../src/components/AppText';
+import { AppIcon, type IconName } from '../src/components/AppIcon';
+import { ScreenHeader } from '../src/components/ScreenHeader';
+import { useReports } from '../src/context/ReportsContext';
+import { useTheme } from '../src/context/ThemeContext';
+import { useLocale, rowDir, textAlignDir, type Dir } from '../src/context/LocaleContext';
+import { sosServices, otherServices, type ServiceKey } from '../src/constants/services';
+import { mapsLink } from '../src/utils/share';
+import { elevation, radius, spacing, tint, type ThemeColors } from '../src/constants/theme';
+import type { Locale } from '../src/i18n/strings';
+
+function formatDate(iso: string, locale: Locale): string {
+  return new Date(iso).toLocaleString(locale === 'en' ? 'en-US' : 'ar-EG', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function serviceIcon(key: ServiceKey): IconName {
+  return (
+    (sosServices as Record<string, { icon: IconName }>)[key]?.icon ??
+    (otherServices as Record<string, { icon: IconName }>)[key]?.icon ??
+    'help-buoy-outline'
+  );
+}
+
+function serviceAccentColor(key: ServiceKey): string {
+  return (
+    (sosServices as Record<string, { color: string }>)[key]?.color ??
+    (otherServices as Record<string, { glowColor: string }>)[key]?.glowColor ??
+    '#93A0B4'
+  );
+}
+
+export default function HistoryScreen() {
+  const router = useRouter();
+  const { reports } = useReports();
+  const { colors } = useTheme();
+  const { locale, dir, t } = useLocale();
+  const styles = useMemo(() => createStyles(colors, dir), [colors, dir]);
+
+  return (
+    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+      <ScreenHeader title={t('history.title')} subtitle={t('history.subtitle')} onBack={() => router.back()} />
+
+      <View style={styles.body}>
+        {reports.length === 0 ? (
+          <AppText color={colors.textMuted} style={styles.empty}>
+            {t('history.empty')}
+          </AppText>
+        ) : (
+          reports.map((r) => {
+            const accent = serviceAccentColor(r.serviceKey);
+            const statusColor = r.resolved ? colors.success : colors.warn;
+            return (
+              <View key={r.id} style={[styles.card, elevation.sm]}>
+                <View style={[styles.row, { flexDirection: rowDir(dir) }]}>
+                  <View style={[styles.iconBadge, { backgroundColor: tint(accent) }]}>
+                    <AppIcon name={serviceIcon(r.serviceKey)} size={18} color={accent} />
+                  </View>
+                  <View style={styles.info}>
+                    <AppText weight="bodyBold" style={styles.name}>
+                      {t(`services.${r.serviceKey}.name`)} · #{r.id}
+                    </AppText>
+                    <AppText color={colors.textMuted} style={styles.date}>
+                      {formatDate(r.createdAt, locale)}
+                    </AppText>
+                  </View>
+                  <View style={[styles.badge, { backgroundColor: tint(statusColor, 0.14) }]}>
+                    <AppText weight="bodyMedium" style={styles.badgeText} color={statusColor}>
+                      {r.resolved ? t('history.resolvedBadge') : t('history.followUpBadge')}
+                    </AppText>
+                  </View>
+                </View>
+                {r.coords ? (
+                  <Pressable style={[styles.linkRow, { flexDirection: rowDir(dir) }]} onPress={() => Linking.openURL(mapsLink(r.coords!))}>
+                    <AppIcon name="map-outline" size={13} color={colors.police} />
+                    <AppText color={colors.police} style={styles.link}>
+                      {t('history.viewLocation')}
+                    </AppText>
+                  </Pressable>
+                ) : null}
+              </View>
+            );
+          })
+        )}
+      </View>
+    </ScrollView>
+  );
+}
+
+function createStyles(colors: ThemeColors, dir: Dir) {
+  return StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    content: {
+      paddingBottom: 40,
+    },
+    body: {
+      paddingTop: spacing.sm,
+    },
+    empty: {
+      paddingHorizontal: spacing.lg,
+      fontSize: 12,
+    },
+    card: {
+      marginHorizontal: spacing.lg,
+      marginBottom: spacing.sm,
+      backgroundColor: colors.surface,
+      borderRadius: radius.xl,
+      padding: spacing.md,
+    },
+    row: {
+      alignItems: 'center',
+      gap: 10,
+    },
+    iconBadge: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    info: {
+      flex: 1,
+    },
+    name: {
+      fontSize: 13,
+    },
+    date: {
+      fontSize: 10.5,
+      marginTop: 2,
+    },
+    badge: {
+      borderRadius: radius.pill,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+    },
+    badgeText: {
+      fontSize: 10,
+    },
+    linkRow: {
+      alignItems: 'center',
+      gap: 4,
+      marginTop: spacing.sm,
+    },
+    link: {
+      fontSize: 11.5,
+      textAlign: textAlignDir(dir),
+    },
+  });
+}

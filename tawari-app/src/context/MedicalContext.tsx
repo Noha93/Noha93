@@ -2,12 +2,34 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { readJSON, writeJSON, STORAGE_KEYS } from '../utils/storage';
 
 export interface MedicalProfile {
-  bloodType: string;
+  name: string;
+  age: string;
+  blood: string;
+  height: string;
+  weight: string;
   allergies: string;
-  chronicConditions: string;
+  diseases: string;
+  meds: string;
+  doctor: string;
+  insurance: string;
+  notes: string;
+  photo: string;
 }
 
-const EMPTY_PROFILE: MedicalProfile = { bloodType: '', allergies: '', chronicConditions: '' };
+const EMPTY_PROFILE: MedicalProfile = {
+  name: '',
+  age: '',
+  blood: '',
+  height: '',
+  weight: '',
+  allergies: '',
+  diseases: '',
+  meds: '',
+  doctor: '',
+  insurance: '',
+  notes: '',
+  photo: '',
+};
 
 interface MedicalContextValue {
   profile: MedicalProfile;
@@ -24,7 +46,7 @@ export function MedicalProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     readJSON<MedicalProfile>(STORAGE_KEYS.medical, EMPTY_PROFILE).then((data) => {
-      setProfile(data);
+      setProfile({ ...EMPTY_PROFILE, ...data });
       setLoaded(true);
     });
   }, []);
@@ -34,7 +56,7 @@ export function MedicalProvider({ children }: { children: React.ReactNode }) {
     await writeJSON(STORAGE_KEYS.medical, patch);
   };
 
-  const hasData = !!(profile.bloodType || profile.allergies || profile.chronicConditions);
+  const hasData = !!(profile.blood || profile.allergies || profile.diseases);
 
   return (
     <MedicalContext.Provider value={{ profile, loaded, hasData, updateProfile }}>

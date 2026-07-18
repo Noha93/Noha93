@@ -2,48 +2,51 @@
 // enough to read on both a light and a dark surface, and changing them by
 // theme would undermine the emergency-type color coding (fire/police/amb).
 const semanticColors = {
-  fire: '#E63946',
-  fireDark: '#C22733',
-  police: '#2A6FDB',
-  policeDark: '#1E56B3',
-  amb: '#2A9D8F',
-  ambDark: '#208074',
-  success: '#22C55E',
-  warn: '#F59E0B',
-  voice: '#8B5CF6',
-  voiceDark: '#6D28D9',
+  fire: '#FF6B00',
+  fireDark: '#CC5600',
+  police: '#2962FF',
+  policeDark: '#1E4FD1',
+  amb: '#00B894',
+  ambDark: '#00967A',
+  success: '#2ECC71',
+  warn: '#FFB000',
+  voice: '#2962FF',
+  voiceDark: '#1E4FD1',
   // brand / chrome accent (logo, active tab, primary CTAs) — separate from the
   // per-emergency-type colors above (fire/police/amb keep their own meaning)
-  primary: '#B3202C',
-  primaryDark: '#8C1620',
+  primary: '#E53935',
+  primaryDark: '#C62828',
+  navy: '#08111F',
 } as const;
 
 export const lightColors = {
   ...semanticColors,
   bg: '#F7F8FA',
   surface: '#FFFFFF',
-  text: '#1A1A2E',
-  textMuted: '#6B7280',
-  border: '#E5E7EB',
-  overlay: 'rgba(10,10,15,0.55)',
-  ink: '#8C1620',
-  inkMuted: '#A32A34',
+  surface2: '#F1F3F6',
+  text: '#08111F',
+  textMuted: '#5B6472',
+  border: '#EAECEF',
+  overlay: 'rgba(8,17,31,0.45)',
+  ink: '#08111F',
+  inkMuted: '#3A4657',
   onInk: 'rgba(255,255,255,0.7)',
 } as const;
 
-// "Midnight Glass": near-black base + translucent-white glass surfaces +
-// neon glow accents (mirrors the Figma dark-mode redesign). Light mode keeps
-// its original flat-card look — glassmorphism only reads well over a dark base.
+// Flat, colorful design system matching the Taware2 reference — soft cards,
+// low-opacity color-tinted icon badges, and a light/dark THEME TOGGLE (not a
+// dark-only look). Both modes share the same brand/semantic colors above.
 export const darkColors = {
   ...semanticColors,
-  bg: '#0A0A0F',
-  surface: 'rgba(255,255,255,0.05)',
-  text: '#F5F6FA',
-  textMuted: '#93A0B4',
-  border: 'rgba(255,255,255,0.13)',
-  overlay: 'rgba(0,0,0,0.65)',
-  ink: '#120A10',
-  inkMuted: '#7A1B22',
+  bg: '#0D1625',
+  surface: '#111E33',
+  surface2: '#16233B',
+  text: '#F4F7FB',
+  textMuted: '#9AA7BC',
+  border: '#21304A',
+  overlay: 'rgba(3,8,16,0.6)',
+  ink: '#F4F7FB',
+  inkMuted: '#9AA7BC',
   onInk: 'rgba(255,255,255,0.7)',
 } as const;
 
@@ -61,6 +64,7 @@ export const radius = {
   md: 12,
   lg: 16,
   xl: 24,
+  xxl: 28,
   pill: 999,
 };
 
@@ -116,23 +120,30 @@ export const typography = {
   caption: { fontSize: 11, lineHeight: 16, weight: 'bodyMedium' as const },
 };
 
+// Soft, flat-design shadows — used instead of neon glow in the Taware2 look.
 export const elevation = {
   none: {},
-  sm: { shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
-  md: { shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 4 },
-  lg: { shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
+  sm: { shadowColor: '#08111F', shadowOpacity: 0.06, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  md: { shadowColor: '#08111F', shadowOpacity: 0.1, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 4 },
+  lg: { shadowColor: '#08111F', shadowOpacity: 0.14, shadowRadius: 24, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
 };
 
-// Colored drop-shadow "glow" for the Midnight Glass dark theme — used on SOS
-// buttons, service badges, and primary CTAs instead of a plain black shadow.
-// Only worth applying when scheme === 'dark' (a neon shadow reads as murky on
-// a light surface); callers gate on that themselves.
-export function glow(hexColor: string, opacity = 0.5, radius = 16) {
+// Colored "glow" shadow for the primary CTA / SOS button — a soft colored
+// halo rather than the previous neon dark-mode-only treatment. Safe to use
+// in both light and dark now (kept low-opacity).
+export function glow(hexColor: string, opacity = 0.35, radius = 20) {
   return {
     shadowColor: hexColor,
     shadowOpacity: opacity,
     shadowRadius: radius,
-    shadowOffset: { width: 0, height: 0 },
+    shadowOffset: { width: 0, height: 8 },
     elevation: Math.round(radius / 2),
   };
+}
+
+// Low-opacity color tint for icon badges, matching the reference's
+// `${color}1A` (≈10% alpha) Tailwind pattern.
+export function tint(hexColor: string, alpha = 0.1) {
+  const a = Math.round(alpha * 255).toString(16).padStart(2, '0');
+  return `${hexColor}${a}`;
 }

@@ -72,7 +72,7 @@ export function ShareLocationSheet({
           <AppIcon name="water-outline" size={14} color={colors.fire} />
           <AppText color={themeColors.text} style={[styles.medicalChipText, { textAlign: dir === 'rtl' ? 'right' : 'left' }]}>
             {t('shareLocation.medicalChip', {
-              bloodType: profile.bloodType || '—',
+              bloodType: profile.blood || '—',
               allergies: profile.allergies || '—',
             })}
           </AppText>

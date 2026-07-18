@@ -5,6 +5,7 @@ export interface EmergencyContact {
   id: string;
   name: string;
   phone: string;
+  relation: string;
 }
 
 export const MAX_CONTACTS = 5;

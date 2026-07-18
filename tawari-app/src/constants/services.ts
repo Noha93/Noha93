@@ -60,12 +60,12 @@ export const sosServices: Record<SosKey, SosService> = {
 };
 
 export const otherServices: Record<OtherKey, OtherService> = {
-  elec: { key: 'elec', number: '121', icon: 'flash-outline', glowColor: '#FBBF24' },
-  gas: { key: 'gas', number: '129', icon: 'cloud-outline', glowColor: '#38BDF8' },
-  traffic: { key: 'traffic', number: '128', icon: 'car-outline', glowColor: '#FB7185' },
-  water: { key: 'water', number: '125', icon: 'water-outline', glowColor: '#22D3EE' },
-  tourist: { key: 'tourist', number: '126', icon: 'business-outline', glowColor: '#A78BFA' },
-  health: { key: 'health', number: '137', icon: 'medical-outline', glowColor: '#F472B6' },
+  elec: { key: 'elec', number: '121', icon: 'flash-outline', glowColor: '#FFB000' },
+  gas: { key: 'gas', number: '129', icon: 'cloud-outline', glowColor: '#FF6B00' },
+  traffic: { key: 'traffic', number: '128', icon: 'car-outline', glowColor: '#2962FF' },
+  water: { key: 'water', number: '125', icon: 'water-outline', glowColor: '#2962FF' },
+  tourist: { key: 'tourist', number: '126', icon: 'business-outline', glowColor: '#2962FF' },
+  health: { key: 'health', number: '137', icon: 'medical-outline', glowColor: '#00B894' },
 };
 
 export function findService(key: ServiceKey): SosService | OtherService {

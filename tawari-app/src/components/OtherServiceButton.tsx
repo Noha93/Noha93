@@ -41,14 +41,14 @@ export function OtherServiceButton({ service, onPress }: Props) {
         <View
           style={[
             styles.badge,
-            isDark && {
-              backgroundColor: withAlpha(service.glowColor, 0.16),
+            {
+              backgroundColor: withAlpha(service.glowColor, isDark ? 0.16 : 0.12),
               borderWidth: 1,
-              borderColor: withAlpha(service.glowColor, 0.4),
+              borderColor: withAlpha(service.glowColor, isDark ? 0.4 : 0),
             },
           ]}
         >
-          <AppIcon name={service.icon} size={20} color={isDark ? service.glowColor : colors.text} />
+          <AppIcon name={service.icon} size={20} color={service.glowColor} />
         </View>
         <AppText weight="bodyBold" style={styles.name}>
           {t(`services.${service.key}.name`)}
