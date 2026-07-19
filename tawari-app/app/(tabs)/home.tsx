@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, AppStateStatus, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { AppText } from '../../src/components/AppText';
 import { AppIcon } from '../../src/components/AppIcon';
@@ -224,19 +225,26 @@ export default function HomeScreen() {
           <SosCircle service={sosServices.fire} onPress={() => openCallConfirm('fire')} onAutoTrigger={() => autoTriggerSos('fire')} />
         </View>
 
-        <Pressable onPress={() => router.push('/sos')} style={[styles.sosBanner, elevation.md]}>
-          <View style={styles.sosBannerIconWrap}>
-            <AppIcon name="warning-outline" size={26} color="#fff" />
-          </View>
-          <View style={{ flex: 1 }}>
-            <AppText weight="bodyBold" color="#fff" style={styles.sosBannerTitle}>
-              {t('home.sosBannerTitle')}
-            </AppText>
-            <AppText color="rgba(255,255,255,0.8)" style={styles.sosBannerSub}>
-              {t('home.sosBannerSub')}
-            </AppText>
-          </View>
-          <AppIcon name={dir === 'rtl' ? 'chevron-back-outline' : 'chevron-forward-outline'} size={20} color="#fff" />
+        <Pressable onPress={() => router.push('/sos')} style={[styles.sosBannerWrap, elevation.md]}>
+          <LinearGradient
+            colors={[colors.primary, '#FF6B66']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[styles.sosBanner, { flexDirection: rowDir(dir) }]}
+          >
+            <View style={styles.sosBannerIconWrap}>
+              <AppIcon name="warning-outline" size={26} color="#fff" />
+            </View>
+            <View style={{ flex: 1 }}>
+              <AppText weight="bodyBold" color="#fff" style={styles.sosBannerTitle}>
+                {t('home.sosBannerTitle')}
+              </AppText>
+              <AppText color="rgba(255,255,255,0.8)" style={styles.sosBannerSub}>
+                {t('home.sosBannerSub')}
+              </AppText>
+            </View>
+            <AppIcon name={dir === 'rtl' ? 'chevron-back-outline' : 'chevron-forward-outline'} size={20} color="#fff" />
+          </LinearGradient>
         </Pressable>
 
         <View style={styles.quickRow}>
@@ -421,14 +429,15 @@ function createStyles(colors: ThemeColors, dir: Dir) {
       paddingHorizontal: spacing.md,
       paddingTop: spacing.lg,
     },
-    sosBanner: {
-      flexDirection: rowDir(dir),
-      alignItems: 'center',
-      gap: 12,
-      backgroundColor: colors.primary,
+    sosBannerWrap: {
       borderRadius: radius.xl,
       marginHorizontal: spacing.lg,
       marginTop: spacing.lg,
+      overflow: 'hidden',
+    },
+    sosBanner: {
+      alignItems: 'center',
+      gap: 12,
       padding: spacing.md,
     },
     sosBannerIconWrap: {

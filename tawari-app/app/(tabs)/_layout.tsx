@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, useRouter } from 'expo-router';
 import { View, Pressable, StyleSheet } from 'react-native';
 import type { ColorValue } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { AppIcon, type IconName } from '../../src/components/AppIcon';
 import { fontForWeight, glow, radius } from '../../src/constants/theme';
 import { useTheme } from '../../src/context/ThemeContext';
@@ -16,11 +17,15 @@ function SosTabButton() {
   const { colors } = useTheme();
   return (
     <View style={styles.sosWrap} pointerEvents="box-none">
-      <Pressable
-        onPress={() => router.push('/sos')}
-        style={[styles.sosButton, { backgroundColor: colors.primary, borderColor: colors.bg }, glow(colors.primary, 0.45, 18)]}
-      >
-        <AppIcon name="warning-outline" size={26} color="#fff" />
+      <Pressable onPress={() => router.push('/sos')} style={[styles.sosButtonOuter, glow(colors.primary, 0.45, 18)]}>
+        <LinearGradient
+          colors={[colors.primary, '#FF6B66']}
+          start={{ x: 0.2, y: 0 }}
+          end={{ x: 0.8, y: 1 }}
+          style={[styles.sosButton, { borderColor: colors.bg }]}
+        >
+          <AppIcon name="warning-outline" size={26} color="#fff" />
+        </LinearGradient>
       </Pressable>
     </View>
   );
@@ -92,6 +97,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 64,
     alignSelf: 'center',
+  },
+  sosButtonOuter: {
+    width: 60,
+    height: 60,
+    borderRadius: radius.pill,
   },
   sosButton: {
     width: 60,

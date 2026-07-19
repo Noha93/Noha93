@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { AppText } from '../../src/components/AppText';
 import { AppIcon } from '../../src/components/AppIcon';
 import { NearbyMapView } from '../../src/components/NearbyMapView';
 import { useTheme } from '../../src/context/ThemeContext';
 import { useLocale, rowDir, type Dir } from '../../src/context/LocaleContext';
-import { elevation, radius, spacing, tint, type ThemeColors } from '../../src/constants/theme';
+import { elevation, radius, spacing, tint, withAlpha, type ThemeColors } from '../../src/constants/theme';
 import { nearbyPlaces, placeTypeMeta, type PlaceType } from '../../src/constants/nearby';
 import { placeCall } from '../../src/utils/share';
 
@@ -54,9 +55,14 @@ export default function NearbyScreen() {
           return (
             <View key={p.id} style={[styles.card, elevation.sm]}>
               <View style={[styles.cardTop, { flexDirection: rowDir(dir) }]}>
-                <View style={[styles.iconWrap, { backgroundColor: tint(meta.color) }]}>
+                <LinearGradient
+                  colors={[withAlpha(meta.color, 0.32), withAlpha(meta.color, 0.1)]}
+                  start={{ x: 0.2, y: 0 }}
+                  end={{ x: 0.8, y: 1 }}
+                  style={styles.iconWrap}
+                >
                   <AppIcon name={meta.icon as any} size={20} color={meta.color} />
-                </View>
+                </LinearGradient>
                 <View style={{ flex: 1 }}>
                   <View style={[styles.nameRow, { flexDirection: rowDir(dir) }]}>
                     <AppText weight="bodyBold" style={styles.name} numberOfLines={1}>{locale === 'ar' ? p.ar : p.en}</AppText>

@@ -1,5 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { AppText } from './AppText';
 import { AppIcon } from './AppIcon';
 import { elevation, glow, radius, spacing, type ThemeColors } from '../constants/theme';
@@ -38,18 +39,20 @@ export function OtherServiceButton({ service, onPress }: Props) {
           !isDark && pressed && styles.pressedLight,
         ]}
       >
-        <View
+        <LinearGradient
+          colors={[withAlpha(service.glowColor, isDark ? 0.32 : 0.28), withAlpha(service.glowColor, isDark ? 0.1 : 0.08)]}
+          start={{ x: 0.2, y: 0 }}
+          end={{ x: 0.8, y: 1 }}
           style={[
             styles.badge,
             {
-              backgroundColor: withAlpha(service.glowColor, isDark ? 0.16 : 0.12),
               borderWidth: 1,
-              borderColor: withAlpha(service.glowColor, isDark ? 0.4 : 0),
+              borderColor: withAlpha(service.glowColor, isDark ? 0.4 : 0.16),
             },
           ]}
         >
           <AppIcon name={service.icon} size={20} color={service.glowColor} />
-        </View>
+        </LinearGradient>
         <AppText weight="bodyBold" style={styles.name}>
           {t(`services.${service.key}.name`)}
         </AppText>
@@ -78,7 +81,7 @@ function createStyles(colors: ThemeColors) {
       backgroundColor: colors.surface,
       borderWidth: 1,
       borderColor: colors.border,
-      borderRadius: radius.lg,
+      borderRadius: radius.xl,
       paddingVertical: 16,
       paddingHorizontal: spacing.sm,
       alignItems: 'center',

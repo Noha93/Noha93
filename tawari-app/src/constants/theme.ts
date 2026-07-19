@@ -147,3 +147,13 @@ export function tint(hexColor: string, alpha = 0.1) {
   const a = Math.round(alpha * 255).toString(16).padStart(2, '0');
   return `${hexColor}${a}`;
 }
+
+// rgba() variant of tint() — for gradient stops, where a hex+alpha-suffix
+// string isn't accepted by some native gradient implementations.
+export function withAlpha(hex: string, alpha: number): string {
+  const v = hex.replace('#', '');
+  const r = parseInt(v.substring(0, 2), 16);
+  const g = parseInt(v.substring(2, 4), 16);
+  const b = parseInt(v.substring(4, 6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}

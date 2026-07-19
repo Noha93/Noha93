@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { AppText } from '../../src/components/AppText';
 import { AppIcon } from '../../src/components/AppIcon';
 import { ScreenHeader } from '../../src/components/ScreenHeader';
@@ -50,7 +51,12 @@ export default function MedicalScreen() {
         <SheetButton label="" onPress={openEdit} icon="create-outline" variant="secondary" style={styles.editBtn} />
       } />
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.hero, elevation.md]}>
+        <LinearGradient
+          colors={[colors.navy, colors.amb]}
+          start={{ x: 0.1, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[styles.hero, elevation.md]}
+        >
           <View style={styles.heroTop}>
             <View style={styles.bloodBadge}>
               <AppText weight="displayExtraBold" color="#fff" style={styles.bloodText}>
@@ -67,7 +73,7 @@ export default function MedicalScreen() {
             </View>
             <SheetButton label="" onPress={() => setShowQr(true)} icon="qr-code-outline" variant="secondary" style={styles.qrBtn} />
           </View>
-        </View>
+        </LinearGradient>
 
         <View style={[styles.lockNote, { flexDirection: rowDir(dir) }]}>
           <AppIcon name="lock-closed-outline" size={16} color={colors.warn} />
