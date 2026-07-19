@@ -23,7 +23,7 @@ export default function SettingsScreen() {
     <View style={styles.screen}>
       <ScreenHeader title={t('settings.title')} onBack={() => router.back()} />
       <ScrollView contentContainerStyle={styles.content}>
-        <Pressable onPress={() => router.push('/(tabs)/medical')} style={[styles.profileCard, { flexDirection: rowDir(dir) }]}>
+        <Pressable onPress={() => router.push('/medical')} style={[styles.profileCard, { flexDirection: rowDir(dir) }]}>
           <View style={styles.profileAvatar}>
             <AppText weight="bodyBold" color="#fff" style={styles.profileAvatarText}>
               {(profile.name || t('medical.namePlaceholder')).trim().slice(0, 2)}

@@ -27,7 +27,7 @@ export default function SplashScreen() {
     readJSON<boolean>(STORAGE_KEYS.onboarded, false).then((onboarded) => {
       setReady(true);
       const timer = setTimeout(() => {
-        router.replace(onboarded ? '/(tabs)/home' : '/onboarding');
+        router.replace(onboarded ? '/home' : '/onboarding');
       }, 1600);
       return () => clearTimeout(timer);
     });

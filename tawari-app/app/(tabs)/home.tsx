@@ -166,7 +166,7 @@ export default function HomeScreen() {
   const runQuickAction = (key: string) => {
     if (key === 'voice') openVoiceSheet();
     else if (key === 'share') router.push('/share-location');
-    else if (key === 'firstAid') router.push('/(tabs)/first-aid');
+    else if (key === 'firstAid') router.push('/first-aid');
     else if (key === 'contacts') router.push('/contacts');
   };
 

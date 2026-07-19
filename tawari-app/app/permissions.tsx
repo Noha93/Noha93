@@ -27,7 +27,7 @@ export default function PermissionsScreen() {
 
   const finish = async () => {
     await writeJSON(STORAGE_KEYS.onboarded, true);
-    router.replace('/(tabs)/home');
+    router.replace('/home');
   };
 
   return (
