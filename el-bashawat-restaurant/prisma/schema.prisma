@@ -1,0 +1,125 @@
+// El Bashawat restaurant chain — public site + admin CMS data model.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MenuCategory {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  sortOrder Int        @default(0)
+  items     MenuItem[]
+}
+
+model MenuItem {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  description String?
+  price       Decimal      @db.Decimal(10, 2)
+  imageUrl    String?
+  isAvailable Boolean      @default(true)
+  isFeatured  Boolean      @default(false)
+
+  categoryId  String
+  category    MenuCategory @relation(fields: [categoryId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  orderItems  OrderItem[]
+
+  @@index([categoryId])
+}
+
+model Offer {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String?
+  discountPct Int?
+  startsAt    DateTime?
+  endsAt      DateTime?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Branch {
+  id          String   @id @default(cuid())
+  name        String
+  address     String
+  city        String
+  phone       String
+  whatsapp    String
+  latitude    Float
+  longitude   Float
+  openingTime String   // "12:00"
+  closingTime String   // "01:00" (past midnight)
+  isActive    Boolean  @default(true)
+
+  orders      Order[]
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  customerName String
+  phone        String
+  address      String?
+  notes        String?
+  status       OrderStatus @default(NEW)
+  total        Decimal     @db.Decimal(10, 2)
+
+  branchId     String
+  branch       Branch      @relation(fields: [branchId], references: [id])
+
+  items        OrderItem[]
+  createdAt    DateTime    @default(now())
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  PREPARING
+  COMPLETED
+  CANCELLED
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity   Int
+  unitPrice  Decimal  @db.Decimal(10, 2)
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model FaqItem {
+  id        String @id @default(cuid())
+  question  String
+  answer    String
+  sortOrder Int    @default(0)
+}
+
+model AdminUser {
+  id           String @id @default(cuid())
+  email        String @unique
+  passwordHash String
+  name         String
+}

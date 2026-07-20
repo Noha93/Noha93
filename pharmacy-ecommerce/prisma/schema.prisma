@@ -1,0 +1,137 @@
+// Pharmacy e-commerce data model
+// Designed for 10,000+ SKUs with fast search on name / active ingredient,
+// bulk price & stock updates, and prescription-gated checkout.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  parentId String?
+  parent   Category? @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  products Product[]
+
+  @@index([parentId])
+}
+
+model ActiveIngredient {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  products Product[]
+}
+
+model Product {
+  id                 String   @id @default(cuid())
+  sku                String   @unique
+  name               String
+  slug               String   @unique
+  description        String?
+  imageUrl           String?
+  price              Decimal  @db.Decimal(10, 2)
+  compareAtPrice     Decimal? @db.Decimal(10, 2)
+  stockQuantity      Int      @default(0)
+  requiresPrescription Boolean @default(false)
+  isActive           Boolean  @default(true)
+
+  categoryId         String?
+  category           Category? @relation(fields: [categoryId], references: [id])
+
+  activeIngredientId String?
+  activeIngredient   ActiveIngredient? @relation(fields: [activeIngredientId], references: [id])
+
+  metaTitle          String?
+  metaDescription    String?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  orderItems         OrderItem[]
+
+  // Full text search over name + description (see migration for GIN index)
+  @@index([name])
+  @@index([categoryId])
+  @@index([activeIngredientId])
+  @@index([isActive])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  phone         String?
+  name          String?
+  passwordHash  String?
+  createdAt     DateTime  @default(now())
+
+  orders        Order[]
+  prescriptions Prescription[]
+}
+
+model Prescription {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  imageUrl   String
+  status     PrescriptionStatus @default(PENDING)
+  reviewedBy String?
+  notes      String?
+  createdAt  DateTime @default(now())
+
+  order      Order?
+}
+
+enum PrescriptionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  status         OrderStatus @default(PENDING)
+  total          Decimal     @db.Decimal(10, 2)
+  prescriptionId String?     @unique
+  prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
+  items          OrderItem[]
+  createdAt      DateTime    @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Decimal @db.Decimal(10, 2)
+}
+
+// Every bulk import run is logged so admins can audit / roll back pricing mistakes.
+model ImportBatch {
+  id           String   @id @default(cuid())
+  fileName     String
+  totalRows    Int
+  createdCount Int
+  updatedCount Int
+  errorCount   Int
+  errors       Json?
+  createdAt    DateTime @default(now())
+}
