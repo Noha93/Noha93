@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "طوارئ",
+    "name": "أرقام الطوارئ",
     "slug": "tawari-app",
     "scheme": "tawari",
     "version": "1.0.0",
@@ -13,7 +13,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.tawari.app",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "طوارئ يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصل بيها أو تشاركه مع جهات اتصالك.",
+        "NSLocationWhenInUseUsageDescription": "التطبيق يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصل بيها أو تشاركه مع جهات اتصالك.",
         "UIBackgroundModes": []
       }
     },
@@ -49,14 +49,14 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "طوارئ يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصل بيها أو تشاركه مع جهات اتصالك."
+          "locationWhenInUsePermission": "التطبيق يحتاج موقعك عشان يقدر يرسله لجهة الطوارئ اللي تتصل بيها أو تشاركه مع جهات اتصالك."
         }
       ],
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "طوارئ يحتاج الميكروفون عشان يسمع بلاغك ويحدد نوع الطارئة بصوتك.",
-          "speechRecognitionPermission": "طوارئ يحتاج التعرف على الصوت عشان يحول كلامك لبلاغ."
+          "microphonePermission": "التطبيق يحتاج الميكروفون عشان يسمع بلاغك ويحدد نوع الطارئة بصوتك.",
+          "speechRecognitionPermission": "التطبيق يحتاج التعرف على الصوت عشان يحول كلامك لبلاغ."
         }
       ]
     ]

@@ -25,12 +25,12 @@ export default function OnboardingScreen() {
   const last = i === SLIDES.length - 1;
   const slide = SLIDES[i];
 
-  const next = () => (last ? router.replace('/permissions') : setI(i + 1));
+  const next = () => (last ? router.replace('/consent') : setI(i + 1));
 
   return (
     <View style={styles.screen}>
       <View style={styles.skipRow}>
-        <Pressable onPress={() => router.replace('/permissions')}>
+        <Pressable onPress={() => router.replace('/consent')}>
           <AppText weight="bodyMedium" color={colors.textMuted} style={styles.skipText}>{t('onboarding.skip')}</AppText>
         </Pressable>
       </View>

@@ -54,14 +54,14 @@ export default function SettingsScreen() {
 
         <Group title={t('settings.privacySupport')} colors={colors}>
           <Row icon="shield-checkmark-outline" color={colors.amb} label={t('settings.permissions')} onPress={() => router.push('/permissions')} dir={dir} colors={colors} />
-          <Row icon="lock-closed-outline" color={colors.police} label={t('settings.privacy')} dir={dir} colors={colors} />
+          <Row icon="lock-closed-outline" color={colors.police} label={t('settings.privacy')} onPress={() => router.push('/consent?review=1')} dir={dir} colors={colors} />
           <Row icon="document-text-outline" color={colors.textMuted} label={t('settings.terms')} dir={dir} colors={colors} />
           <Row icon="help-circle-outline" color={colors.warn} label={t('settings.support')} dir={dir} colors={colors} />
           <Row icon="star-outline" color={colors.fire} label={t('settings.rateApp')} dir={dir} colors={colors} />
           <Row icon="information-circle-outline" color={colors.primary} label={t('settings.about')} dir={dir} colors={colors} last />
         </Group>
 
-        <AppText color={colors.textMuted} style={styles.version}>{t('brand.name')} · Tawari · v1.0.0</AppText>
+        <AppText color={colors.textMuted} style={styles.version}>{t('brand.name')} · v1.0.0</AppText>
       </ScrollView>
     </View>
   );

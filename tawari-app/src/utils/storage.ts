@@ -5,6 +5,7 @@ export const STORAGE_KEYS = {
   reports: 'tawari:reports',
   medical: 'tawari:medical',
   onboarded: 'tawari:onboarded',
+  consentAccepted: 'tawari:consentAccepted',
 } as const;
 
 export async function readJSON<T>(key: string, fallback: T): Promise<T> {
