@@ -1,0 +1,131 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: linear-gradient(180deg, #ffe9d6 0%, #ffd6e8 45%, #d6e9ff 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  padding: 12px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.stat {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  padding: 6px 14px;
+  text-align: center;
+  min-width: 88px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: #6b5b73;
+}
+
+.stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3a2e4a;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  background: #fffaf3;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  touch-action: manipulation;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 20, 40, 0.82);
+  color: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  gap: 10px;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.rules {
+  text-align: right;
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 320px;
+  margin: 4px 0;
+  padding-right: 18px;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff8fb3, #7fb8ff);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.1s ease;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #5b4a63;
+  text-align: center;
+}

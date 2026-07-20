@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>لعبة الحجلة | Hopscotch</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="stat">
+        <span class="stat-label">الجولة</span>
+        <span id="roundValue" class="stat-value">1</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">النتيجة</span>
+        <span id="scoreValue" class="stat-value">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">المحاولات</span>
+        <span id="livesValue" class="stat-value">❤️❤️❤️</span>
+      </div>
+    </header>
+
+    <main class="stage">
+      <canvas id="gameCanvas" width="420" height="760"></canvas>
+
+      <div id="startScreen" class="overlay">
+        <h1>لعبة الحجلة 🟪</h1>
+        <p>ارسمي بمخيلتك الشارع، واقفزي فوق المربعات من غير ما تلمسي الخط!</p>
+        <ul class="rules">
+          <li>اضغطي <b>مسافة (Space)</b> أو دوسي على الشاشة عشان تنطي</li>
+          <li>النطة الناجحة لازم تكون داخل المنطقة الآمنة (الخط الأخضر)</li>
+          <li>في مربع فيه "حجر" 🪨 لازم تتخطاه من غير ما تلمسيه</li>
+          <li>كل ما تقدمي في الجولات، اللعبة تتصعب أكتر</li>
+        </ul>
+        <button id="startBtn" class="btn">ابدأ اللعب</button>
+      </div>
+
+      <div id="gameOverScreen" class="overlay hidden">
+        <h1>لمستي الخط! 😖</h1>
+        <p>النتيجة النهائية: <span id="finalScore">0</span></p>
+        <button id="restartBtn" class="btn">حاولي تاني</button>
+      </div>
+    </main>
+
+    <footer class="hint" id="hintText">اضغطي مسافة أو دوسي على الشاشة للنط</footer>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
