@@ -382,6 +382,7 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 90px; }
 
 /* ---------- Grids ---------- */
 .grid { display: grid; gap: 28px; }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
 .grid--3 { grid-template-columns: repeat(3, 1fr); }
 .grid--4 { grid-template-columns: repeat(4, 1fr); }
 
@@ -579,6 +580,42 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 90px; }
 }
 .project-card h3 { font-size: 18px; margin-top: 8px; }
 
+/* Featured project cards (real screenshots) */
+.featured-projects { margin-bottom: 0; }
+.project-card--featured .project-card__cover {
+  height: 280px;
+  background: var(--bg-soft);
+}
+.project-card__cover--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform .6s var(--ease);
+}
+.project-card--featured:hover .project-card__cover--photo img { transform: scale(1.04); }
+.project-card__cover--dark { background: #0f1b2e; }
+.project-card__cover--dark img { object-fit: contain; padding: 18px 0; }
+.project-card--featured .project-card__body p {
+  color: var(--secondary);
+  font-size: 14px;
+  margin: 10px 0 18px;
+}
+.project-card__thumbs {
+  display: flex;
+  gap: 10px;
+}
+.project-card__thumbs img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .35s var(--ease);
+}
+.project-card__thumbs img:hover { transform: translateY(-4px) scale(1.06); }
+
 /* ---------- Contact ---------- */
 .contact { text-align: center; overflow: hidden; }
 .contact p { margin-top: 14px; color: var(--secondary); font-size: 16px; }
@@ -657,6 +694,7 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 90px; }
   .about__visual { margin-bottom: 60px; }
   .grid--4 { grid-template-columns: repeat(2, 1fr); }
   .grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .grid--2 { grid-template-columns: 1fr; }
   .tools__grid { grid-template-columns: repeat(3, 1fr); }
   .specialty-row { grid-template-columns: 1fr; gap: 8px; }
 }
@@ -678,7 +716,7 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 90px; }
   }
   .nav-links.open .nav-link { font-size: 22px; }
   section { padding: 80px 0; }
-  .grid--4, .grid--3 { grid-template-columns: 1fr; }
+  .grid--4, .grid--3, .grid--2 { grid-template-columns: 1fr; }
   .tools__grid { grid-template-columns: repeat(2, 1fr); }
   .avatar-frame { width: 280px; height: 340px; }
   .avatar-initials { font-size: 64px; }
