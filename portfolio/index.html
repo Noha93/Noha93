@@ -8,7 +8,7 @@
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -28,7 +28,9 @@
       <a href="#projects" class="nav-link">Projects</a>
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
-    <a href="#contact" class="btn btn--sm nav-cta">Let's Talk</a>
+    <a href="#contact" class="btn btn--sm nav-cta">
+      Let's Talk <span class="btn__arrow">→</span>
+    </a>
     <button class="burger" id="burger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -37,12 +39,14 @@
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="home">
+  <div class="ring-decor ring-decor--1" aria-hidden="true"></div>
+  <div class="ring-decor ring-decor--2" aria-hidden="true"></div>
   <div class="blob blob--1" data-speed="0.3"></div>
   <div class="blob blob--2" data-speed="0.5"></div>
   <div class="container hero__inner">
     <div class="hero__text">
-      <p class="eyebrow reveal">Hello, I am</p>
-      <h1 class="hero__name reveal">Noha Aboyoussef</h1>
+      <p class="status-badge reveal"><span class="status-dot"></span> Available for freelance</p>
+      <h1 class="hero__name reveal">Noha<br>Aboyoussef</h1>
       <h2 class="hero__role reveal">
         <span class="role-word">UI</span> <span class="amp">&amp;</span> <span class="role-word">UX</span> <span class="role-word role-word--outline">Designer</span>
       </h2>
@@ -52,14 +56,14 @@
         pixel-perfect screens ready for developer handoff.
       </p>
       <div class="hero__cta reveal">
-        <a href="#projects" class="btn btn--primary">View My Work</a>
+        <a href="#projects" class="btn btn--primary">View My Work <span class="btn__arrow">→</span></a>
         <a href="#contact" class="btn btn--ghost">Get in Touch</a>
       </div>
     </div>
 
     <div class="hero__art reveal-right">
       <div class="avatar-frame">
-        <div class="avatar-blob"></div>
+        <div class="avatar-ring-spin"></div>
         <div class="avatar-photo">
           <span class="avatar-initials">NA</span>
         </div>
@@ -71,7 +75,7 @@
           <svg viewBox="0 0 24 24" width="18" height="18"><rect width="24" height="24" rx="5" fill="#001e36"/><text x="12" y="16.5" font-family="Poppins, sans-serif" font-weight="700" font-size="10" fill="#31a8ff" text-anchor="middle">Ps</text></svg>
           <span>Photoshop</span>
         </div>
-        <div class="badge-pill float-slow float-delay2">2+ yrs learning</div>
+        <div class="badge-pill float-slow float-delay2">DEPI UI/UX 2025</div>
       </div>
     </div>
   </div>
@@ -440,6 +444,16 @@
       </article>
 
     </div>
+  </div>
+</section>
+
+<!-- ===== BOLD CTA BAND ===== -->
+<section class="cta-band">
+  <div class="ring-decor ring-decor--3" aria-hidden="true"></div>
+  <div class="container cta-band__inner reveal">
+    <p class="status-badge status-badge--dark">Got a project in mind?</p>
+    <h2 class="cta-band__title">Let's build something<br>bold &amp; beautiful.</h2>
+    <a href="#contact" class="btn btn--primary btn--lg">Start a Conversation <span class="btn__arrow">→</span></a>
   </div>
 </section>
 
