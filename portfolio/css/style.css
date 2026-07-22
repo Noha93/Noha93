@@ -378,6 +378,74 @@ button { font-family: inherit; cursor: pointer; }
   border: 1.5px solid rgba(255, 255, 255, 0.06);
 }
 
+/* ---------- Neon morphing shapes ---------- */
+/* .neon-shape: positioned wrapper moved by GSAP scroll parallax (own transform).
+   .neon-shape__blob: the visual — CSS-driven morph + spin (its own transform),
+   kept on a separate element so the two animation systems never fight over
+   the same `transform` property. */
+.neon-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+.neon-shape__blob {
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0deg, #ff2e9e, #7b2ff7, #00e0ff, #ff9a3d, #ff2e9e);
+  filter: blur(1px);
+  animation: neonMorph 14s ease-in-out infinite, neonSpin 26s linear infinite;
+  mix-blend-mode: screen;
+}
+@keyframes neonMorph {
+  0%, 100% { border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%; }
+  33% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
+  66% { border-radius: 35% 65% 55% 45% / 60% 35% 65% 40%; }
+}
+@keyframes neonSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.neon-shape--hero {
+  width: 260px; height: 260px;
+  top: 60px; right: 60px;
+}
+.neon-shape--hero .neon-shape__blob {
+  opacity: 0.3;
+  mix-blend-mode: normal;
+  filter: blur(6px);
+  box-shadow:
+    0 0 50px 6px rgba(255, 46, 158, 0.35),
+    0 0 100px 20px rgba(123, 47, 247, 0.22);
+}
+.neon-shape--cta .neon-shape__blob {
+  opacity: 0.55;
+  mix-blend-mode: normal;
+}
+.neon-shape--a {
+  width: 380px; height: 380px;
+  top: -120px; left: -100px;
+}
+.neon-shape--a .neon-shape__blob {
+  box-shadow:
+    0 0 70px 12px rgba(255, 46, 158, 0.55),
+    0 0 140px 40px rgba(123, 47, 247, 0.35),
+    0 0 220px 70px rgba(0, 224, 255, 0.18);
+}
+.neon-shape--b {
+  width: 300px; height: 300px;
+  bottom: -110px; right: -60px;
+}
+.neon-shape--b .neon-shape__blob {
+  animation-duration: 18s, 34s;
+  animation-direction: normal, reverse;
+  box-shadow:
+    0 0 60px 10px rgba(0, 224, 255, 0.4),
+    0 0 130px 34px rgba(255, 46, 158, 0.28);
+}
+@media (prefers-reduced-motion: reduce) {
+  .neon-shape__blob { animation: none; }
+}
+
 .scroll-cue {
   position: absolute;
   bottom: 34px;
@@ -782,7 +850,40 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 110px; }
   background: var(--pink);
   box-shadow: 0 12px 32px rgba(241, 126, 152, 0.35);
 }
-.cta-band .btn--primary:hover { background: #ff96ac; }
+.cta-band .btn--primary:hover {
+  background: #ff96ac;
+  box-shadow:
+    0 0 20px rgba(255, 46, 158, 0.6),
+    0 0 45px rgba(123, 47, 247, 0.5),
+    0 0 80px rgba(0, 224, 255, 0.3);
+}
+
+/* Neon hover glow on cards — a soft blurred halo behind the card,
+   revealed at the edges on hover. Simpler and more robust across
+   browsers than a masked gradient-border. */
+.why-card, .service-card, .tool-card, .project-card, .experience-card {
+  position: relative;
+  isolation: isolate;
+}
+.why-card::before, .service-card::before, .tool-card::before, .project-card::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  z-index: -1;
+  background: conic-gradient(from 0deg, #ff2e9e, #7b2ff7, #00e0ff, #ff9a3d, #ff2e9e);
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+  animation: neonSpin 6s linear infinite;
+  pointer-events: none;
+}
+.why-card:hover::before, .service-card:hover::before, .tool-card:hover::before, .project-card:hover::before {
+  opacity: 0.55;
+}
+.why-card:hover, .service-card:hover, .tool-card:hover, .project-card:hover {
+  box-shadow: 0 20px 50px rgba(241, 126, 152, .25), 0 0 40px rgba(123, 47, 247, .18);
+}
 
 /* ---------- Contact ---------- */
 .contact { text-align: center; overflow: hidden; }

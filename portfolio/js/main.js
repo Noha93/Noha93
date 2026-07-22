@@ -113,6 +113,17 @@ if (window.gsap && window.ScrollTrigger && !prefersReduced) {
     });
   });
 
+  // Parallax + drift for neon shapes
+  gsap.utils.toArray('.neon-shape').forEach((shape) => {
+    const speed = parseFloat(shape.dataset.speed) || 0.2;
+    gsap.to(shape, {
+      y: () => window.innerHeight * speed,
+      x: () => 40 * speed,
+      ease: 'none',
+      scrollTrigger: { trigger: shape.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+  });
+
   // Navbar reveal already visible; refresh on load
   window.addEventListener('load', () => ScrollTrigger.refresh());
 } else {
