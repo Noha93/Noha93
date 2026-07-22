@@ -379,14 +379,33 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ---------- Neon morphing shapes ---------- */
-/* .neon-shape: positioned wrapper moved by GSAP scroll parallax (own transform).
-   .neon-shape__blob: the visual — CSS-driven morph + spin (its own transform),
-   kept on a separate element so the two animation systems never fight over
-   the same `transform` property. */
+/* Three layers, each owning its own `transform`, so nothing fights:
+   .neon-shape  — positioned wrapper; GSAP animates its scale/opacity on
+                  load and its x/y on scroll (all via GSAP, which composites
+                  fine on one element).
+   .neon-shape__float — pure-CSS slow drift (translate), independent layer.
+   .neon-shape__blob  — pure-CSS morph + spin + glow, innermost layer. */
 .neon-shape {
   position: absolute;
   pointer-events: none;
   z-index: 0;
+}
+.js .neon-shape {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.neon-shape__float {
+  width: 100%;
+  height: 100%;
+  animation: neonFloat 11s ease-in-out infinite;
+}
+.neon-shape__float--a { animation-duration: 13s; }
+.neon-shape__float--b { animation-duration: 16s; animation-direction: reverse; }
+@keyframes neonFloat {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(4%, -6%); }
+  50% { transform: translate(-3%, 3%); }
+  75% { transform: translate(3%, 5%); }
 }
 .neon-shape__blob {
   width: 100%;
@@ -445,6 +464,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (prefers-reduced-motion: reduce) {
   .neon-shape__blob { animation: none; }
+  .neon-shape__float { animation: none; }
+  .js .neon-shape { opacity: 1; transform: none; }
 }
 
 .scroll-cue {

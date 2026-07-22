@@ -73,7 +73,16 @@ if (window.gsap && window.ScrollTrigger && !prefersReduced) {
   // Hero entrance
   gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } })
     .to('.hero .reveal', { opacity: 1, y: 0, stagger: 0.15 })
-    .to('.hero__art.reveal-right', { opacity: 1, x: 0 }, '-=0.7');
+    .to('.hero__art.reveal-right', { opacity: 1, x: 0 }, '-=0.7')
+    .to('.neon-shape--hero', { opacity: 1, scale: 1, duration: 1.3, ease: 'back.out(1.5)' }, '-=0.9');
+
+  // CTA band neon shapes pop in as the section enters view
+  gsap.utils.toArray('.neon-shape--cta').forEach((shape, i) => {
+    gsap.to(shape, {
+      opacity: 1, scale: 1, duration: 1.2, ease: 'back.out(1.5)', delay: i * 0.15,
+      scrollTrigger: { trigger: shape.closest('section'), start: 'top 80%' }
+    });
+  });
 
   // Generic reveal / reveal-left / reveal-right for the rest of the page
   gsap.utils.toArray('.reveal:not(.hero .reveal)').forEach((el) => {
@@ -133,5 +142,8 @@ if (window.gsap && window.ScrollTrigger && !prefersReduced) {
   });
   document.querySelectorAll('.reveal-stagger').forEach(group => {
     [...group.children].forEach(c => { c.style.opacity = 1; c.style.transform = 'none'; });
+  });
+  document.querySelectorAll('.neon-shape').forEach(el => {
+    el.style.opacity = 1; el.style.transform = 'none';
   });
 }
