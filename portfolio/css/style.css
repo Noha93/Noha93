@@ -250,8 +250,10 @@ button { font-family: inherit; cursor: pointer; }
 }
 .role-word { font-weight: 800; }
 .amp { color: var(--pink); font-weight: 400; }
-.role-word--outline {
-  -webkit-text-stroke: 1.5px var(--pink-black);
+.role-word--gradient {
+  background: linear-gradient(100deg, var(--pink) 0%, #b3a2e8 50%, #ffb27a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 .hero__desc {
@@ -331,6 +333,66 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 12px;
   font-weight: 600;
   box-shadow: var(--shadow-sm);
+}
+.stat-chip {
+  position: absolute;
+  left: -14%;
+  bottom: 4%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  padding: 12px 18px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-md);
+  max-width: 220px;
+}
+.stat-chip__icon { font-size: 20px; }
+.stat-chip__text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pink-black);
+  line-height: 1.4;
+}
+.stat-chip__text strong { font-size: 15px; color: var(--pink); margin-right: 3px; }
+.stat-chip__text small {
+  display: block;
+  font-weight: 500;
+  color: var(--secondary);
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+/* ---------- Vertical social rail ---------- */
+.social-rail {
+  position: fixed;
+  right: 28px;
+  bottom: 0;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 18px;
+}
+.social-rail a {
+  writing-mode: vertical-rl;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--pink-black);
+  opacity: .6;
+  transition: opacity .3s, color .3s;
+}
+.social-rail a:hover { opacity: 1; color: var(--pink); }
+.social-rail__line {
+  width: 1px;
+  height: 70px;
+  background: var(--pink-black);
+  opacity: .25;
+}
+@media (max-width: 960px) {
+  .social-rail { display: none; }
 }
 
 .float-slow { animation: floatY 5s ease-in-out infinite; }
@@ -1025,4 +1087,5 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 110px; }
   .avatar-frame { width: 280px; height: 340px; }
   .avatar-initials { font-size: 64px; }
   .experience-card { flex-direction: column; }
+  .stat-chip { left: 4%; max-width: 180px; padding: 10px 14px; }
 }
