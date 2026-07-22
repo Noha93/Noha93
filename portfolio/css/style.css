@@ -391,7 +391,7 @@ button { font-family: inherit; cursor: pointer; }
 .neon-shape__blob {
   width: 100%;
   height: 100%;
-  background: conic-gradient(from 0deg, #ff2e9e, #7b2ff7, #00e0ff, #ff9a3d, #ff2e9e);
+  background: conic-gradient(from 0deg, #ff9ecb, #b3a2e8, #8fd9e6, #ffcfa0, #ff9ecb);
   filter: blur(1px);
   animation: neonMorph 14s ease-in-out infinite, neonSpin 26s linear infinite;
   mix-blend-mode: screen;
@@ -410,16 +410,17 @@ button { font-family: inherit; cursor: pointer; }
   top: 60px; right: 60px;
 }
 .neon-shape--hero .neon-shape__blob {
-  opacity: 0.3;
+  opacity: 0.18;
   mix-blend-mode: normal;
-  filter: blur(6px);
+  filter: blur(10px);
   box-shadow:
-    0 0 50px 6px rgba(255, 46, 158, 0.35),
-    0 0 100px 20px rgba(123, 47, 247, 0.22);
+    0 0 40px 4px rgba(255, 158, 203, 0.2),
+    0 0 80px 14px rgba(179, 162, 232, 0.14);
 }
 .neon-shape--cta .neon-shape__blob {
-  opacity: 0.55;
+  opacity: 0.32;
   mix-blend-mode: normal;
+  filter: blur(3px);
 }
 .neon-shape--a {
   width: 380px; height: 380px;
@@ -427,9 +428,9 @@ button { font-family: inherit; cursor: pointer; }
 }
 .neon-shape--a .neon-shape__blob {
   box-shadow:
-    0 0 70px 12px rgba(255, 46, 158, 0.55),
-    0 0 140px 40px rgba(123, 47, 247, 0.35),
-    0 0 220px 70px rgba(0, 224, 255, 0.18);
+    0 0 50px 8px rgba(255, 158, 203, 0.3),
+    0 0 100px 26px rgba(179, 162, 232, 0.2),
+    0 0 160px 46px rgba(143, 217, 230, 0.1);
 }
 .neon-shape--b {
   width: 300px; height: 300px;
@@ -439,8 +440,8 @@ button { font-family: inherit; cursor: pointer; }
   animation-duration: 18s, 34s;
   animation-direction: normal, reverse;
   box-shadow:
-    0 0 60px 10px rgba(0, 224, 255, 0.4),
-    0 0 130px 34px rgba(255, 46, 158, 0.28);
+    0 0 40px 6px rgba(143, 217, 230, 0.25),
+    0 0 90px 20px rgba(255, 158, 203, 0.16);
 }
 @media (prefers-reduced-motion: reduce) {
   .neon-shape__blob { animation: none; }
@@ -853,9 +854,9 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 110px; }
 .cta-band .btn--primary:hover {
   background: #ff96ac;
   box-shadow:
-    0 0 20px rgba(255, 46, 158, 0.6),
-    0 0 45px rgba(123, 47, 247, 0.5),
-    0 0 80px rgba(0, 224, 255, 0.3);
+    0 0 16px rgba(255, 158, 203, 0.4),
+    0 0 34px rgba(179, 162, 232, 0.3),
+    0 0 60px rgba(143, 217, 230, 0.16);
 }
 
 /* Neon hover glow on cards — a soft blurred halo behind the card,
@@ -871,7 +872,7 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 110px; }
   inset: -8px;
   border-radius: inherit;
   z-index: -1;
-  background: conic-gradient(from 0deg, #ff2e9e, #7b2ff7, #00e0ff, #ff9a3d, #ff2e9e);
+  background: conic-gradient(from 0deg, #ff9ecb, #b3a2e8, #8fd9e6, #ffcfa0, #ff9ecb);
   filter: blur(14px);
   opacity: 0;
   transition: opacity .4s var(--ease);
@@ -879,10 +880,10 @@ section { padding: 120px 0; position: relative; scroll-margin-top: 110px; }
   pointer-events: none;
 }
 .why-card:hover::before, .service-card:hover::before, .tool-card:hover::before, .project-card:hover::before {
-  opacity: 0.55;
+  opacity: 0.32;
 }
 .why-card:hover, .service-card:hover, .tool-card:hover, .project-card:hover {
-  box-shadow: 0 20px 50px rgba(241, 126, 152, .25), 0 0 40px rgba(123, 47, 247, .18);
+  box-shadow: 0 20px 50px rgba(241, 126, 152, .2), 0 0 30px rgba(179, 162, 232, .12);
 }
 
 /* ---------- Contact ---------- */
