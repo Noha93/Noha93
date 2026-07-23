@@ -70,34 +70,26 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
 if (window.gsap && window.ScrollTrigger && !prefersReduced) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero entrance
-  gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } })
-    .to('.hero .reveal', { opacity: 1, y: 0, stagger: 0.15 })
-    .to('.hero__art.reveal-right', { opacity: 1, x: 0 }, '-=0.7')
-    .to('.neon-shape--hero', { opacity: 1, scale: 1, duration: 1.3, ease: 'back.out(1.5)' }, '-=0.9');
-
-  // CTA band neon shapes pop in as the section enters view
-  gsap.utils.toArray('.neon-shape--cta').forEach((shape, i) => {
-    gsap.to(shape, {
-      opacity: 1, scale: 1, duration: 1.2, ease: 'back.out(1.5)', delay: i * 0.15,
-      scrollTrigger: { trigger: shape.closest('section'), start: 'top 80%' }
-    });
-  });
+  // Hero entrance: name lines slide up out of their masks, then the rest fades in
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .to('.hero__badges', { opacity: 1, y: 0, duration: 0.7 })
+    .to('.hero__name.reveal-up', { yPercent: 0, opacity: 1, duration: 1.1, stagger: 0.15, ease: 'expo.out' }, '-=0.3')
+    .to('.hero__foot .reveal, .hero__divider, .hero__tags', { opacity: 1, y: 0, duration: 0.8, stagger: 0.1 }, '-=0.5');
 
   // Generic reveal / reveal-left / reveal-right for the rest of the page
-  gsap.utils.toArray('.reveal:not(.hero .reveal)').forEach((el) => {
+  gsap.utils.toArray('.reveal:not(.hero *)').forEach((el) => {
     gsap.to(el, {
       opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 85%' }
     });
   });
-  gsap.utils.toArray('.reveal-left:not(.hero__art)').forEach((el) => {
+  gsap.utils.toArray('.reveal-left').forEach((el) => {
     gsap.to(el, {
       opacity: 1, x: 0, duration: 0.9, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 85%' }
     });
   });
-  gsap.utils.toArray('.reveal-right:not(.hero__art)').forEach((el) => {
+  gsap.utils.toArray('.reveal-right').forEach((el) => {
     gsap.to(el, {
       opacity: 1, x: 0, duration: 0.9, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 85%' }
@@ -107,43 +99,21 @@ if (window.gsap && window.ScrollTrigger && !prefersReduced) {
   // Staggered grids / lists
   gsap.utils.toArray('.reveal-stagger').forEach((group) => {
     gsap.to(group.children, {
-      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12,
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1,
       scrollTrigger: { trigger: group, start: 'top 85%' }
     });
   });
 
-  // Parallax blobs
-  gsap.utils.toArray('.blob').forEach((blob) => {
-    const speed = parseFloat(blob.dataset.speed) || 0.2;
-    gsap.to(blob, {
-      y: () => window.innerHeight * speed,
-      ease: 'none',
-      scrollTrigger: { trigger: blob.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true }
-    });
-  });
-
-  // Parallax + drift for neon shapes
-  gsap.utils.toArray('.neon-shape').forEach((shape) => {
-    const speed = parseFloat(shape.dataset.speed) || 0.2;
-    gsap.to(shape, {
-      y: () => window.innerHeight * speed,
-      x: () => 40 * speed,
-      ease: 'none',
-      scrollTrigger: { trigger: shape.closest('section'), start: 'top bottom', end: 'bottom top', scrub: true }
-    });
-  });
-
-  // Navbar reveal already visible; refresh on load
   window.addEventListener('load', () => ScrollTrigger.refresh());
 } else {
   // No GSAP / reduced motion: make everything visible immediately
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .hero__badges, .hero__divider, .hero__tags').forEach(el => {
+    el.style.opacity = 1; el.style.transform = 'none';
+  });
+  document.querySelectorAll('.hero__name.reveal-up').forEach(el => {
     el.style.opacity = 1; el.style.transform = 'none';
   });
   document.querySelectorAll('.reveal-stagger').forEach(group => {
     [...group.children].forEach(c => { c.style.opacity = 1; c.style.transform = 'none'; });
-  });
-  document.querySelectorAll('.neon-shape').forEach(el => {
-    el.style.opacity = 1; el.style.transform = 'none';
   });
 }

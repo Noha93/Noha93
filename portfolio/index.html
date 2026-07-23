@@ -18,19 +18,17 @@
 <!-- ===== NAVBAR ===== -->
 <header class="navbar" id="navbar">
   <div class="container navbar__inner">
-    <a href="#home" class="logo">Noha<span class="dot">.</span></a>
+    <a href="#" class="logo">N<span class="dot">&middot;</span>A</a>
     <nav class="nav-links" id="navLinks">
-      <a href="#home" class="nav-link active">Home</a>
       <a href="#about" class="nav-link">About</a>
-      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#work" class="nav-link">Work</a>
       <a href="#services" class="nav-link">Services</a>
-      <a href="#experience" class="nav-link">Experience</a>
-      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#background" class="nav-link">Background</a>
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
-    <a href="#contact" class="btn btn--sm nav-cta">
-      Let's Talk <span class="btn__arrow">→</span>
-    </a>
+    <div class="nav-status">
+      <span class="status-dot"></span> Available
+    </div>
     <button class="burger" id="burger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -38,94 +36,76 @@
 </header>
 
 <!-- ===== HERO ===== -->
-<section class="hero" id="home">
-  <div class="ring-decor ring-decor--1" aria-hidden="true"></div>
-  <div class="ring-decor ring-decor--2" aria-hidden="true"></div>
-  <div class="blob blob--1" data-speed="0.3"></div>
-  <div class="blob blob--2" data-speed="0.5"></div>
-  <div class="neon-shape neon-shape--hero" data-speed="0.4" aria-hidden="true"><div class="neon-shape__float"><div class="neon-shape__blob"></div></div></div>
+<section class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__dotgrid" aria-hidden="true"></div>
+  <div class="hero__stripe" aria-hidden="true"></div>
   <div class="container hero__inner">
-    <div class="hero__text">
-      <p class="status-badge reveal"><span class="status-dot"></span> Available for freelance</p>
-      <h1 class="hero__name reveal">Noha<br>Aboyoussef</h1>
-      <h2 class="hero__role reveal">
-        <span class="role-word">UI</span> <span class="amp">&amp;</span> <span class="role-word">UX</span> <span class="role-word role-word--gradient">Designer</span>
-      </h2>
-      <p class="hero__desc reveal">
-        I specialize in modern, user-centered web interfaces that combine strong visual
-        design with practical usability — clean layouts, clear hierarchy, and
-        pixel-perfect screens ready for developer handoff.
-      </p>
+    <div class="hero__badges reveal">
+      <span class="status-badge"><span class="status-dot"></span> Available for freelance</span>
+      <span class="status-badge status-badge--plain">Figma</span>
+    </div>
+
+    <div class="hero__name-block">
+      <div class="hero__line-mask"><h1 class="hero__name reveal-up">Noha</h1></div>
+      <div class="hero__line-mask"><h1 class="hero__name hero__name--ghost reveal-up" style="transition-delay:.15s">Aboyoussef</h1></div>
+    </div>
+
+    <div class="hero__foot">
+      <div class="hero__role-block reveal">
+        <p class="hero__role">UI &amp; UX Designer</p>
+        <p class="hero__desc">Modern, user-centered interfaces with clean layouts, clear hierarchy, and pixel-perfect screens ready for developer handoff.</p>
+      </div>
       <div class="hero__cta reveal">
-        <a href="#projects" class="btn btn--primary">View My Work <span class="btn__arrow">→</span></a>
+        <a href="#work" class="btn btn--primary">View My Work <span class="btn__arrow">→</span></a>
         <a href="#contact" class="btn btn--ghost">Get in Touch</a>
       </div>
     </div>
 
-    <div class="hero__art reveal-right">
-      <div class="avatar-frame">
-        <div class="avatar-ring-spin"></div>
-        <div class="avatar-photo">
-          <span class="avatar-initials">NA</span>
-        </div>
-        <div class="chip chip--figma float-slow">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#0acf83" d="M8 24c2.2 0 4-1.8 4-4v-4H8c-2.2 0-4 1.8-4 4s1.8 4 4 4Z"/><path fill="#a259ff" d="M4 12c0-2.2 1.8-4 4-4h4v8H8c-2.2 0-4-1.8-4-4Z"/><path fill="#f24e1e" d="M4 4c0-2.2 1.8-4 4-4h4v8H8C5.8 8 4 6.2 4 4Z"/><path fill="#ff7262" d="M12 0h4c2.2 0 4 1.8 4 4s-1.8 4-4 4h-4V0Z"/><path fill="#1abcfe" d="M20 12c0 2.2-1.8 4-4 4s-4-1.8-4-4 1.8-4 4-4 4 1.8 4 4Z"/></svg>
-          <span>Figma</span>
-        </div>
-        <div class="chip chip--ps float-slow float-delay">
-          <svg viewBox="0 0 24 24" width="18" height="18"><rect width="24" height="24" rx="5" fill="#001e36"/><text x="12" y="16.5" font-family="Poppins, sans-serif" font-weight="700" font-size="10" fill="#31a8ff" text-anchor="middle">Ps</text></svg>
-          <span>Photoshop</span>
-        </div>
-        <div class="badge-pill float-slow float-delay2">DEPI UI/UX 2025</div>
-        <div class="stat-chip float-slow float-delay">
-          <span class="stat-chip__icon">📈</span>
-          <span class="stat-chip__text">
-            <strong>3</strong> Real Case Studies
-            <small>B2Pay &middot; Color Hint &middot; Gamil</small>
-          </span>
-        </div>
-      </div>
+    <div class="hero__divider reveal"></div>
+
+    <div class="hero__tags reveal">
+      <span>DEPI Certified</span><span>Figma</span><span>Photoshop</span><span>Illustrator</span><span>Sketch</span>
     </div>
   </div>
-  <a href="#about" class="scroll-cue" aria-label="Scroll down"><span></span></a>
 </section>
-
-<!-- ===== VERTICAL SOCIAL RAIL ===== -->
-<aside class="social-rail" aria-label="Social links">
-  <a href="mailto:dr.noha.aboyoussef@gmail.com">Email</a>
-  <a href="https://www.linkedin.com/in/noha-mohamed-8ba65b378" target="_blank" rel="noopener">LinkedIn</a>
-  <a href="https://www.behance.net/nohaaboyoussef" target="_blank" rel="noopener">Behance</a>
-  <span class="social-rail__line" aria-hidden="true"></span>
-</aside>
 
 <!-- ===== ABOUT ===== -->
 <section class="about" id="about">
-  <div class="container about__inner">
-    <div class="section-head reveal">
-      <p class="section-tag">Get To Know Me</p>
-      <h2 class="section-title">About Me</h2>
-    </div>
+  <div class="container">
+    <p class="section-tag reveal">Get to Know Me</p>
     <div class="about__grid">
-      <div class="about__visual reveal-left">
-        <div class="about__ring"></div>
-        <div class="about__card">
-          <p class="about__quote">“Blending beauty with functionality to create intuitive interfaces.”</p>
-        </div>
-      </div>
-      <div class="about__copy reveal-right">
-        <p>
+      <div class="about__copy">
+        <h2 class="section-title reveal">About Me</h2>
+        <p class="reveal">
           I'm a creative <strong>UI/UX designer</strong> passionate about crafting modern,
           user-friendly, and visually engaging designs. Trained through the
           <strong> Digital Egypt Pioneers Initiative (DEPI)</strong>, I'm skilled in
           Figma, Photoshop, Illustrator, and Sketch.
         </p>
-        <p>
+        <p class="reveal">
           I focus on blending beauty with functionality to create intuitive interfaces.
           Fluent in Arabic and English, I value teamwork and clear communication to
           deliver designs that enhance user experience and bring ideas to life.
         </p>
-        <div class="about__tags">
+        <div class="about__tags reveal">
           <span>Figma</span><span>Photoshop</span><span>Illustrator</span><span>Sketch</span><span>Wireframing</span><span>Prototyping</span>
+        </div>
+      </div>
+      <div class="about__side reveal-right">
+        <div class="about__card">
+          <p class="about__quote">&ldquo;Blending beauty with functionality to create intuitive interfaces.&rdquo;</p>
+          <div class="about__card-foot">
+            <div class="about__avatar">NA</div>
+            <div>
+              <p class="about__name">Noha Aboyoussef</p>
+              <p class="about__role">UI &amp; UX Designer</p>
+            </div>
+          </div>
+        </div>
+        <div class="about__langs">
+          <div class="lang-chip"><small>Arabic</small><strong>Native</strong></div>
+          <div class="lang-chip"><small>English</small><strong>Fluent</strong></div>
         </div>
       </div>
     </div>
@@ -135,11 +115,14 @@
 <!-- ===== WHY HIRE ME ===== -->
 <section class="why">
   <div class="container">
-    <div class="section-head center reveal">
-      <p class="section-tag">Why Hire Me</p>
-      <h2 class="section-title">What I Bring to the Table</h2>
+    <div class="why__head reveal">
+      <div>
+        <p class="section-tag">Why Hire Me</p>
+        <h2 class="section-title">What I Bring<br>to the Table</h2>
+      </div>
+      <p class="why__note">Every project is approached with precision, empathy, and a commitment to design excellence.</p>
     </div>
-    <div class="grid grid--4 reveal-stagger" id="whyGrid">
+    <div class="grid grid--4 reveal-stagger">
       <div class="why-card">
         <div class="why-card__icon">🖥️</div>
         <h3>Web &amp; Mobile App Design</h3>
@@ -172,12 +155,12 @@
       <h2 class="section-title">Tools &amp; Skills</h2>
     </div>
     <div class="tools__grid reveal-stagger">
-      <div class="tool-card"><div class="tool-icon" style="background:#f24e1e1a">🎨</div><span>Figma</span></div>
-      <div class="tool-card"><div class="tool-icon" style="background:#31a8ff1a">🖌️</div><span>Photoshop</span></div>
-      <div class="tool-card"><div class="tool-icon" style="background:#ff9a001a">✒️</div><span>Illustrator</span></div>
-      <div class="tool-card"><div class="tool-icon" style="background:#fbb1381a">✏️</div><span>Sketch</span></div>
-      <div class="tool-card"><div class="tool-icon" style="background:#e34c261a">🌐</div><span>HTML5</span></div>
-      <div class="tool-card"><div class="tool-icon" style="background:#2965f11a">💠</div><span>CSS3</span></div>
+      <div class="tool-card"><span class="tool-card__icon">🎨</span><span>Figma</span></div>
+      <div class="tool-card"><span class="tool-card__icon">🖌️</span><span>Photoshop</span></div>
+      <div class="tool-card"><span class="tool-card__icon">✒️</span><span>Illustrator</span></div>
+      <div class="tool-card"><span class="tool-card__icon">✏️</span><span>Sketch</span></div>
+      <div class="tool-card"><span class="tool-card__icon">🌐</span><span>HTML5</span></div>
+      <div class="tool-card"><span class="tool-card__icon">💠</span><span>CSS3</span></div>
     </div>
   </div>
 </section>
@@ -185,210 +168,107 @@
 <!-- ===== SERVICES ===== -->
 <section class="services" id="services">
   <div class="container">
-    <div class="section-head center reveal">
+    <div class="section-head reveal">
       <p class="section-tag">What Do I Offer</p>
-      <h2 class="section-title">Creates Professional Design That's<br>Oriented Towards Client Needs</h2>
+      <h2 class="section-title">Creates Professional Design Oriented Towards Client Needs</h2>
     </div>
+
     <div class="grid grid--3 reveal-stagger">
       <div class="service-card">
         <div class="service-card__icon">🖼️</div>
         <h3>Content Design</h3>
-        <p>Clear, purposeful copy and content structure that guides users naturally through a product.</p>
+        <p>Clear, purposeful content structure that guides users naturally through a product.</p>
       </div>
       <div class="service-card service-card--highlight">
         <div class="service-card__icon">📲</div>
         <h3>Mobile App Design</h3>
-        <p>Sleek, user-friendly mobile experiences combining aesthetic design with practical usability.</p>
+        <p>Sleek mobile experiences combining aesthetic design with practical usability.</p>
       </div>
       <div class="service-card">
         <div class="service-card__icon">💻</div>
         <h3>Web Design</h3>
-        <p>Stunning websites built from scratch or refined from templates — creative and functional.</p>
+        <p>Stunning websites built from scratch or refined from templates.</p>
       </div>
     </div>
 
-    <div class="specialties reveal">
-      <div class="specialty-row">
-        <h4>Web Design</h4>
-        <p>I craft stunning websites from scratch or refine existing templates, blending creativity and functionality to deliver visually engaging digital experiences.</p>
+    <div class="grid grid--2 reveal-stagger service-list">
+      <div class="service-num-card">
+        <div class="service-num-card__top"><h3>Web Design</h3><span>01</span></div>
+        <p>Crafting stunning websites from scratch or refining existing templates — blending creativity and functionality for visually engaging digital experiences.</p>
       </div>
-      <div class="specialty-row">
-        <h4>UI/UX Design</h4>
-        <p>I design intuitive and immersive interfaces that connect users to products effortlessly, ensuring every interaction feels smooth and purposeful.</p>
+      <div class="service-num-card">
+        <div class="service-num-card__top"><h3>UI/UX Design</h3><span>02</span></div>
+        <p>Designing intuitive and immersive interfaces that connect users to products effortlessly, with smooth and purposeful interactions.</p>
       </div>
-      <div class="specialty-row">
-        <h4>User Research</h4>
-        <p>I uncover real user needs through research and testing, turning insights into design decisions that drive engagement and satisfaction.</p>
+      <div class="service-num-card">
+        <div class="service-num-card__top"><h3>User Research</h3><span>03</span></div>
+        <p>Uncovering real user needs through research and testing, turning insights into design decisions that drive engagement and satisfaction.</p>
       </div>
-      <div class="specialty-row">
-        <h4>Mobile Application</h4>
-        <p>I transform ideas into sleek, user-friendly mobile experiences, combining aesthetic design with practical usability for every screen size.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== EDUCATION ===== -->
-<section class="timeline-section" id="education">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="section-tag">Background</p>
-      <h2 class="section-title">Education</h2>
-    </div>
-    <div class="timeline reveal-stagger">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <span class="timeline-date">2022 – 2023</span>
-        <h3>Diploma of Clinical Nutrition</h3>
-        <p>Mansoura University</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <span class="timeline-date">2016 – 2017</span>
-        <h3>Diploma of Clinical Pharmacy</h3>
-        <p>Mansoura University</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <span class="timeline-date">2009 – 2014</span>
-        <h3>Bachelor's of Pharmaceutical Industry</h3>
-        <p>Faculty of Pharmacy, Misr University for Science &amp; Technology (MUST) — Excellent grade</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== COURSES & CERTIFICATIONS ===== -->
-<section class="timeline-section timeline-section--alt" id="courses">
-  <div class="container">
-    <div class="section-head reveal">
-      <p class="section-tag">Growth</p>
-      <h2 class="section-title">Courses &amp; Certifications</h2>
-    </div>
-    <div class="timeline reveal-stagger">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <span class="timeline-date">Jun 2025 – Dec 2025</span>
-        <h3>Digital Egypt Pioneers Initiative (DEPI) — UI/UX Design</h3>
-        <p>An intensive 6-month training program under the Ministry of Communications and Information
-        Technology. Learned core UI/UX principles — user research, wireframing and prototyping — with
-        hands-on practice in Photoshop, XD and Figma, working in teams on real-world case studies, plus
-        soft-skills and English communication training.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <span class="timeline-date">Apr 2025 – Jun 2025</span>
-        <h3>Sustainable Egypt AI Ambassadors Program</h3>
-        <p>National Telecommunication Institute (NTI), Egypt — focused on sustainable development and
-        artificial intelligence.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== EXPERIENCE (NEW) ===== -->
-<section class="experience" id="experience">
-  <div class="container">
-    <div class="section-head center reveal">
-      <p class="section-tag">Hands-on</p>
-      <h2 class="section-title">Experience</h2>
-    </div>
-    <div class="experience-card reveal">
-      <div class="experience-card__logo">AX</div>
-      <div class="experience-card__body">
-        <div class="experience-card__top">
-          <h3>UI/UX Design Workshop — Anorix</h3>
-          <span class="experience-card__duration">1 Month</span>
-        </div>
-        <p class="experience-card__mentor">Mentored by Senior Eng. Rahma Ahmed</p>
-        <p>
-          A one-month, hands-on UI/UX design workshop in collaboration with
-          <strong> Anorix</strong>, guided by <strong>Senior Eng. Rahma Ahmed</strong>. The workshop
-          strengthened my practical design workflow — from design critique to applying real-world
-          UI/UX practices — through mentorship, feedback sessions and collaborative problem solving.
-        </p>
+      <div class="service-num-card">
+        <div class="service-num-card__top"><h3>Mobile Application</h3><span>04</span></div>
+        <p>Transforming ideas into sleek, user-friendly mobile experiences with aesthetic design and practical usability for every screen size.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===== PROJECTS ===== -->
-<section class="projects" id="projects">
+<section class="projects" id="work">
   <div class="container">
-    <div class="section-head center reveal">
-      <p class="section-tag">Portfolio</p>
-      <h2 class="section-title">My Projects</h2>
-      <a href="https://www.behance.net/nohaaboyoussef" target="_blank" rel="noopener" class="behance-link">
-        <span class="behance-link__icon">Bē</span> See more on Behance
-      </a>
+    <div class="why__head reveal">
+      <div>
+        <p class="section-tag">Portfolio</p>
+        <h2 class="section-title">My Projects</h2>
+      </div>
+      <p class="why__note">A selection of web, mobile, and UI/UX design work.</p>
     </div>
+    <a href="https://www.behance.net/nohaaboyoussef" target="_blank" rel="noopener" class="behance-link reveal">
+      <span class="behance-link__icon">Bē</span> See more on Behance
+    </a>
 
-    <!-- Featured real case studies -->
-    <div class="grid grid--3 reveal-stagger featured-projects">
+    <div class="project-grid reveal-stagger">
 
-      <article class="project-card project-card--featured">
-        <div class="project-card__cover project-card__cover--photo">
+      <article class="project-card project-card--wide">
+        <div class="project-card__cover">
           <img src="assets/img/b2pay/home.png" alt="B2Pay supply chain finance platform homepage" loading="lazy">
         </div>
         <div class="project-card__body">
           <span class="project-card__tag">Web Design &middot; UI/UX</span>
-          <h3>B2Pay — Supply Chain Finance Platform</h3>
-          <p>A full web platform helping suppliers get paid faster through supply-chain
-          financing — homepage, supplier journey, solutions, industries served and
-          contact/office pages. Explored in both dark and light color themes.</p>
-          <div class="project-card__thumbs">
-            <img src="assets/img/b2pay/suppliers.png" alt="B2Pay for suppliers page" loading="lazy">
-            <img src="assets/img/b2pay/solutions.png" alt="B2Pay solutions for suppliers section" loading="lazy">
-            <img src="assets/img/b2pay/industries.png" alt="B2Pay industries we serve section" loading="lazy">
-            <img src="assets/img/b2pay/office.png" alt="B2Pay office locations page" loading="lazy">
-            <img src="assets/img/b2pay/theme-dark.png" alt="B2Pay dark theme exploration" loading="lazy">
-            <img src="assets/img/b2pay/theme-light.png" alt="B2Pay light theme exploration" loading="lazy">
-          </div>
+          <h3>B2Pay</h3>
+          <p class="project-card__subtitle">Supply Chain Finance Platform</p>
+          <p class="project-card__desc">A full web platform helping suppliers get paid faster through supply-chain financing.</p>
         </div>
       </article>
 
-      <article class="project-card project-card--featured">
-        <div class="project-card__cover project-card__cover--photo project-card__cover--dark">
+      <article class="project-card">
+        <div class="project-card__cover project-card__cover--dark">
           <img src="assets/img/colorhint/splash.png" alt="Color Hint mobile app splash screen" loading="lazy">
         </div>
         <div class="project-card__body">
-          <span class="project-card__tag">Mobile App Design &middot; UI/UX</span>
-          <h3>Color Hint — Paint Color Selector App</h3>
-          <p>A mobile app that helps users pick the perfect paint color for their space —
-          onboarding, social login, quick palettes and a full custom color picker, in Arabic.</p>
-          <div class="project-card__thumbs">
-            <img src="assets/img/colorhint/onboarding.png" alt="Color Hint onboarding screen" loading="lazy">
-            <img src="assets/img/colorhint/login.png" alt="Color Hint login screen" loading="lazy">
-            <img src="assets/img/colorhint/color-select.png" alt="Color Hint color selection screen" loading="lazy">
-          </div>
+          <span class="project-card__tag">Mobile App &middot; UI/UX</span>
+          <h3>Color Hint</h3>
+          <p class="project-card__subtitle">Paint Color Selector App</p>
+          <p class="project-card__desc">A mobile app that helps users pick the perfect paint color for their space.</p>
         </div>
       </article>
-
-      <article class="project-card project-card--featured">
-        <div class="project-card__cover project-card__cover--photo">
-          <img src="assets/img/jameel/cover.jpg" alt="Jameel (Gamil) fashion e-commerce app case study cover" loading="lazy">
-        </div>
-        <div class="project-card__body">
-          <span class="project-card__tag">UX/UI Case Study &middot; Mobile + Web</span>
-          <h3>جميل (Gamil) — Fashion E-commerce Case Study</h3>
-          <p>A full clothing shopping app for women, men and kids — research, a complete
-          design system (colors, type, spacing, components), wireframes, a 6-screen admin
-          dashboard, and final polished mobile UI screens.</p>
-          <div class="project-card__thumbs">
-            <img src="assets/img/jameel/design-system.jpg" alt="Jameel design system: colors, type and components" loading="lazy">
-            <img src="assets/img/jameel/admin-dashboard.jpg" alt="Jameel admin dashboard screens" loading="lazy">
-            <img src="assets/img/jameel/ui-showcase.jpg" alt="Jameel final mobile UI showcase" loading="lazy">
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Additional projects -->
-    <div class="grid grid--3 reveal-stagger" style="margin-top:28px">
 
       <article class="project-card">
-        <div class="project-card__cover project-card__cover--recycle">
+        <div class="project-card__cover project-card__cover--video">
+          <video autoplay muted loop playsinline preload="metadata">
+            <source src="assets/video/team-carousel.mp4" type="video/mp4">
+          </video>
+          <span class="video-badge">▶ Motion Preview</span>
+        </div>
+        <div class="project-card__body">
+          <span class="project-card__tag">UI Animation &middot; Prototyping</span>
+          <h3>Our Team</h3>
+          <p class="project-card__subtitle">Interactive Carousel</p>
+          <p class="project-card__desc">An animated coverflow-style team carousel component with smooth transitions.</p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <div class="project-card__cover project-card__cover--solid project-card__cover--recycle">
           <svg viewBox="0 0 200 140" class="cover-svg" aria-hidden="true">
             <circle cx="100" cy="70" r="46" fill="#ffffff33"/>
             <path d="M100 34 l14 24h-28z" fill="#fff"/>
@@ -398,12 +278,14 @@
         </div>
         <div class="project-card__body">
           <span class="project-card__tag">Web Design</span>
-          <h3>Recycling Landing Page Design</h3>
+          <h3>Recycling Landing Page</h3>
+          <p class="project-card__subtitle">Eco-Friendly UI</p>
+          <p class="project-card__desc">Sustainable landing page design promoting recycling and environmental awareness.</p>
         </div>
       </article>
 
       <article class="project-card">
-        <div class="project-card__cover project-card__cover--audio">
+        <div class="project-card__cover project-card__cover--solid project-card__cover--audio">
           <svg viewBox="0 0 200 140" class="cover-svg" aria-hidden="true">
             <rect x="30" y="60" width="10" height="20" rx="4" fill="#fff"/>
             <rect x="50" y="45" width="10" height="50" rx="4" fill="#fff"/>
@@ -417,25 +299,26 @@
         </div>
         <div class="project-card__body">
           <span class="project-card__tag">Web Design</span>
-          <h3>Audiobooks Landing Page Design</h3>
+          <h3>Audiobooks Landing Page</h3>
+          <p class="project-card__subtitle">Digital Reading Experience</p>
+          <p class="project-card__desc">Clean, modern landing page for an audiobook subscription service.</p>
         </div>
       </article>
 
-      <article class="project-card">
-        <div class="project-card__cover project-card__cover--video">
-          <video autoplay muted loop playsinline preload="metadata">
-            <source src="assets/video/team-carousel.mp4" type="video/mp4">
-          </video>
-          <span class="video-badge">▶ Motion Preview</span>
+      <article class="project-card project-card--wide">
+        <div class="project-card__cover">
+          <img src="assets/img/jameel/cover.jpg" alt="Jameel (Gamil) fashion e-commerce app case study cover" loading="lazy">
         </div>
         <div class="project-card__body">
-          <span class="project-card__tag">UI Animation &middot; Prototyping</span>
-          <h3>Our Team — Interactive Carousel</h3>
+          <span class="project-card__tag">UX/UI Case Study &middot; Mobile + Web</span>
+          <h3>جميل (Gamil)</h3>
+          <p class="project-card__subtitle">Fashion E-commerce</p>
+          <p class="project-card__desc">Full e-commerce case study for a fashion brand — research, design system, admin dashboard, and final UI.</p>
         </div>
       </article>
 
       <article class="project-card project-card--pending">
-        <div class="project-card__cover" style="background:linear-gradient(160deg,#7fd6c2,#2f8a76)">
+        <div class="project-card__cover project-card__cover--solid" style="background:linear-gradient(160deg,#7fd6c2,#2f8a76)">
           <svg viewBox="0 0 200 140" class="cover-svg" aria-hidden="true">
             <path d="M70 30 h60 l-16 40 h20 l-44 50 12-38 h-22z" fill="#fff"/>
           </svg>
@@ -448,7 +331,7 @@
       </article>
 
       <article class="project-card project-card--pending">
-        <div class="project-card__cover" style="background:linear-gradient(160deg,#f2a154,#c1541f)">
+        <div class="project-card__cover project-card__cover--solid" style="background:linear-gradient(160deg,#f2a154,#c1541f)">
           <svg viewBox="0 0 200 140" class="cover-svg" aria-hidden="true">
             <path d="M100 32c-16 0-28 12-28 28 0 20 28 48 28 48s28-28 28-48c0-16-12-28-28-28z" fill="#fff"/>
             <rect x="93" y="52" width="14" height="30" rx="2" fill="#c1541f"/>
@@ -458,7 +341,8 @@
         </div>
         <div class="project-card__body">
           <span class="project-card__tag">Mobile App Design</span>
-          <h3>أرقام الطوارئ — Emergency Numbers</h3>
+          <h3>أرقام الطوارئ</h3>
+          <p class="project-card__subtitle">Emergency Numbers App</p>
         </div>
       </article>
 
@@ -466,45 +350,108 @@
   </div>
 </section>
 
+<!-- ===== BACKGROUND (Education / Courses / Experience) ===== -->
+<section class="background" id="background">
+  <div class="container background__grid">
+
+    <div>
+      <div class="section-head reveal">
+        <p class="section-tag">Background</p>
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="edu-list reveal-stagger">
+        <div class="edu-row">
+          <span class="edu-row__years">2009 – 2014</span>
+          <div>
+            <h3>Bachelor's in Pharmaceutical Industry</h3>
+            <p>Faculty of Pharmacy, Misr University for Science &amp; Technology (MUST)</p>
+            <span class="edu-row__note">Excellent grade</span>
+          </div>
+        </div>
+        <div class="edu-row">
+          <span class="edu-row__years">2016 – 2017</span>
+          <div>
+            <h3>Diploma in Clinical Pharmacy</h3>
+            <p>Mansoura University</p>
+          </div>
+        </div>
+        <div class="edu-row">
+          <span class="edu-row__years">2022 – 2023</span>
+          <div>
+            <h3>Diploma in Clinical Nutrition</h3>
+            <p>Mansoura University</p>
+          </div>
+        </div>
+        <div class="edu-row edu-row--end"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-head reveal">
+        <p class="section-tag">Growth</p>
+        <h2 class="section-title">Courses &amp; Certs</h2>
+      </div>
+
+      <div class="cert-card cert-card--featured reveal">
+        <span class="cert-card__date">Jun 2025 – Dec 2025</span>
+        <h3>Digital Egypt Pioneers Initiative (DEPI)</h3>
+        <p class="cert-card__sub">UI/UX Design</p>
+        <p>An intensive 6-month program under the Ministry of Communications and Information Technology. Learned core UI/UX principles — user research, wireframing and prototyping — with hands-on practice in Photoshop, XD and Figma.</p>
+      </div>
+
+      <div class="cert-card reveal">
+        <span class="cert-card__date cert-card__date--alt">Apr 2025 – Jun 2025</span>
+        <h3>Sustainable Egypt AI Ambassadors Program</h3>
+        <p class="cert-card__sub">National Telecommunication Institute (NTI), Egypt</p>
+        <p>Focused on sustainable development and artificial intelligence.</p>
+      </div>
+
+      <p class="section-tag reveal" style="margin-top:44px">Hands-On Experience</p>
+      <div class="experience-card reveal">
+        <div class="experience-card__logo">AX</div>
+        <div class="experience-card__body">
+          <div class="experience-card__top">
+            <h3>UI/UX Design Workshop — Anorix</h3>
+            <span class="experience-card__duration">1 Month</span>
+          </div>
+          <p class="experience-card__mentor">Mentored by Senior Eng. Rahma Ahmed</p>
+          <p>A one-month hands-on UI/UX design workshop in collaboration with Anorix, strengthening practical design workflow through mentorship, critique and collaborative problem solving.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ===== BOLD CTA BAND ===== -->
 <section class="cta-band">
-  <div class="ring-decor ring-decor--3" aria-hidden="true"></div>
-  <div class="neon-shape neon-shape--cta neon-shape--a" data-speed="0.3" aria-hidden="true"><div class="neon-shape__float neon-shape__float--a"><div class="neon-shape__blob"></div></div></div>
-  <div class="neon-shape neon-shape--cta neon-shape--b" data-speed="-0.2" aria-hidden="true"><div class="neon-shape__float neon-shape__float--b"><div class="neon-shape__blob"></div></div></div>
-  <div class="container cta-band__inner reveal">
-    <p class="status-badge status-badge--dark">Got a project in mind?</p>
-    <h2 class="cta-band__title">Let's build something<br>bold &amp; beautiful.</h2>
-    <a href="#contact" class="btn btn--primary btn--lg">Start a Conversation <span class="btn__arrow">→</span></a>
+  <div class="container cta-band__inner">
+    <h2 class="cta-band__title reveal-left">Let's build something<br><span>bold &amp; beautiful.</span></h2>
+    <a href="#contact" class="btn btn--primary btn--lg reveal-right">Start a Conversation <span class="btn__arrow">→</span></a>
   </div>
 </section>
 
 <!-- ===== CONTACT ===== -->
 <section class="contact" id="contact">
-  <div class="blob blob--3"></div>
-  <div class="container contact__inner reveal">
-    <h2 class="section-title">Get in Touch</h2>
-    <p>For additional project details or a copy of my CV, please reach out below.</p>
-    <div class="contact__links">
-      <a href="mailto:dr.noha.aboyoussef@gmail.com" class="contact-link">
-        <span class="contact-link__icon">✉️</span>
-        <span>
-          <small>Email</small>
-          dr.noha.aboyoussef@gmail.com
-        </span>
+  <span class="contact__ghost" aria-hidden="true">Hello</span>
+  <div class="container contact__inner">
+    <p class="section-tag reveal">Get in Touch</p>
+    <h2 class="contact__title reveal">Got a project<br><span>in mind?</span></h2>
+    <p class="contact__desc reveal">Let's build something bold &amp; beautiful. For project details or a copy of my CV, reach out below.</p>
+    <a href="mailto:dr.noha.aboyoussef@gmail.com" class="btn btn--primary reveal">Start a Conversation <span class="btn__arrow">→</span></a>
+
+    <div class="contact__grid reveal-stagger">
+      <a href="mailto:dr.noha.aboyoussef@gmail.com" class="contact-item">
+        <span class="contact-item__icon">✉️</span>
+        <span><small>Email</small>dr.noha.aboyoussef@gmail.com</span>
       </a>
-      <a href="https://www.linkedin.com/in/noha-mohamed-8ba65b378" target="_blank" rel="noopener" class="contact-link">
-        <span class="contact-link__icon">in</span>
-        <span>
-          <small>LinkedIn</small>
-          linkedin.com/in/noha-mohamed-8ba65b378
-        </span>
+      <a href="https://www.linkedin.com/in/noha-mohamed-8ba65b378" target="_blank" rel="noopener" class="contact-item">
+        <span class="contact-item__icon">in</span>
+        <span><small>LinkedIn</small>linkedin.com/in/noha-mohamed-8ba65b378</span>
       </a>
-      <a href="https://www.behance.net/nohaaboyoussef" target="_blank" rel="noopener" class="contact-link">
-        <span class="contact-link__icon">Bē</span>
-        <span>
-          <small>Behance</small>
-          behance.net/nohaaboyoussef
-        </span>
+      <a href="https://www.behance.net/nohaaboyoussef" target="_blank" rel="noopener" class="contact-item">
+        <span class="contact-item__icon">Bē</span>
+        <span><small>Behance</small>behance.net/nohaaboyoussef</span>
       </a>
     </div>
   </div>
@@ -513,13 +460,13 @@
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
   <div class="container footer__inner">
-    <p class="footer__thanks">Thank You 💗</p>
+    <p class="footer__copy">© <span id="year"></span> Noha Aboyoussef — UI &amp; UX Designer</p>
     <div class="footer__socials">
+      <span>💗</span>
       <a href="mailto:dr.noha.aboyoussef@gmail.com" aria-label="Email">✉️</a>
       <a href="https://www.linkedin.com/in/noha-mohamed-8ba65b378" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
       <a href="https://www.behance.net/nohaaboyoussef" target="_blank" rel="noopener" aria-label="Behance">Bē</a>
     </div>
-    <p class="footer__copy">© <span id="year"></span> Noha Aboyoussef — UI &amp; UX Designer</p>
     <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
   </div>
 </footer>
