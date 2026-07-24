@@ -388,6 +388,25 @@ section { padding: 110px 0; position: relative; scroll-margin-top: 80px; }
   font-size: 10px; font-weight: 800;
 }
 
+.project-card__meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: 12px;
+}
+.project-card__team {
+  font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--pink); background: var(--bg-soft); border-radius: 100px; padding: 4px 10px;
+}
+.project-card__behance {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--secondary);
+  transition: color .3s;
+}
+.project-card__behance:hover { color: var(--pink); }
+.project-card__behance-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 17px; height: 17px; border-radius: 50%; border: 1.3px solid currentColor;
+  font-size: 8px; font-weight: 800;
+}
+
 /* ---------- Background (Education / Courses / Experience) ---------- */
 .background { background: var(--bg); border-top: 1px solid var(--border); }
 .background__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
