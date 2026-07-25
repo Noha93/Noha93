@@ -340,13 +340,39 @@ section { padding: 110px 0; position: relative; scroll-margin-top: 80px; }
 /* ---------- Projects ---------- */
 .projects { background: #fff; border-top: 1px solid var(--border); }
 .projects .behance-link { margin: -18px 0 44px; display: inline-block; }
-.project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* ---------- Projects slider ---------- */
+.project-slider { position: relative; }
+.project-slider__viewport { overflow: hidden; }
+.project-track {
+  display: flex; gap: 20px; will-change: transform;
+  transition: transform .65s cubic-bezier(.65,0,.35,1);
+  cursor: grab; user-select: none;
+}
+.project-track.dragging { transition: none; cursor: grabbing; }
 .project-card {
+  flex: 0 0 340px; width: 340px;
   background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg);
   overflow: hidden; transition: transform .4s var(--ease), box-shadow .4s var(--ease);
 }
 .project-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-.project-card--wide { grid-column: span 2; }
+.project-card--wide { flex-basis: 620px; width: 620px; }
+.project-slider__controls {
+  display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 30px;
+}
+.project-nav {
+  width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center; color: var(--pink-black);
+  background: #fff; transition: background .3s, color .3s, border-color .3s, transform .3s;
+  flex-shrink: 0;
+}
+.project-nav:hover { background: var(--pink-black); color: #fff; border-color: var(--pink-black); transform: translateY(-2px); }
+.project-dots { display: flex; align-items: center; gap: 8px; }
+.project-dots__dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--border);
+  border: none; padding: 0; cursor: pointer; transition: background .3s, width .3s, border-radius .3s;
+}
+.project-dots__dot.active { width: 22px; border-radius: 100px; background: var(--pink); }
 .project-card__cover {
   position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-soft);
 }
@@ -509,8 +535,8 @@ section { padding: 110px 0; position: relative; scroll-margin-top: 80px; }
   .grid--3 { grid-template-columns: repeat(2, 1fr); }
   .grid--2 { grid-template-columns: 1fr; }
   .tools__grid { grid-template-columns: repeat(3, 1fr); }
-  .project-grid { grid-template-columns: repeat(2, 1fr); }
-  .project-card--wide { grid-column: span 2; }
+  .project-card { flex-basis: 280px; width: 280px; }
+  .project-card--wide { flex-basis: 480px; width: 480px; }
   .background__grid { grid-template-columns: 1fr; gap: 56px; }
   .contact__grid { grid-template-columns: 1fr; }
 }
@@ -527,8 +553,8 @@ section { padding: 110px 0; position: relative; scroll-margin-top: 80px; }
   section { padding: 76px 0; }
   .grid--4, .grid--3, .grid--2 { grid-template-columns: 1fr; }
   .tools__grid { grid-template-columns: repeat(2, 1fr); }
-  .project-grid { grid-template-columns: 1fr; }
-  .project-card--wide { grid-column: span 1; }
+  .project-card, .project-card--wide { flex-basis: 82vw; width: 82vw; }
+  .project-slider__controls { gap: 16px; }
   .why__head { flex-direction: column; align-items: flex-start; }
   .cta-band__inner { flex-direction: column; align-items: flex-start; }
   .experience-card { flex-direction: column; }

@@ -64,6 +64,104 @@ document.querySelectorAll('.project-card, .why-card, .service-card').forEach(car
   card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 
+/* ---------- Projects slider ---------- */
+(function () {
+  const track = document.getElementById('projectTrack');
+  const viewport = track && track.parentElement;
+  const prevBtn = document.getElementById('projectPrev');
+  const nextBtn = document.getElementById('projectNext');
+  const dotsWrap = document.getElementById('projectDots');
+  const sliderWrap = document.querySelector('.project-slider');
+  if (!track || !viewport || !prevBtn || !nextBtn || !dotsWrap || !sliderWrap) return;
+
+  const slides = Array.from(track.children);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let index = 0;
+  let autoplayTimer = null;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'project-dots__dot';
+    dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+    dot.addEventListener('click', () => { goTo(i); restartAutoplay(); });
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function trackGap() {
+    return parseFloat(getComputedStyle(track).columnGap) || 20;
+  }
+
+  function offsetFor(i) {
+    let offset = 0;
+    for (let j = 0; j < i; j++) offset += slides[j].getBoundingClientRect().width + trackGap();
+    const maxOffset = Math.max(0, track.scrollWidth - viewport.clientWidth);
+    return Math.min(offset, maxOffset);
+  }
+
+  function render() {
+    track.style.transform = `translateX(-${offsetFor(index)}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    render();
+  }
+
+  prevBtn.addEventListener('click', () => { goTo(index - 1); restartAutoplay(); });
+  nextBtn.addEventListener('click', () => { goTo(index + 1); restartAutoplay(); });
+  window.addEventListener('resize', render);
+
+  /* Drag / swipe */
+  let isDown = false, startX = 0, currentX = 0, startOffset = 0;
+  const pointerX = (e) => (e.touches ? e.touches[0].clientX : e.clientX);
+
+  function dragStart(e) {
+    isDown = true;
+    startX = currentX = pointerX(e);
+    startOffset = offsetFor(index);
+    track.classList.add('dragging');
+    stopAutoplay();
+  }
+  function dragMove(e) {
+    if (!isDown) return;
+    currentX = pointerX(e);
+    track.style.transform = `translateX(${-startOffset + (currentX - startX)}px)`;
+  }
+  function dragEnd() {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove('dragging');
+    const dx = currentX - startX;
+    if (dx < -60) goTo(index + 1);
+    else if (dx > 60) goTo(index - 1);
+    else render();
+    restartAutoplay();
+  }
+
+  track.addEventListener('mousedown', dragStart);
+  window.addEventListener('mousemove', dragMove);
+  window.addEventListener('mouseup', dragEnd);
+  track.addEventListener('touchstart', dragStart, { passive: true });
+  track.addEventListener('touchmove', dragMove, { passive: true });
+  track.addEventListener('touchend', dragEnd);
+
+  function startAutoplay() {
+    if (reduceMotion) return;
+    autoplayTimer = setInterval(() => goTo(index + 1), 5000);
+  }
+  function stopAutoplay() { clearInterval(autoplayTimer); }
+  function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+
+  sliderWrap.addEventListener('mouseenter', stopAutoplay);
+  sliderWrap.addEventListener('mouseleave', startAutoplay);
+
+  render();
+  startAutoplay();
+})();
+
 /* ---------- GSAP scroll animations ---------- */
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
