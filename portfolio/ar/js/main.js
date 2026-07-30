@@ -148,6 +148,12 @@ let LANG = 'ar';
    ========================================================== */
 function el(tag, className, html){ const e=document.createElement(tag); if(className) e.className=className; if(html!==undefined) e.innerHTML=html; return e; }
 function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
+function setRevealSide(selector, side){
+  const node = document.querySelector(selector);
+  if (!node) return;
+  node.classList.remove('reveal-left','reveal-right');
+  node.classList.add(side);
+}
 
 /* ==========================================================
    RENDER
@@ -157,6 +163,15 @@ function render(lang){
   const C = CONTENT[lang];
   document.documentElement.lang = C.lang;
   document.documentElement.dir = C.dir;
+
+  /* Reveal-in direction: these two-column rows mirror with dir (grid auto-flips
+     start/end), so the "enter from screen-right" vs "enter from screen-left"
+     class has to follow which physical side each element actually lands on —
+     it can't stay hardcoded like the rest of the markup. */
+  const ar = lang === 'ar';
+  setRevealSide('.about__visual', ar ? 'reveal-right' : 'reveal-left');
+  setRevealSide('#phoneMockup', ar ? 'reveal-right' : 'reveal-left');
+  setRevealSide('#browserMockup', ar ? 'reveal-left' : 'reveal-right');
 
   renderNav(C);
   renderHero(C);

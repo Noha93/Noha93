@@ -157,8 +157,6 @@ input{font-family:inherit}
 .reveal-up{ opacity:0; transform:translateY(52px); transition:opacity .95s var(--ease), transform .95s var(--ease); }
 .reveal-left{ opacity:0; transform:translateX(-64px); transition:opacity .95s var(--ease), transform .95s var(--ease); }
 .reveal-right{ opacity:0; transform:translateX(64px); transition:opacity .95s var(--ease), transform .95s var(--ease); }
-[dir="rtl"] .reveal-left{ transform:translateX(64px); }
-[dir="rtl"] .reveal-right{ transform:translateX(-64px); }
 .reveal-scale{ opacity:0; transform:scale(.88); transition:opacity .95s var(--ease), transform .95s var(--ease); }
 .in-view{ opacity:1 !important; transform:none !important; }
 .d1{ transition-delay:.10s !important; } .d2{ transition-delay:.20s !important; }
