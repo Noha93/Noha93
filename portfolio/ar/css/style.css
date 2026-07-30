@@ -4,13 +4,17 @@
   --violet:#7C3AED; --violet-light:#A78BFA; --violet-deep:#6D28D9;
   --pink:#F059A4; --lime:#A3E635; --green:#10B981; --amber:#F59E0B; --blue:#0EA5E9;
   --ease: cubic-bezier(.16,1,.3,1);
+  --f-display:'Cairo',serif; --f-body:'Cairo',sans-serif; --f-label:'Cairo',monospace;
+}
+html[lang="en"]{
+  --f-display:'Fraunces',serif; --f-body:'Outfit',sans-serif; --f-label:'JetBrains Mono',monospace;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scrollbar-width:none; scroll-behavior:smooth; overflow-x:hidden; max-width:100vw}
 html::-webkit-scrollbar{display:none}
 body{
   margin:0; background:var(--bg); color:var(--ink);
-  font-family:'Cairo',sans-serif;
+  font-family:var(--f-body);
   overflow-x:hidden; max-width:100vw;
 }
 body.js, body.js *{ cursor:none !important; }
@@ -19,7 +23,13 @@ a{color:inherit; text-decoration:none}
 button{font-family:inherit; cursor:none; border:none; background:none; color:inherit}
 input{font-family:inherit}
 
-.eyebrow{ font-family:'Cairo',monospace; font-size:13px; color:var(--violet-light); font-weight:700; margin-bottom:18px; }
+.eyebrow, .hero__badge span, .hero__cue span, .pcard__cat, .pcard__year, .pstep__n{ font-family:var(--f-label); }
+.nav__logo, .hero__title, .about__title, .work__title, .mockups__title, .process__title,
+.contact__title, .journey__program, .footer__logo, .pcard__title, .pstep__title,
+.hero__stat-n, .about__stat-n, .about__float-num, .about__float-num2, .about__frame-name,
+.mock__caption-name, .phone-greet-name, .phone-picked-name, .browser-brand, .browser-h2,
+.dash-brand, .dash-head-title, .dash-revenue-val{ font-family:var(--f-display); }
+.eyebrow{ font-size:13px; color:var(--violet-light); font-weight:700; margin-bottom:18px; }
 
 /* ---------- cursor ---------- */
 .cursor-dot{ position:fixed; width:7px; height:7px; border-radius:50%; background:var(--violet-light);
@@ -66,7 +76,7 @@ input{font-family:inherit}
 .hero__badge{ display:inline-flex; align-items:center; gap:10px; background:rgba(163,230,53,.07); border:1px solid rgba(163,230,53,.2);
   border-radius:100px; padding:8px 18px; margin-bottom:44px; opacity:0; transform:translateY(14px); transition:all .8s var(--ease) .1s; }
 .hero__badge-dot{ width:7px; height:7px; border-radius:50%; background:var(--lime); animation:pulse-dot 2.4s ease-in-out infinite; }
-.hero__badge span{ font-family:'Cairo',monospace; font-size:13px; color:var(--lime); font-weight:600; }
+.hero__badge span{ font-size:13px; color:var(--lime); font-weight:600; }
 .hero__title{ font-weight:900; font-size:clamp(46px,8.5vw,112px); line-height:1.05; letter-spacing:.01em; max-width:900px;
   margin:0 0 44px; text-align:start; opacity:0; transform:translateY(52px); transition:all 1s var(--ease) .3s; }
 .hero__title .grad{ background:linear-gradient(135deg,var(--violet-light) 0%, var(--pink) 45%, #FB923C 100%); background-size:200% auto;
@@ -89,7 +99,7 @@ input{font-family:inherit}
 .hero__stat-l{ font-size:12px; color:rgba(240,238,248,.38); margin-top:5px; }
 .hero__cue{ position:absolute; bottom:36px; inset-inline-start:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:10px; opacity:0; transition:opacity 1s ease 1.4s; }
 .hero__cue.in{ opacity:.38; }
-.hero__cue span{ font-family:'Cairo',monospace; font-size:11px; letter-spacing:.1em; }
+.hero__cue span{ font-size:11px; letter-spacing:.1em; }
 .hero__cue-line{ width:1px; height:52px; background:linear-gradient(to bottom, rgba(167,139,250,.7), transparent); animation:pulse-dot 2s ease-in-out infinite; }
 
 @media (max-width:900px){ .hero__stats{ position:static; transform:none; flex-direction:row; flex-wrap:wrap; margin-top:40px; } }
@@ -176,8 +186,8 @@ input{font-family:inherit}
 .pcard__media--contain{ object-fit:contain; padding:20px 0; opacity:.9; background:#0a0a14; }
 .pcard.hover .pcard__media--contain{ opacity:1; }
 .pcard__scrim{ position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,12,.96) 0%, rgba(7,7,12,.48) 55%, rgba(7,7,12,.08) 100%); }
-.pcard__cat{ position:absolute; top:24px; inset-inline-end:24px; border-radius:100px; padding:7px 16px; font-family:'Cairo',monospace; font-size:12px; font-weight:700; }
-.pcard__year{ position:absolute; top:24px; inset-inline-start:24px; font-family:'Cairo',monospace; font-size:12px; color:rgba(240,238,248,.28); }
+.pcard__cat{ position:absolute; top:24px; inset-inline-end:24px; border-radius:100px; padding:7px 16px; font-size:12px; font-weight:700; }
+.pcard__year{ position:absolute; top:24px; inset-inline-start:24px; font-size:12px; color:rgba(240,238,248,.28); }
 .pcard__body{ position:absolute; bottom:0; inset-inline-start:0; inset-inline-end:0; padding:0 26px 26px; text-align:start; }
 .pcard__title{ font-weight:900; font-size:29px; margin-bottom:6px; line-height:1.2; }
 .pcard__tagline{ font-size:14px; color:rgba(240,238,248,.5); margin-bottom:16px; line-height:1.7; }
@@ -307,7 +317,7 @@ input{font-family:inherit}
 .pstep{ background:rgba(255,255,255,.028); border:1px solid rgba(255,255,255,.065); border-radius:26px; padding:26px;
   position:relative; overflow:hidden; text-align:start; transition:all .42s var(--ease); }
 .pstep:hover{ transform:translateY(-10px); }
-.pstep__n{ font-family:'Cairo',monospace; font-size:12px; margin-bottom:20px; opacity:.65; }
+.pstep__n{ font-size:12px; margin-bottom:20px; opacity:.65; }
 .pstep__icon{ width:46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:20px; margin-inline-end:auto; }
 .pstep__title{ font-size:19px; font-weight:800; margin-bottom:12px; line-height:1.3; }
 .pstep__desc{ font-size:14px; color:rgba(240,238,248,.48); margin-bottom:22px; line-height:1.8; }
