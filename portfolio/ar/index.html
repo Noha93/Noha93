@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نهى أبو يوسف — UI/UX Designer</title>
+<meta name="description" content="نهى أبو يوسف — مصممة UI/UX. من الصيدلة والتغذية الإكلينيكية إلى تصميم واجهات المستخدم.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="js">
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav class="nav" id="nav">
+  <span class="nav__logo">نهى<span class="nav__logo-dot">·</span></span>
+  <div class="nav__right">
+    <div class="nav__links" id="navLinks"></div>
+    <button class="nav__lang" id="langToggle" type="button">English</button>
+    <a href="#contact" class="nav__cta" id="navCta" data-hover></a>
+  </div>
+  <button class="nav__burger" id="burger" type="button" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="navMobile"></div>
+
+<section class="hero" id="hero">
+  <div class="hero__orb hero__orb--1"></div>
+  <div class="hero__orb hero__orb--2"></div>
+  <div class="hero__orb hero__orb--3"></div>
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__badge">
+      <span class="hero__badge-dot"></span>
+      <span id="heroBadge"></span>
+    </div>
+    <h1 class="hero__title" id="heroTitle"></h1>
+    <div class="hero__foot">
+      <p class="hero__desc" id="heroDesc"></p>
+      <div class="hero__buttons">
+        <a href="#work" class="btn btn--primary" data-hover id="heroBtnWork"></a>
+        <a href="#contact" class="btn btn--ghost" data-hover id="heroBtnContact"></a>
+      </div>
+    </div>
+    <div class="hero__stats" id="heroStats"></div>
+  </div>
+  <div class="hero__cue">
+    <span id="heroCue"></span>
+    <div class="hero__cue-line"></div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee__track" id="marqueeTrack"></div>
+</div>
+
+<section class="about" id="about">
+  <div class="about__inner">
+    <div class="about__visual reveal-right">
+      <div class="about__frame">
+        <div class="about__monogram">ن<span>·</span>أ</div>
+        <div class="about__frame-overlay"></div>
+        <div class="about__frame-card">
+          <div class="about__frame-name" id="aboutCardName"></div>
+          <div class="about__frame-role" id="aboutCardRole"></div>
+        </div>
+      </div>
+      <div class="about__float about__float--1">
+        <div class="about__float-num" id="aboutFloatNum"></div>
+        <div class="about__float-label" id="aboutFloatLabel"></div>
+      </div>
+      <div class="about__float about__float--2">
+        <div class="about__float-row">
+          <div>
+            <div class="about__float-num2" id="aboutFloatNum2"></div>
+            <div class="about__float-label2" id="aboutFloatLabel2"></div>
+          </div>
+          <div class="about__float-emoji">✦</div>
+        </div>
+      </div>
+    </div>
+    <div class="about__text">
+      <div class="eyebrow reveal-up" id="aboutEyebrow"></div>
+      <h2 class="about__title reveal-up d1" id="aboutTitle"></h2>
+      <div class="reveal-up d2">
+        <p class="about__p" id="aboutP1"></p>
+        <p class="about__p" id="aboutP2"></p>
+      </div>
+      <div class="about__tools reveal-up d3" id="aboutTools"></div>
+      <div class="about__stats reveal-up d4" id="aboutStats"></div>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="work__head">
+    <div>
+      <div class="eyebrow reveal-up" id="workEyebrow"></div>
+      <h2 class="work__title reveal-up d1" id="workTitle"></h2>
+    </div>
+    <div class="work__hint reveal-up d2" id="workHint"></div>
+  </div>
+  <div class="work__carousel" id="workCarousel"></div>
+  <div class="work__dots" id="workDots"></div>
+</section>
+
+<section class="mockups" id="mockups">
+  <div class="mockups__inner">
+    <div class="mockups__head">
+      <div class="eyebrow reveal-up" id="mockupsEyebrow"></div>
+      <h2 class="mockups__title reveal-up d1" id="mockupsTitle"></h2>
+    </div>
+    <div class="mockups__row">
+      <div class="reveal-right" id="phoneMockup"></div>
+      <div class="reveal-left d1" id="browserMockup"></div>
+    </div>
+    <div class="reveal-up d2" id="dashboardMockup"></div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="process__inner">
+    <div class="eyebrow reveal-up" id="processEyebrow"></div>
+    <h2 class="process__title reveal-up d1" id="processTitle"></h2>
+    <div class="process__grid" id="processGrid"></div>
+  </div>
+</section>
+
+<section class="journey" id="journey">
+  <div class="journey__inner">
+    <div class="eyebrow reveal-up" id="journeyEyebrow"></div>
+    <div class="journey__body" id="journeyBody"></div>
+    <div class="journey__dots" id="journeyDots"></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact__glow"></div>
+  <div class="contact__inner">
+    <div class="eyebrow reveal-up" id="contactEyebrow"></div>
+    <h2 class="contact__title reveal-up d1" id="contactTitle"></h2>
+    <p class="contact__desc reveal-up d2" id="contactDesc"></p>
+    <form class="contact__form reveal-up d3" id="contactForm">
+      <button type="submit" class="btn btn--gradient" id="contactSend"></button>
+      <input type="email" id="contactEmail" required>
+    </form>
+    <div class="contact__socials reveal-up d4" id="contactSocials"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer__logo">نهى<span>·</span></span>
+  <span class="footer__note" id="footerNote"></span>
+  <span class="footer__loc" id="footerLoc"></span>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
