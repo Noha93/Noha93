@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صيدليتي — تطبيق الصيدلية الإلكترونية</title>
+<meta name="description" content="تطبيق صيدليتي: طلب الأدوية ومستحضرات العناية للعميل، وداشبورد إدارة شامل للصيدلي.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="mode-switch-bar">
+  <button class="mode-btn active" id="btn-mode-app" onclick="setMode('app')">📱 تطبيق العميل</button>
+  <button class="mode-btn" id="btn-mode-admin" onclick="setMode('admin')">🖥️ داشبورد الإدارة</button>
+  <span class="brand">💊 صيدليتي</span>
+</div>
+
+<div class="stage" id="stage-app">
+  <div class="phone-mockup">
+    <div class="notch"></div>
+    <div class="status-bar"><span>9:41</span><span>🔋 📶</span></div>
+    <div class="app-viewport">
+
+      <!-- SPLASH -->
+      <div class="app-screen center-content active" id="scr-splash">
+        <div class="logo-mark"><svg viewBox="0 0 100 100" width="48" height="48"><rect x="40" y="14" width="20" height="72" rx="9" fill="#fff"/><rect x="14" y="40" width="72" height="20" rx="9" fill="#fff"/><circle cx="78" cy="22" r="9" fill="#ff8a5c"/></svg></div>
+        <div style="font-family:Cairo;font-weight:800;font-size:24px;margin-top:16px">صيدلي<span style="color:var(--app-primary)">تي</span></div>
+        <div style="font-size:11.5px;color:var(--app-text-muted);margin-top:6px">صحتك في إيدك 💚</div>
+        <button class="app-btn app-btn-primary" style="width:160px;margin-top:34px" onclick="showScreen('onb1')">ابدأ</button>
+      </div>
+
+      <!-- ONBOARDING 1 -->
+      <div class="app-screen" id="scr-onb1" style="padding-top:30px">
+        <div style="text-align:left"><button style="background:none;border:none;font-size:11px;color:var(--app-text-muted)" onclick="showScreen('home')">تخطي</button></div>
+        <div style="height:190px;border-radius:20px;background:linear-gradient(160deg,#e4f6ee,#f7faf8);display:flex;align-items:center;justify-content:center;margin:10px 0 22px"><svg viewBox="0 0 100 100" width="90" height="90"><rect x="42" y="18" width="16" height="60" rx="7" fill="#0e9a7e"/><rect x="20" y="40" width="60" height="16" rx="7" fill="#0e9a7e"/><circle cx="72" cy="24" r="7" fill="#ff8a5c"/></svg></div>
+        <div class="app-h" style="text-align:center;font-size:17px">اطلب دوائك بضغطة واحدة</div>
+        <p style="text-align:center;font-size:12.5px;color:var(--app-text-muted);padding:0 8px">دور، اطلب، وهيوصلك لحد باب البيت</p>
+        <div class="onb-dots"><span class="active"></span><span></span><span></span></div>
+        <button class="app-btn app-btn-primary" onclick="showScreen('onb2')">التالي</button>
+      </div>
+
+      <!-- ONBOARDING 2 -->
+      <div class="app-screen" id="scr-onb2" style="padding-top:30px">
+        <div style="text-align:left"><button style="background:none;border:none;font-size:11px;color:var(--app-text-muted)" onclick="showScreen('home')">تخطي</button></div>
+        <div style="height:190px;border-radius:20px;background:linear-gradient(160deg,#e4f6ee,#f7faf8);display:flex;align-items:center;justify-content:center;margin:10px 0 22px"><svg viewBox="0 0 100 100" width="80" height="80"><rect x="20" y="14" width="60" height="72" rx="10" fill="#fff" stroke="#0e9a7e" stroke-width="3"/><rect x="30" y="30" width="40" height="6" rx="3" fill="#0e9a7e"/><rect x="30" y="42" width="40" height="6" rx="3" fill="#dbe9e3"/><circle cx="65" cy="70" r="12" fill="#ff8a5c"/></svg></div>
+        <div class="app-h" style="text-align:center;font-size:17px">ارفع روشتتك بسهولة</div>
+        <p style="text-align:center;font-size:12.5px;color:var(--app-text-muted);padding:0 8px">صيدلي مرخّص هيراجعها ويجهزلك طلبك بأمان</p>
+        <div class="onb-dots"><span></span><span class="active"></span><span></span></div>
+        <button class="app-btn app-btn-primary" onclick="showScreen('onb3')">التالي</button>
+      </div>
+
+      <!-- ONBOARDING 3 -->
+      <div class="app-screen" id="scr-onb3" style="padding-top:30px">
+        <div style="height:190px;border-radius:20px;background:linear-gradient(160deg,#e4f6ee,#f7faf8);display:flex;align-items:center;justify-content:center;margin:34px 0 22px"><svg viewBox="0 0 100 100" width="80" height="80"><circle cx="50" cy="50" r="34" fill="none" stroke="#dbe9e3" stroke-width="6"/><path d="M50 16 A34 34 0 0 1 84 50" fill="none" stroke="#0e9a7e" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="6" fill="#ff8a5c"/></svg></div>
+        <div class="app-h" style="text-align:center;font-size:17px">تابع طلبك لحظة بلحظة</div>
+        <p style="text-align:center;font-size:12.5px;color:var(--app-text-muted);padding:0 8px">اعرف مكان طلبك بالظبط لحد ما يوصلك</p>
+        <div class="onb-dots"><span></span><span></span><span class="active"></span></div>
+        <button class="app-btn app-btn-primary" onclick="showScreen('home')">ابدأ الآن</button>
+      </div>
+
+      <!-- HOME -->
+      <div class="app-screen" id="scr-home">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px">
+          <div><div style="font-size:11px;color:var(--app-text-muted)">أهلًا 👋</div><b style="font-size:14px">مريم حسين</b></div>
+          <div style="width:34px;height:34px;border-radius:50%;background:var(--app-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer" onclick="showScreen('profile')">م</div>
+        </div>
+        <div style="margin-top:14px;cursor:pointer" onclick="showScreen('search')"><div class="app-search">🔍 دور على دواء أو منتج عناية</div></div>
+        <div style="display:flex;overflow-x:auto;margin-top:12px" id="home-cats"></div>
+
+        <div class="section-row"><span class="app-h">🔥 عروض العناية والتجميل</span><span class="see-all" onclick="goCategory('skincare')">شوف الكل ›</span></div>
+        <div class="h-scroll" id="home-offers"></div>
+
+        <div class="section-row"><span class="app-h">💊 الأكثر طلبًا</span></div>
+        <div class="product-grid" id="home-products"></div>
+
+        <div class="section-row"><span class="app-h">🤧 نزلات البرد والإنفلونزا</span><span class="see-all" onclick="goCategory('cold')">شوف الكل ›</span></div>
+        <div class="h-scroll" id="home-cold"></div>
+
+        <div class="section-row"><span class="app-h">❤️ القلب والضغط والسكري</span><span class="see-all" onclick="goCategory('chronic')">شوف الكل ›</span></div>
+        <div class="h-scroll" id="home-chronic"></div>
+
+        <div class="section-row"><span class="app-h">🍊 الفيتامينات والمكملات</span><span class="see-all" onclick="goCategory('vitamins')">شوف الكل ›</span></div>
+        <div class="h-scroll" id="home-vitamins"></div>
+
+        <div class="section-row"><span class="app-h">🍼 صحة الطفل والأم</span><span class="see-all" onclick="goCategory('baby')">شوف الكل ›</span></div>
+        <div class="h-scroll" id="home-baby"></div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="app-screen" id="scr-categories">
+        <div class="app-h" style="margin-top:14px">🗂️ تسوّق حسب الحالة</div>
+        <p style="font-size:11px;color:var(--app-text-muted);margin:-6px 0 10px">اختار اللي بتحس بيه، مش اسم الدواء</p>
+        <div id="cat-list"></div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="app-screen" id="scr-search">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <div class="app-h" style="margin-top:2px">🔍 البحث عن دواء</div>
+        <div class="tabs2">
+          <button id="tab-search-trade" class="active" onclick="setSearchMode('trade')">بالاسم التجاري</button>
+          <button id="tab-search-active" onclick="setSearchMode('active')">بالمادة الفعالة</button>
+        </div>
+        <input class="app-search" id="search-input" placeholder="مثال: أوجمنتين، بانادول..." oninput="renderSearchResults()">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0 6px">
+          <span style="font-size:11px;color:var(--app-text-muted)">النتائج مرتبة أبجديًا (أ ← ي)</span>
+          <span id="search-count" style="font-size:10.5px;color:var(--app-primary)"></span>
+        </div>
+        <div id="search-results"></div>
+      </div>
+
+      <!-- PRODUCT DETAIL -->
+      <div class="app-screen" id="scr-detail">
+        <button class="back-btn" onclick="goBackFromDetail()">←</button>
+        <div id="detail-content"></div>
+      </div>
+
+      <!-- CART -->
+      <div class="app-screen" id="scr-cart">
+        <div class="app-h" style="margin-top:14px">🛒 سلة المشتريات</div>
+        <div id="cart-items"></div>
+        <div id="cart-empty" style="display:none;text-align:center;color:var(--app-text-muted);font-size:12.5px;margin-top:60px">🛒<br>سلتك فاضية دلوقتي</div>
+        <div id="cart-summary" style="margin-top:14px"></div>
+      </div>
+
+      <!-- CHECKOUT -->
+      <div class="app-screen" id="scr-checkout">
+        <button class="back-btn" onclick="showScreen('cart')">←</button>
+        <div class="app-h">تأكيد الطلب</div>
+        <div class="stepper">
+          <div class="st done">1. السلة</div><div class="st done">2. الدفع</div><div class="st">3. التأكيد</div>
+        </div>
+        <div style="background:var(--app-surface);border:1px solid var(--app-border);border-radius:14px;padding:14px;margin-bottom:12px">
+          <b style="font-size:12.5px">عنوان التوصيل</b>
+          <p style="font-size:12px;color:var(--app-text-muted);margin-top:6px">📍 مدينة نصر، شارع مصطفى النحاس، ب12</p>
+        </div>
+        <div style="background:var(--app-surface);border:1px solid var(--app-border);border-radius:14px;padding:14px;margin-bottom:14px">
+          <b style="font-size:12.5px">طريقة الدفع</b>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <span class="app-cat-chip active" style="margin:0">💵 كاش</span>
+            <span class="app-cat-chip" style="margin:0">💳 بطاقة</span>
+          </div>
+        </div>
+        <div id="checkout-summary"></div>
+        <button class="app-btn app-btn-primary" style="margin-top:14px" onclick="confirmOrder()">تأكيد الطلب</button>
+        <button class="app-btn app-btn-wa" style="margin-top:8px" onclick="openWhatsApp()">💬 تواصل مع الصيدلية قبل الطلب</button>
+      </div>
+
+      <!-- ORDER SUCCESS -->
+      <div class="app-screen center-content" id="scr-success" style="text-align:center">
+        <div style="font-size:56px">✅</div>
+        <div class="app-h">تم تأكيد طلبك!</div>
+        <p style="font-size:12.5px;color:var(--app-text-muted);padding:0 20px">رقم الطلب #4821 — هيوصلك خلال 45 دقيقة</p>
+        <button class="app-btn app-btn-primary" style="width:180px;margin-top:20px" onclick="showScreen('tracking')">تتبع الطلب</button>
+      </div>
+
+      <!-- PRESCRIPTION UPLOAD -->
+      <div class="app-screen" id="scr-rx">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <div class="app-h">📤 رفع الروشتة</div>
+        <div id="rx-box" style="height:220px;background:var(--app-surface);border:2px dashed var(--app-primary);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--app-primary);font-size:12px;margin-bottom:14px;cursor:pointer" onclick="mockUploadRx()">📷<br>اضغط لتصوير الروشتة</div>
+        <button class="app-btn app-btn-primary" style="margin-bottom:8px" onclick="mockUploadRx()">التقاط صورة</button>
+        <button class="app-btn app-btn-secondary" onclick="mockUploadRx()">رفع من المعرض</button>
+        <div style="background:#eef8f4;border-right:4px solid var(--app-primary);border-radius:10px;padding:12px 14px;font-size:12px;margin-top:16px">✅ هيراجعها صيدلي مرخّص خلال 10 دقائق</div>
+      </div>
+
+      <!-- TRACKING -->
+      <div class="app-screen" id="scr-tracking">
+        <div class="app-h" style="margin-top:14px">📍 طلباتي</div>
+        <div style="background:var(--app-surface);border:1px solid var(--app-border);border-radius:16px;padding:14px;margin-bottom:14px">
+          <b style="font-size:12.5px">طلب #4821</b>
+          <div style="height:130px;background:var(--app-bg);border-radius:12px;margin:10px 0;display:flex;align-items:center;justify-content:center;color:var(--app-text-muted);font-size:11.5px">🗺️ خريطة تتبع حية</div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--app-text-muted)"><span style="color:var(--app-primary);font-weight:700">✅ تم التجهيز</span><span style="color:var(--app-primary);font-weight:700">🚴 في الطريق</span><span>🏠 التوصيل</span></div>
+          <div style="background:var(--app-bg);border-radius:10px;padding:10px;margin-top:12px;font-size:12px">الوقت المتبقي: <b>12 دقيقة</b></div>
+          <button class="app-btn app-btn-secondary" style="margin-top:10px">تواصل مع المندوب</button>
+          <button class="app-btn app-btn-wa" style="margin-top:8px" onclick="openWhatsApp()">💬 تواصل مع الصيدلية</button>
+        </div>
+        <div class="list-row"><span style="font-size:12px">طلب #4790 — تم التسليم ✅</span><span style="font-size:11px;color:var(--app-text-muted)">قبل 3 أيام</span></div>
+        <div class="list-row"><span style="font-size:12px">طلب #4756 — تم التسليم ✅</span><span style="font-size:11px;color:var(--app-text-muted)">أسبوع</span></div>
+      </div>
+
+      <!-- CHAT -->
+      <div class="app-screen" id="scr-chat">
+        <button class="back-btn" onclick="showScreen('profile')">←</button>
+        <div class="app-h">💬 استشارة صيدلي</div>
+        <div id="chat-log" style="display:flex;flex-direction:column"></div>
+        <div style="display:flex;gap:8px;margin-top:12px;position:sticky;bottom:0;background:var(--app-bg);padding:6px 0">
+          <input class="app-search" id="chat-input" placeholder="اكتب رسالتك...">
+          <button class="qty-btn" style="width:38px;height:38px;background:var(--app-primary);color:#fff;border:none" onclick="sendChat()">➤</button>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="app-screen" id="scr-profile">
+        <div style="display:flex;flex-direction:column;align-items:center;margin-top:20px">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--app-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">م</div>
+          <b style="margin-top:10px;font-size:15px">مريم حسين</b>
+          <span style="font-size:11.5px;color:var(--app-text-muted)">01012345678</span>
+        </div>
+        <div style="margin-top:20px">
+          <div class="list-row" onclick="showScreen('tracking')"><span style="font-size:12.5px">📦 طلباتي السابقة</span><span>›</span></div>
+          <div class="list-row" onclick="showScreen('chat')"><span style="font-size:12.5px">💬 استشارة صيدلي</span><span>›</span></div>
+          <div class="list-row"><span style="font-size:12.5px">📍 عناويني</span><span>›</span></div>
+          <div class="list-row"><span style="font-size:12.5px">⏰ تذكير مواعيد الدواء</span><span>›</span></div>
+          <div class="list-row"><span style="font-size:12.5px">🎁 نقاطي ومكافآتي</span><span>240 نقطة</span></div>
+          <div class="list-row" onclick="openWhatsApp()"><span style="font-size:12.5px;color:var(--wa)">💬 تواصل مع الصيدلية</span><span>›</span></div>
+          <div class="list-row"><span style="font-size:12.5px;color:#e0575a">تسجيل الخروج</span><span></span></div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="whatsapp-fab pulse" title="تواصل مع الصيدلية" onclick="openWhatsApp()">💬</div>
+    <div class="toast" id="toast"></div>
+
+    <div class="phone-bottom-nav" id="bottom-nav">
+      <button class="nav-btn active" data-nav="home" onclick="showScreen('home')"><span class="ic">🏠</span>الرئيسية</button>
+      <button class="nav-btn" data-nav="categories" onclick="showScreen('categories')"><span class="ic">🗂️</span>الفئات</button>
+      <button class="nav-btn nav-badge" data-nav="cart" onclick="showScreen('cart')"><span class="ic">🛒</span>السلة<span class="count" id="cart-count">0</span></button>
+      <button class="nav-btn" data-nav="tracking" onclick="showScreen('tracking')"><span class="ic">📦</span>طلباتي</button>
+      <button class="nav-btn" data-nav="profile" onclick="showScreen('profile')"><span class="ic">👤</span>حسابي</button>
+    </div>
+  </div>
+</div>
+
+<div class="stage hidden" id="stage-admin">
+  <div id="admin-login-wrap" class="login-wrap">
+    <div class="logo-mark"><svg viewBox="0 0 100 100" width="44" height="44"><rect x="40" y="14" width="20" height="72" rx="9" fill="#fff"/><rect x="14" y="40" width="72" height="20" rx="9" fill="#fff"/><circle cx="78" cy="22" r="9" fill="#ff8a5c"/></svg></div>
+    <h2 style="text-align:center;color:#fff;font-size:19px;margin-bottom:4px">تسجيل دخول الإدارة</h2>
+    <p style="text-align:center;color:var(--adm-text-muted);font-size:12px;margin-bottom:22px">داشبورد صيدليتي — للصيادلة والمديرين</p>
+    <div class="form-field" style="margin-bottom:12px"><label>البريد الإلكتروني</label><input class="adm-input" style="width:100%" value="ahmed.kamel@saydaliaty.com"></div>
+    <div class="form-field" style="margin-bottom:20px"><label>كلمة المرور</label><input class="adm-input" style="width:100%" type="password" value="••••••••"></div>
+    <button class="adm-btn adm-btn-primary" style="width:100%" onclick="adminLogin()">دخول</button>
+  </div>
+
+  <div class="dash-shell hidden" id="admin-dash-shell">
+    <div class="dash-sidebar">
+      <div class="logo">💊 صيدليتي</div>
+      <button class="side-item active" data-adm="home" onclick="showAdminView('home')">📊 لوحة التحكم</button>
+      <button class="side-item" data-adm="products" onclick="showAdminView('products')">📦 المنتجات</button>
+      <button class="side-item" data-adm="inventory" onclick="showAdminView('inventory')">🧮 المخزون</button>
+      <button class="side-item" data-adm="orders" onclick="showAdminView('orders')">🧾 الطلبات والروشتات</button>
+      <button class="side-item" data-adm="sales" onclick="showAdminView('sales')">📈 المبيعات</button>
+      <button class="side-item" data-adm="dispensing" onclick="showAdminView('dispensing')">💊 معدل الصرف الشهري</button>
+      <button class="side-item" data-adm="customers" onclick="showAdminView('customers')">👥 سلوك العملاء</button>
+      <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--adm-border)">
+        <button class="side-item" onclick="adminLogout()">🚪 تسجيل الخروج</button>
+      </div>
+    </div>
+    <div class="dash-content">
+
+      <!-- DASHBOARD HOME -->
+      <div class="dash-view active" id="adm-home">
+        <div class="dash-topbar"><h2>مرحبًا، د. أحمد 👋</h2><span style="font-size:12px;color:var(--adm-text-muted)" id="today-date"></span></div>
+        <div class="kpi-row">
+          <div class="kpi-card"><div class="l">مبيعات اليوم</div><div class="v">12,480 ج.م</div><div class="d up">▲ 8.2%</div></div>
+          <div class="kpi-card"><div class="l">طلبات جديدة</div><div class="v" id="kpi-orders">34</div><div class="d up">▲ 5</div></div>
+          <div class="kpi-card"><div class="l">روشتات معلّقة</div><div class="v">6</div><div class="d down">تحتاج مراجعة</div></div>
+          <div class="kpi-card"><div class="l">منتجات منخفضة</div><div class="v">11</div><div class="d down">▼ أعد الطلب</div></div>
+        </div>
+        <div class="dash-card">
+          <h5>المبيعات آخر 7 أيام</h5>
+          <div class="mini-bars"><div class="b" style="height:40%"></div><div class="b" style="height:55%"></div><div class="b" style="height:35%"></div><div class="b" style="height:70%"></div><div class="b" style="height:50%"></div><div class="b" style="height:85%"></div><div class="b" style="height:100%"></div></div>
+        </div>
+        <div class="dash-card">
+          <h5>أحدث الطلبات</h5>
+          <table class="dash-table" id="home-orders-table"></table>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="dash-view" id="adm-products">
+        <div class="dash-topbar"><h2>📦 المنتجات</h2><button class="adm-btn adm-btn-primary" onclick="showAdminView('addproduct')">+ إضافة منتج</button></div>
+        <div class="dash-card">
+          <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+            <input class="adm-input" placeholder="ابحث في المنتجات..." style="flex:1;min-width:180px" oninput="renderAdminProducts(this.value)">
+            <select class="adm-select" onchange="filterAdminCategory(this.value)">
+              <option value="all">كل الفئات</option>
+              <option value="medicine">أدوية</option>
+              <option value="cosmetic">تجميل</option>
+              <option value="care">عناية</option>
+            </select>
+          </div>
+          <table class="dash-table" id="admin-products-table"></table>
+        </div>
+      </div>
+
+      <!-- ADD PRODUCT -->
+      <div class="dash-view" id="adm-addproduct">
+        <div class="dash-topbar"><h2>➕ إضافة منتج جديد</h2><button class="adm-btn adm-btn-outline" onclick="showAdminView('products')">إلغاء</button></div>
+        <div class="dash-card">
+          <div class="chip-select" id="new-prod-cat">
+            <button class="active" onclick="setNewProdCat('medicine',this)">💊 دواء</button>
+            <button onclick="setNewProdCat('cosmetic',this)">💄 مستحضر تجميل</button>
+            <button onclick="setNewProdCat('care',this)">🧴 عناية</button>
+          </div>
+          <div class="form-grid">
+            <div class="form-field"><label>الاسم التجاري</label><input class="adm-input" id="np-trade" placeholder="مثال: بانادول إكسترا"></div>
+            <div class="form-field"><label>الاسم العلمي / المادة الفعالة</label><input class="adm-input" id="np-active" placeholder="مثال: Paracetamol"></div>
+            <div class="form-field"><label>التركيز</label><input class="adm-input" id="np-strength" placeholder="مثال: 500 مجم"></div>
+            <div class="form-field"><label>السعر (ج.م)</label><input class="adm-input" id="np-price" type="number" placeholder="0"></div>
+            <div class="form-field"><label>الكمية بالمخزن</label><input class="adm-input" id="np-stock" type="number" placeholder="0"></div>
+            <div class="form-field full">
+              <label>يتطلب روشتة طبية؟</label>
+              <button class="toggle" id="np-rx-toggle" onclick="this.classList.toggle('on')"><span class="dotc"></span></button>
+            </div>
+          </div>
+          <button class="adm-btn adm-btn-primary" style="margin-top:18px" onclick="saveNewProduct()">حفظ ونشر المنتج</button>
+        </div>
+      </div>
+
+      <!-- INVENTORY -->
+      <div class="dash-view" id="adm-inventory">
+        <div class="dash-topbar"><h2>🧮 حالة المخزون</h2></div>
+        <div class="dash-card">
+          <table class="dash-table" id="inventory-table"></table>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div class="dash-view" id="adm-orders">
+        <div class="dash-topbar"><h2>🧾 الطلبات والروشتات</h2></div>
+        <div class="dash-card">
+          <table class="dash-table">
+            <tr><th>رقم الطلب</th><th>العميل</th><th>روشتة</th><th>الحالة</th><th></th></tr>
+            <tr><td>#4821</td><td>مريم حسين</td><td>✅ تمت المراجعة</td><td><span class="status-pill ok">في الطريق</span></td><td><button class="adm-btn adm-btn-outline" style="padding:5px 12px;font-size:11px">تفاصيل</button></td></tr>
+            <tr><td>#4822</td><td>رجب سيد</td><td>⏳ بانتظار المراجعة</td><td><span class="status-pill warn">معلّق</span></td><td><button class="adm-btn adm-btn-primary" style="padding:5px 12px;font-size:11px" onclick="approveRx()">مراجعة</button></td></tr>
+            <tr><td>#4823</td><td>سارة عادل</td><td>— لا يوجد</td><td><span class="status-pill ok">تم التسليم</span></td><td><button class="adm-btn adm-btn-outline" style="padding:5px 12px;font-size:11px">تفاصيل</button></td></tr>
+            <tr><td>#4824</td><td>كريم فتحي</td><td>⏳ بانتظار المراجعة</td><td><span class="status-pill warn">معلّق</span></td><td><button class="adm-btn adm-btn-primary" style="padding:5px 12px;font-size:11px" onclick="approveRx()">مراجعة</button></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- SALES -->
+      <div class="dash-view" id="adm-sales">
+        <div class="dash-topbar"><h2>📈 تحليلات المبيعات</h2><span style="font-size:12px;color:var(--adm-text-muted)">هذا الشهر ▾</span></div>
+        <div class="kpi-row" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="kpi-card"><div class="l">الإيرادات</div><div class="v">318K ج.م</div><div class="d up">▲ 14%</div></div>
+          <div class="kpi-card"><div class="l">متوسط الطلب</div><div class="v">142 ج.م</div><div class="d up">▲ 3%</div></div>
+          <div class="kpi-card"><div class="l">طلبات ملغاة</div><div class="v">2.1%</div><div class="d down">▼ 0.5%</div></div>
+        </div>
+        <div class="dash-card">
+          <h5>الأكثر مبيعًا هذا الشهر</h5>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:grid;grid-template-columns:120px 1fr 40px;align-items:center;gap:10px"><span style="font-size:12.5px;color:var(--adm-text-muted)">باراسيتامول</span><div style="height:22px;background:var(--adm-surface2);border-radius:6px;overflow:hidden"><div style="height:100%;width:88%;background:var(--adm-primary)"></div></div><span style="font-size:12px">88%</span></div>
+            <div style="display:grid;grid-template-columns:120px 1fr 40px;align-items:center;gap:10px"><span style="font-size:12.5px;color:var(--adm-text-muted)">فيتامين سي</span><div style="height:22px;background:var(--adm-surface2);border-radius:6px;overflow:hidden"><div style="height:100%;width:71%;background:var(--adm-primary)"></div></div><span style="font-size:12px">71%</span></div>
+            <div style="display:grid;grid-template-columns:120px 1fr 40px;align-items:center;gap:10px"><span style="font-size:12.5px;color:var(--adm-text-muted)">كريم ترطيب</span><div style="height:22px;background:var(--adm-surface2);border-radius:6px;overflow:hidden"><div style="height:100%;width:54%;background:var(--adm-primary)"></div></div><span style="font-size:12px">54%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISPENSING RATE -->
+      <div class="dash-view" id="adm-dispensing">
+        <div class="dash-topbar"><h2>💊 معدل صرف الأدوية الشهري</h2><span style="font-size:12px;color:var(--adm-text-muted)">أغسطس 2026 ▾</span></div>
+        <div class="kpi-row" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="kpi-card"><div class="l">إجمالي الوحدات المصروفة</div><div class="v">9,842</div><div class="d up">▲ 11%</div></div>
+          <div class="kpi-card"><div class="l">أعلى معدل صرف</div><div class="v" style="font-size:15px">باراسيتامول 500</div><div class="d up">1,340 وحدة</div></div>
+          <div class="kpi-card"><div class="l">أدوية شبه راكدة</div><div class="v">7</div><div class="d down">صرف أقل من 5/شهر</div></div>
+        </div>
+        <div class="dash-card">
+          <h5>معدل الصرف الشهري لكل دواء (آخر 4 شهور)</h5>
+          <table class="dash-table">
+            <tr><th>الدواء</th><th>مايو</th><th>يونيو</th><th>يوليو</th><th>أغسطس</th><th>الاتجاه</th></tr>
+            <tr><td>باراسيتامول 500</td><td>980</td><td>1,050</td><td>1,190</td><td>1,340</td><td><span class="status-pill ok">▲ صاعد</span></td></tr>
+            <tr><td>أوجمنتين 1 جم</td><td>410</td><td>395</td><td>360</td><td>330</td><td><span class="status-pill warn">▼ هابط</span></td></tr>
+            <tr><td>فيتامين سي 1000</td><td>520</td><td>560</td><td>610</td><td>640</td><td><span class="status-pill ok">▲ صاعد</span></td></tr>
+            <tr><td>ميتفورمين 500</td><td>300</td><td>298</td><td>305</td><td>301</td><td><span class="status-pill neutral">مستقر</span></td></tr>
+            <tr><td>دواء نادر الطلب X</td><td>6</td><td>4</td><td>3</td><td>2</td><td><span class="status-pill bad">▼ شبه راكد</span></td></tr>
+          </table>
+        </div>
+        <div class="dash-card">
+          <h5>تحليلات نتائج الصرف الشهرية</h5>
+          <div class="mini-bars"><div class="b" style="height:50%"></div><div class="b" style="height:60%"></div><div class="b" style="height:68%"></div><div class="b" style="height:85%"></div><div class="b" style="height:100%"></div><div class="b" style="height:95%"></div></div>
+          <p style="font-size:12px;color:var(--adm-text-muted);margin-top:12px">📊 <b style="color:#fff">ملاحظة تلقائية:</b> صرف باراسيتامول وفيتامين سي في نمو مستمر — يُنصح بزيادة كمية إعادة الطلب 15%. الأدوية شبه الراكدة تحتاج مراجعة قبل تجديد المخزون.</p>
+        </div>
+      </div>
+
+      <!-- CUSTOMERS -->
+      <div class="dash-view" id="adm-customers">
+        <div class="dash-topbar"><h2>👥 سلوك المستخدمين</h2></div>
+        <div class="kpi-row" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="kpi-card"><div class="l">معدل التخلي عن السلة</div><div class="v">23%</div><div class="d down">▼ 4%</div></div>
+          <div class="kpi-card"><div class="l">عملاء جدد</div><div class="v">86</div><div class="d up">▲ 12</div></div>
+          <div class="kpi-card"><div class="l">معدل التكرار</div><div class="v">47%</div><div class="d up">▲ 6%</div></div>
+        </div>
+        <div class="dash-card">
+          <h5>الأكثر مشاهدة (ولم تُشترَ بعد)</h5>
+          <table class="dash-table">
+            <tr><th>المنتج</th><th>مشاهدات</th><th>معدل التحويل</th></tr>
+            <tr><td>سيروم النياسيناميد</td><td>1,204</td><td><span class="status-pill warn">6%</span></td></tr>
+            <tr><td>مكمل أوميغا 3</td><td>892</td><td><span class="status-pill ok">18%</span></td></tr>
+          </table>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+<script src="script.js"></script>
+</body>
+</html>
