@@ -33,7 +33,7 @@ const products = [
   {id:31,name:'نيكسيوم 20',active:'Esomeprazole',strength:'20 مجم',category:'medicine',condition:'digestive',price:55,stock:60,rx:true,icon:'🍽️',desc:'لعلاج الحموضة وقرحة المعدة'},
   {id:32,name:'سملاك',active:'Diosmectite',strength:'3 جم',category:'medicine',condition:'digestive',price:38,stock:100,rx:false,icon:'🍽️',desc:'لعلاج الإسهال الحاد عند الكبار والأطفال'},
   {id:33,name:'سنتروم',active:'Multivitamin',strength:'',category:'care',condition:'vitamins',price:195,stock:50,rx:false,icon:'🍊',desc:'فيتامينات ومعادن متكاملة للاستخدام اليومي'},
-  {id:34,name:'كالسيوم د³',active:'Calcium + Vitamin D3',strength:'600 مجم',category:'care',condition:'vitamins',price:85,stock:70,rx:false,icon:'🍊',desc:'لدعم صحة العظام والأسنان'},
+  {id:34,name:'كالسيوم د٣',active:'Calcium + Vitamin D3',strength:'600 مجم',category:'care',condition:'vitamins',price:85,stock:70,rx:false,icon:'🍊',desc:'لدعم صحة العظام والأسنان'},
   {id:35,name:'زنك بلس',active:'Zinc',strength:'15 مجم',category:'care',condition:'vitamins',price:60,stock:90,rx:false,icon:'🍊',desc:'يدعم المناعة ويسرّع التئام الجروح'},
   {id:36,name:'واقي شمس أوسيرين',active:'Sunscreen SPF50',strength:'SPF50',category:'cosmetic',condition:'skincare',price:250,oldPrice:300,stock:40,rx:false,icon:'✨',desc:'حماية عالية من أشعة الشمس لكل أنواع البشرة'},
   {id:37,name:'غسول وجه سيتافيل',active:'Facial Cleanser',strength:'',category:'cosmetic',condition:'skincare',price:165,oldPrice:195,stock:55,rx:false,icon:'✨',desc:'غسول لطيف للبشرة الحساسة'},
@@ -46,7 +46,7 @@ const products = [
   {id:44,name:'غسول هيكسيتول',active:'Antiseptic Mouthwash',strength:'0.1%',category:'care',condition:'dental',price:60,stock:70,rx:false,icon:'🦷',desc:'غسول مطهر للفم واللثة'},
   {id:45,name:'بيتادين محلول',active:'Povidone Iodine',strength:'10%',category:'medicine',condition:'first_aid',price:35,stock:90,rx:false,icon:'🩹',desc:'مطهر للجروح البسيطة والحروق'},
   {id:46,name:'مرهم فلامازين',active:'Silver Sulfadiazine',strength:'1%',category:'medicine',condition:'first_aid',price:48,stock:40,rx:true,icon:'🩹',desc:'لعلاج الحروق ومنع العدوى'},
-  {id:47,name:'حمض الفوليك',active:'Folic Acid',strength:'5 مجم',category:'care',condition:'women',price:40,stock:100,rx:false,icon:'🌷',desc:'مكمل أساسي للحوامل ومخطّطات الحمل'},
+  {id:47,name:'حمض الفوليك',active:'Folic Acid',strength:'5 مجم',category:'care',condition:'women',price:40,stock:100,rx:false,icon:'🌷',desc:'مكمل أساسي للحوامل ومخطِّطات الحمل'},
   {id:48,name:'كانستين كريم مهبلي',active:'Clotrimazole',strength:'2%',category:'medicine',condition:'women',price:42,stock:55,rx:false,icon:'🌷',desc:'لعلاج الالتهابات الفطرية'},
   {id:49,name:'ميلاتونين',active:'Melatonin',strength:'3 مجم',category:'care',condition:'sleep',price:110,stock:60,rx:false,icon:'😴',desc:'يساعد على تنظيم النوم الطبيعي'},
   {id:50,name:'فاليريان',active:'Valerian Root Extract',strength:'500 مجم',category:'care',condition:'sleep',price:95,stock:50,rx:false,icon:'😴',desc:'مهدئ عشبي طبيعي للتوتر والأرق'},
@@ -80,7 +80,7 @@ let searchMode = 'trade';
 let activeCategoryFilter = 'all';
 let adminCategoryFilter = 'all';
 let newProdCat = 'medicine';
-const chatSeed = [{who:'them', text:'أهلاً، إزاي أقدر أساعدك؟ 🙂'}];
+const chatSeed = [{who:'them', text:'أهلًا، إزاي أقدر أساعدك؟ 🙂'}];
 let chatLog = [...chatSeed];
 
 /* ===== MODE SWITCH ===== */
@@ -221,7 +221,7 @@ function renderDetail(id){
     ${p.stock===0?'<div style="color:#e0575a;font-size:12px;margin-top:6px">⚠️ غير متاح حاليًا بالمخزون</div>':''}
     ${altHtml}
     <button class="app-btn app-btn-primary" style="margin-top:16px" ${p.stock===0?'disabled':''} onclick="addToCart(${p.id})">${p.stock===0?'غير متاح حاليًا':'إضافة للسلة'}</button>
-    ${p.rx?'<button class="app-btn app-btn-secondary" style="margin-top:8px" onclick="showScreen(\'rx\')">رفع الروشتة أولاً</button>':''}
+    ${p.rx?'<button class="app-btn app-btn-secondary" style="margin-top:8px" onclick="showScreen(\'rx\')">رفع الروشتة أولًا</button>':''}
     <button class="app-btn app-btn-wa" style="margin-top:8px" onclick="openWhatsApp()">💬 اسأل الصيدلية عن هذا المنتج</button>
   `;
 }
@@ -295,7 +295,7 @@ function sendChat(){
   if(!val) return;
   chatLog.push({who:'me',text:val});
   renderChat(); input.value='';
-  setTimeout(()=>{ chatLog.push({who:'them',text:'تمام، هراجعلك المعلومة وأرد عليك حالاً ✅'}); renderChat(); }, 700);
+  setTimeout(()=>{ chatLog.push({who:'them',text:'تمام، هراجعلك المعلومة وأرد عليك حالًا ✅'}); renderChat(); }, 700);
 }
 function showToast(msg){
   const t = document.getElementById('toast');
